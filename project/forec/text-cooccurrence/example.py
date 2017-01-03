@@ -59,5 +59,4 @@ with codecs.open("edge.txt", "w", "gbk") as f:
 	f.write("Source Target Weight\r\n")
 	for name, edges in relationships.items():
 		for v, w in edges.items():
-			if w > 10:
-			f.write(name + " " + v + " " + str(w) + "\r\n")
+			if w > 10: f.write(name + " " + v + " " + str(w) + "\r\n")
