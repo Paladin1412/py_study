@@ -1,0 +1,79 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content %}
+<script>
+    function view(detail)
+    {
+        $("#detailres").val(detail);
+        $.ajax({
+            url: "/interface/testcase/detailresult",
+            type: "POST",
+            data: "passidlist="+$("#passidlist").val()+"&failidlist="+$("#failidlist").val()+"&detailres="+$("#detailres").val(),
+            success:function(data) {
+                        if (data.search("span")>-1)
+                        {
+                            $("#resdiv").css("display","block");
+                            $("#resdiv").html(data);
+                        }
+                        else
+                            $("#resdiv").css("display","none");
+                }
+            });
+    }
+</script>
+<form action="/interface/testcase/detailresult" method="post" id ="getdetailform" style="display:none">
+        {% csrf_token %}
+        <input type="hidden" name="passidlist" value="{{count.passresid}}" id="passidlist"/>
+        <input type="hidden" name="failidlist" value="{{count.failresid}}" id="failidlist"/>
+        <input type="hidden" name="detailres" value="" id="detailres"/>
+</form>
+<div class="box box-success">
+    <div class="row" id="commonDataTableRow">
+        <div class="box-body no-padding">
+                    <table class="table">
+                    <thead>
+                    <tr><th></th>
+                    <th>接口名称</th>
+                    <th>运行总个数</th>
+                    <th>成功</th>
+                    <th>失败</th>
+                    <th>运行时间</th>
+                    <th>PASS/FAIL</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <th></th>
+                      <th>
+                          <span class="text">{{count.interface}}</span>
+                      </th>
+                      <th>
+                          <a id="total_num" onclick="view('total')"><span class="text">&nbsp;&nbsp;{{count.total}}&nbsp;&nbsp;</span></a>
+                      </th>
+                      <th>
+                          <a id="pass_num" onclick="view('pass')"><span class="text">&nbsp;&nbsp;{{count.pass}}&nbsp;&nbsp;</span></a>
+                      </th>
+                      <th>
+                          <a id="fail_num" onclick="view('fail')"><span class="text">&nbsp;&nbsp;{{count.fail}}&nbsp;&nbsp;</span></a>
+                      </th>
+                      <th>
+                          <span class="text">{{count.time_elapsed}}</span>
+                      </th>
+                      <th>
+                          <div class="progress sm">
+                            <div class="progress-bar progress-bar-green" style="width: {{passrate}}%" data-toggle="tooltip" title="PASS:{{count.pass}}" data-placement="bottom"></div>
+                            <div class="progress-bar progress-bar-red" style="width: {{failrate}}%" data-toggle="tooltip" title="FAIL:{{count.fail}}" data-placement="bottom"></div>
+                          </div>
+                      </th>
+                      <th></th>
+                   </tr>
+                  </tbody>
+                  </table>
+        </div>
+    </div>
+</div>
+<div id="resdiv" class="box box-primary" style="display:none">
+    {% include 'resultlist.html' %}
+</div>
+{% endblock %}

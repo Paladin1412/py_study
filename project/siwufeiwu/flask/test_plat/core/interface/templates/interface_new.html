@@ -1,0 +1,243 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content %}
+<div class="box box-primary">
+    <div class="row" id="commonDataTableRow">
+        <div class="form-horizontal col-xs-12 col-md-8" >
+            <!-- form start -->
+            <form action="/interface/create/" method="POST" id="newinterfaceform">
+                    {% csrf_token %}
+                  <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active col-sm-2"><a href="#tab_1" data-toggle="tab">设置</a></li>
+                        {% if interface %}
+                        <li class="col-sm-2"><a href="#tab_2" data-toggle="tab">用例</a></li>
+                        <input type="hidden" name="interfaceid" id="interfaceid" value="{{interface.id}}">
+                        {% endif %}
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <label></label>
+                            <div class="form-group" >
+                                <label for="name" class="col-sm-2 control-label ">名称</label>
+                                <div class="col-sm-8">
+                                <input type="text" class="form-control" name="name" id="name" {% if interface %} value="{{interface.name}}" {% else %} placeholder="请输入接口名称"  {% endif%} required maxlength="80">
+                                </div>
+                                <div class="col-sm-2 ">
+                                <p class="margin pull-left"><code>*必填项</code></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="detail" class="col-sm-2 control-label">接口描述</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" name="detail" id="detail" {% if interface %} value="{{interface.detail}}" {% else %} placeholder="请输入接口描述,最长不超过100个字符"  {% endif%} maxlength="100"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="req_url" class="col-sm-2 control-label">请求URL</label>
+                                <div class="col-sm-8">
+                                <input type="url" class="form-control" name="req_url" id="req_url" {% if interface %} value="{{interface.req_url}}" {% else %} placeholder="请输入url" {% endif%} required maxlength="100">
+                                </div>
+                                <div class="col-sm-2 ">
+                                <p class="margin pull-left"><code>*必填项</code></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            <label for="level" class="col-sm-2 control-label">优先级</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="level" name="level">
+                                        {% for key,value in iflevellist %}
+                                        <option value="{{key}}" {% ifequal key interface.level %} selected {% endifequal %}>{{value}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                 <label for="req_method" class="col-sm-2" text-align="left;">请求方法</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="req_method" id="req_method">
+                                        {% for key,value in httpmethods %}
+                                        <option value="{{key}}" {% ifequal key interface.reqmethod %} selected {% endifequal %}>{{value}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product_id" class="col-sm-2 control-label">所属产品</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="product_id" name="product_id" required>
+                                        <option value="">选择所属产品,为必填项</option>
+                                        {% for product in productlist %}
+                                        <option value="{{product.id}}" {% ifequal product.id interface.product_id %} selected {% endifequal %}>{{product.product_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                 <label for="module_id" class="col-sm-2" text-align="left;">所属模块</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="module_id" name="module_id" required>
+                                        <option value="">选择所属模块,为必填项</code></option>
+                                        {% for module in modulelist %}
+                                        <option value="{{module.id}}" {% ifequal module.id interface.module_id %} selected {% endifequal %}>{{module.module_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="req_url" class="col-sm-2 control-label">设置Header</label>
+                                <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="headername" {% if interface.reqheader %} value="{{interface.getheadername}}" {% else %} placeholder="请输入Header名" {% endif%} >
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" name="headervalue" {% if interface.reqheader %} value="{{interface.getheadervalue}}" {% else %}  placeholder="请输入header值" {% endif%} >
+                                    </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="is_json" class="col-sm-2 control-label">是否JSON</label>
+                                <div class="col-sm-10">
+                                    <label for="is_json" class="control-label col-sm-2">
+                                        <input type="radio" class="flat-red" name="is_json" id="is_json" value="True" {% if interface.is_json%} checked {% endif%}>
+                                        JSON
+                                    </label>
+                                    <label for="is_json" class="control-label col-sm-7">
+                                        <input type="radio" class="flat-red" name="is_json" id="is_json" value="False" {% if not interface.is_json%} checked {% endif%}>
+                                        非JSON
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" name="jsondiv" id="jsondiv"  {% if interface.is_json %} style="display" {% else %} style="display:none;" {% endif %}>
+                                <label for="detail" class="col-sm-2 control-label">默认参数</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="8" name="para_data" id="para_data" {% if not parastr %} placeholder="请输入JSON格式的参数" {% endif%}>{% if parastr %}{{parastr}}{% endif %}</textarea>
+                                </div>
+                            </div>
+                            <div name="divnj" id="divnj" {% if not interface.is_json %} style="display" {% else %} style="display:none;" {% endif%}>
+                                {% if interface and paradict %}
+                                    <input type="hidden" name="paradiv" id="paradiv" value="{{paradict|length}}">
+                                    {% for key,value in paradict.items %}
+                                        <div class="form-group" name="lastform" id="njsondiv{{forloop.counter}}">
+                                            <label for="default_param" class="col-sm-2 control-label">{% ifequal forloop.counter 1 %}默认参数 {%else%} &nbsp;{%endifequal%}</label>
+                                            <div class="col-sm-4" name="lasturl">
+                                            <input type="text" class="form-control" name="param_name" value="{{key}}" onfocus="addpara()">
+                                            </div>
+                                            <div class="col-sm-5" name="lastpara">
+                                                <input type="text" class="form-control" name="param_value" value="{{value}}">
+                                            </div>
+                                            <div class="control-label col-sm-offset-10">
+                                                <button type="button" class="btn btn-success btn-sm" id="{{forloop.counter}}" onclick="deletediv()">删除</button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                <input type="hidden" name="paradiv" id="paradiv" value="1">
+                                <div class="form-group" name="lastform" id="njsondiv0">
+                                    <label for="default_param" class="col-sm-2 control-label">默认参数</label>
+                                    <div class="col-sm-4" name="lasturl">
+                                        <input type="text" class="form-control" name="param_name" placeholder="请输入参数名" onfocus="addpara()">
+                                    </div>
+                                    <div class="col-sm-5" name="lastpara">
+                                        <input type="text" class="form-control" name="param_value" placeholder="请输入参数值">
+                                    </div>
+                                     <div class="control-label col-sm-offset-10">
+                                        <button type="button" class="btn btn-success btn-sm" id="0" onclick="deletediv()">删除</button>
+                                     </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                     </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="button" class="btn btn-primary" id="deleteall">全部清除</button>
+                <button type="submit" class="btn btn-info pull-right" id="form_submitbtn">确定</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+ </div>
+    <script>
+    $(function() {
+
+       $("#deleteall").click(function(){
+            $('.form-control').val("");
+       });
+       $('#newinterfaceform a[href="#tab_2"]').click(function (e) {
+            document.location.href = '/interface/tclist/interface'+$("#interfaceid").val();
+        });
+
+       $("input[name='is_json']").click(function(){
+             if(this.checked){
+                if (this.value=='True')
+                {
+                    $('#divnj').hide();
+                    $('#jsondiv').show();
+                }
+                else
+                {
+                    $('#jsondiv').hide();
+                    $('#divnj').show();
+                }
+            }
+        });
+        $("#product_id").change(function(){
+            $.ajax({
+                url: "/interface/getmodules",
+                type: "GET",
+                data: "productid="+$(this).val(),
+                success: function(data)
+                {
+                    $("#module_id").empty();
+                    if (data.module_list.length == 0)
+                        $("#module_id").append('<option value=""></option>');
+                    else
+                    {
+                        for(var i=0;i < data.module_list.length;i++)
+                                $("#module_id").append('<option value="'+data.module_list[i].id+'">'+data.module_list[i].name+'</option>');
+                    }
+                }
+            })
+        });
+    });
+    $.validator.setDefaults({
+        submitHandler: function() {
+            $("#newinterfaceform").submit();
+        }
+    });
+    $().ready(function() {
+        $("#newinterfaceform").validate()
+    });
+    function addpara(){
+        var formlength=25
+        var paradiv_num = parseInt($('#paradiv').val())
+        paradiv_num = paradiv_num +1;
+
+        if($("div[name=lastform]").size()>=formlength)
+        {
+            alert("参数不能超过"+formlength+"个!")
+            return
+        }
+        var new_label="<label for='default_param' class='col-sm-2 control-label'></label>"
+        var new_parainput="<div class='col-sm-4' name='lasturl'><input type='text' class='form-control' name='param_name' placeholder='请输入参数名' onfocus='addpara()'></div>"
+        var new_paravalue="<div class='col-sm-5' name='lastpara'><input type='text' class='form-control' name='param_value' placeholder='请输入参数值'></div>"
+        var deletdiv="<div class='control-label col-sm-offset-10'><button type='button' class='btn btn-success btn-sm' id='"+paradiv_num+"' onclick='deletediv()'>删除</button></div>"
+        var newdiv="<div class='form-group' name='lastform' id='njsondiv"+paradiv_num+"'>"+
+                    new_label+
+                    new_parainput+
+                    new_paravalue+
+                    deletdiv +"</div>";
+
+        $('#paradiv').val(paradiv_num);
+        $("div[name=lastform]").last().after(newdiv);
+       };
+       function deletediv(){
+            var formMinlength=1
+            var divid = 'njsondiv' +event.target.id;
+
+            if($("div[name=lastform]").size()<=formMinlength)
+            {
+                alert("参数不能超过"+formMinlength+"个!")
+                return
+            }
+            $("#"+divid).remove();
+       }
+    </script>
+{% endblock %}

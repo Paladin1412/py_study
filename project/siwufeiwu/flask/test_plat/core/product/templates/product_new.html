@@ -1,0 +1,38 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="box box-primary">
+        <div class="row" id="commonDataTableRow">
+            <div class="form-horizontal col-xs-12 col-md-8">
+                <!-- form start -->
+                {% if error %}
+                    <p style="color: red;">Please submit a search term.</p>
+                {% endif %}
+                <form action="/product/create/" method="POST" id="newinterfaceform">
+                    {% csrf_token %}
+                    <div class="nav-tabs-custom">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1">
+                                <label></label>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label ">名称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="name" id="name"
+                                               placeholder="请输入产品名称" required>
+                                    </div>
+                                </div>
+
+
+                                <div class="control-label col-sm-offset-10">
+                                        <input type="submit" class="btn btn-success btn-sm" id="add_btn" value="保存" >
+                                </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+{% endblock %}

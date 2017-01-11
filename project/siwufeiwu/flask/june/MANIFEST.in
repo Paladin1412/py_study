@@ -1,0 +1,6 @@
+recursive-include june/templates *.*
+recursive-include june/translations *.*
+recursive-include june/public *.*
+recursive-include etc *.*
+include wsgi.py
+include requirements.txt

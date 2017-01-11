@@ -1,0 +1,74 @@
+<link href="{{ STATIC_PREFIX }}assets/css/plat.css" rel="stylesheet" type="text/css" />
+<div class="box-header with-border">
+              <h3 class="box-title">运行结果</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+ </div>
+ <div class="box-body table-responsive no-padding" style="text-overflow:ellipsis;width:100%;white-space:nowrap;">
+                <table class="table table-hover table no-padding">
+                    <thead>
+                    <tr>
+                        <th></th>
+                    <th>用例名称</th>
+                    <th>用例概述</th>
+                    <th>所属产品</th>
+                    <th>所属模块</th>
+                    <th>运行时间</th>
+                    <th>运行结果</th>
+                    <th>返回结果</th>
+                    </thead>
+                    <tbody>
+                        {% for result in pages.object_list %}
+                        <tr>
+                            <th></th>
+                            <th>
+                                <table class="fixed-table">
+                                     <tr>
+                                        <td data-toggle="popover" title="{{result.case.case_name}}">
+                                            <span class="text">{{result.case.case_name}}</span>
+                                        </td>
+                                    </tr>
+                                 </table>
+                            </th>
+                            <th>
+                                <table class="fixed-table">
+                                     <tr>
+                                        <td data-toggle="popover" title="{{result.case.case_detail}}">
+                                            <span class="text">{{result.case.case_detail}}</span>
+                                        </td>
+                                    </tr>
+                                 </table>
+                            </th>
+                            <th>
+                                <span class="text">{{result.product.product_name}}</span>
+                            </th>
+                            <th>
+                                <span class="text">{{result.module.module_name}}</span>
+                            </th>
+                            <th>
+                                <span class="text">{{result.elapsed_time}}</span>
+                            </th>
+                            <th>
+                                <span class="text"{%if result.res_status == 0 %} style="color:red" {% else %} style="color:green"{%endif%} >{{result.get_res_status_display}}</span>
+                            </th>
+                            <th>
+                                <table class="fixed-table">
+                                     <tr>
+                                        <td data-toggle="popover" title="{{result.response}}">
+                                            <span class="text">{{result.response}}</span>
+                                        </td>
+                                    </tr>
+                                 </table>
+                            </th>
+                            <th></th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+</div>
+<div class="box-footer clearfix">
+    {% include 'adminlte/common_list_pagination.html' %}
+</div>

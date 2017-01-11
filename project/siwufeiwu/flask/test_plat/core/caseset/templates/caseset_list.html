@@ -1,0 +1,225 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block content %}
+<div class="box box-primary">
+    <div class="row" id="commonDataTableRow">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                        <table class="table table-bordered table-striped">
+                        <div class="col-xs-6 col-sm-3 col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="search"
+                                       id="query_name"
+                                       class="form-control input-sm pull-right"
+                                       style="width: 120px;"
+                                       placeholder="请输入用例集名称">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" id="delete_name_btn">
+                                        <i class="fa fa-times-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-xs-6 col-sm-3 col-md-2">
+                            <div class="input-group">
+                                <select id="query_product" name="query_product" style="width:130px;height:30px;font-size:13px;">
+                                        <option value="">选择所属项目</option>
+                                        {% for product in productlist %}
+                                        <option value="{{product.id}}">{{product.product_name}}</option>
+                                        {% endfor %}
+                                </select>
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" id="delete_product_btn">
+                                        <i class="fa fa-times-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3 col-md-2">
+                        </div>
+                        <div class="col-xs-6 col-sm-3 col-md-3">
+                        </div>
+                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                <button class="btn btn-danger btn-sm pull-right"
+                                        id="delete_btn">
+                                    <i class="fa fa-trash-o"></i>
+                                    删除
+                                </button>
+                                <button class="btn btn-primary btn-sm pull-right" id="create_btn">
+                                    <i class="fa fa-plus"></i>
+                                    新增
+                                </button>
+                                <button class="btn btn-success btn-sm pull-right" id="search_btn" >
+                                        <i class="fa fa-search"></i>查询
+                                </button>
+                        </div>
+                        </table>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding" style="text-overflow:ellipsis;width:100%;white-space:nowrap;">
+                    <table class="table table-hover table no-padding">
+                    <thead>
+                    <tr>
+                    <th>
+                        <span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                        </span>
+                        <input type="checkbox" id="selectallcs" class="minimal-red">
+                    </th>
+                    <th>用例集名称</th>
+                    <th>所属产品</th>
+                    <th>用例集描述</th>
+                    <th>上次运行时间</th>
+                    <th>上次运行结果</th>
+                    <th>用例个数</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      {% for caseset in pages.object_list %}
+                      <th>
+                          <span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                          </span>
+                          <input type="checkbox" name="selectcs" value="{{caseset.id}}">
+                      </th>
+                      <th>
+                           <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{caseset.set_name}}">
+                                    <span class="text">{{caseset.set_name}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          <span class="text">{{caseset.product.product_name}}</span>
+                      </th>
+                      <th>
+                          <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{caseset.set_desc}}">
+                                    <span class="text">{{caseset.set_desc}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          {% if caseset.updated_time%}
+                          <span class="text">{{caseset.updated_time}}</span>
+                          {% else %}
+                          <span class="text" style="color:green">未运行</span>
+                          {% endif %}
+                      </th>
+                      <th>
+                          <span {%if caseset.runresult == 0 %} style="color:red" {% else %} style="color:green"{%endif%}>{{caseset.get_runresult_display}}</span>
+                      </th>
+                      <th>
+                          <span class="text">{{caseset.count_cases}}</span>
+                      </th>
+                      <th>
+                          <div class="tools">
+                              <a id="edit{{caseset.id}}" onclick='edit("{{caseset.id}}")' data-toggle="tooltip" title="编辑" data-placement="bottom"><i class="fa fa-edit"></i></a>
+                              <a id="delete{{caseset.id}}" onclick='deletecs("{{caseset.id}}")' data-toggle="tooltip" title="删除" data-placement="bottom"><i class="fa fa-trash-o"></i></a>
+                              <a id="view{{caseset.id}}" onclick='view("{{caseset.id}}")' data-toggle="tooltip" title="查看用例列表" data-placement="bottom"><i class="fa fa-fw fa-arrow-circle-o-right"></i></a>
+                          </div>
+                       </th>
+                   </tr>
+                    {% endfor %}
+                  </tbody>
+                    </table>
+                </div>
+                {% block common_list_pagination %}
+                    <div class="box-footer clearfix">
+                        {% include 'adminlte/common_list_pagination.html' %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-dialog-delete -->
+    {% include 'deletemodal.html' %}
+    <script>
+    function deleteinfo(reid){
+         $("#deletemodal").removeClass("modal-warning");
+         $("#deletemodal").addClass("modal-danger");
+         $("h4").text("危险");
+         $("p").text("确定要删除记录吗？");
+         $("#delete_in_btn").show();
+         $("#close_modal").text('取消');
+         $('#recordid').val(reid)
+         $('#deletemodal').modal('show')
+     }
+    function gopage(num)
+    {
+        document.location.href = '/caseset/casesetlist?&page='+num
+    }
+    $(function() {
+      $("#create_btn").click(function(){
+         document.location.href = "/caseset/create/";
+      });
+      $("#delete_name_btn").click(function(){
+           $("#query_name").val("")
+      });
+      $("#delete_product_btn").click(function(){
+           $("#query_product").val("")
+      });
+      $("#delete_btn").click(function(){
+           var count = 0
+           var deleterecord = ''
+           $("input[name='selectcs']:checked").each(function(){
+                 count++ ;
+                 deleterecord +=this.value +','
+           });
+           if ($("p").text().indexOf("记录") >= 0 && deleterecord.length >0 ){
+                deleteinfo(deleterecord)
+           }
+           if ( count==0){
+                $("#deletemodal").removeClass("modal-danger");
+                $("#deletemodal").addClass("modal-warning");
+                $("#delete_in_btn").hide();
+                $("h4").text("警告");
+                $("#close_modal").text('关闭');
+                $("p").text("请选择至少一条记录!");
+                $('#deletemodal').modal('show')
+           }
+      });
+      $("#search_btn").click(function(){
+           document.location.href = '/caseset/casesetlist'+'?name='+$("#query_name").val()+'&producid='+$("#query_product").val();
+      });
+      $("#selectallcs").click(function(){
+            $("input[name='selectcs']").prop("checked",$(this).prop("checked"));
+      });
+      $("#delete_in_btn").click(function(){
+            $.ajax({
+                url: "/caseset/delete",
+                type: "POST",
+                dataType: "json",
+                data: "casesetid="+$('#recordid').val(),
+                success:function(data) {
+                        alert(data.error)
+                        document.location.href = '/caseset/casesetlist/'
+                    }
+                });
+      });
+   });
+   function edit(id){
+        document.location.href = '/caseset/edit'+'?casesetid='+id
+   }
+   function view(id){
+        document.location.href = '/caseset/tclist?casesetid='+id;
+   }
+   function deletecs(id){
+        deleteinfo(id);
+   }
+</script>
+{% endblock %}

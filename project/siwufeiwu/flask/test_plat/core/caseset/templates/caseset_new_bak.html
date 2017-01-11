@@ -1,0 +1,487 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+     .modal {width:75%;left:17%;right:10%;height=80%;top:12%;}
+</style>
+
+<div class="box box-primary">
+    <div class="row" id="commonDataTableRow">
+        <div class="form-horizontal col-xs-12 col-md-8" >
+             <!-- form start -->
+            <div id="casesetdiv">
+                    <form id="casesetform">
+                    {% csrf_token %}
+                    <div class="tab-content">
+                            <label></label>
+                            <input type="hidden" name="casesetid" id="casesetid" {% if caseset %} value="{{caseset.id}}"{% else %} value="0" {% endif %}>
+                            <div class="form-group" >
+                                <label for="casesetname" class="col-sm-2 control-label ">用例集名称</label>
+                                <div class="col-sm-8">
+                                <input type="text" class="form-control" name="casesetname" id="casesetname" {% if caseset %} value="{{caseset.set_name}}" {% else %} placeholder="请输入用例集名称"{% endif %}>
+                                </div>
+                                <div class="col-sm-2">
+                                <p class="margin"><code>*必填项</code></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="casesetdes" class="col-sm-2 control-label">描述</label>
+                                <div class="col-sm-8">
+                                 <textarea class="form-control" rows="3" name="casesetdes" id="casesetdes" {% if not caseset %}  placeholder="请输入用例集描述" {% endif %}>{% if caseset %} {{caseset.set_desc}}{% endif %}</textarea>
+                                </div>
+                                <div class="col-sm-2 ">
+                                <p class="margin pull-left"><code>*必填项</code></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="product_id" class="col-sm-2 control-label">所属产品</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="productid" name="productid">
+                                        <option value="">选择所属产品</option>
+                                        {% for product in productlist %}
+                                        <option value="{{product.id}}" {% ifequal product.id caseset.product_id %} selected {% endifequal %}>{{product.product_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                <p class="margin"><code>*必填项</code></p>
+                                </div>
+                                <label for="module_id" class="col-sm-1 control-label">模块</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" id="moduleid" name="moduleid">
+                                        <option value="">选择所属模块</option>
+                                        {% for module in modulelist %}
+                                        <option value="{{module.id}}" {% ifequal module.id caseset.module_id %} selected {% endifequal %}>{{module.module_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="is_scheduled" class="col-sm-2 control-label">触发条件</label>
+                                <div class="col-sm-10">
+                                    <label for="is_scheduled" class="control-label col-sm-2">
+                                        <input type="radio" class="flat-red" name="is_scheduled" id="is_scheduled" value="True" {% if caseset.scheduled %} checked {% endif%}>
+                                        定时
+                                    </label>
+                                    <label for="is_scheduled" class="control-label col-sm-7">
+                                        <input type="radio" class="flat-red" name="is_scheduled" id="is_scheduled" value="False" {% if not caseset.scheduled %} checked {% endif%}>
+                                        手工
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" name="setschedul" id="setschedul" {% if caseset.scheduled %} style="display" {% else %} style="display:none;" {% endif %}>
+                                 <label class="col-sm-2 control-label">&nbsp;</label>
+                                　<div class="col-sm-10">
+                                 <form class="box-info form-horizontal" style="border-style:solid;border-color:#d2d6de;border-width:1px;">
+                                     　　　<div class="box-body" style="padding:15px">
+                                                <label ><small>开始时间</small></label>
+                                                <div class="form-group">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                            <input type="radio" name="setstarttime"  value="at_once" {% if not caseset %} checked {%endif%}>
+                                                                配置结束立即执行
+                                                            </label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                            <input type="radio" name="setstarttime" value="manually" {% if caseset.scheduled %} checked {%endif%} >
+                                                                设置开始时间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                            <label>
+                                                                <input type="text" class="form-control" name="schedule_starttime" id="schedule_starttime" data-date-end-date="0d" style="width:270px;" {% if caseset.scheduled %} value="{{caseset.get_schedule_starttime}}" {%endif%}>
+                                                            </label>
+                                                            <label id="startcalendar"><i class="fa fa-calendar"></i><code>*必填项</code></label>
+                                                        </div>
+                                                </div>
+                                                <label ><small>执行频率</small></label>
+                                                <div class="form-group">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设置频率明细&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                            <label>
+                                                                <input type="text" class="form-control" name="scheduled_radio" id="scheduled_radio" placeholder="请参照crontab格式配置" style="width:270px" {% if caseset.scheduled %} value="{{caseset.get_schedule_radio}}" {%endif%}>
+                                                            </label>
+                                                            <label><i class="fa fa-book"></i><code>*必填项</code></label>
+                                                        </div>
+                                                </div>
+                                                <label ><small>结束时间</small></label>
+                                                <div class="form-group">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                            <input type="radio" name="setendtime"  value="unlimited" {% ifequal caseset.get_schedule_endtime '2000-01-01 00:00:00' %} checked {% endifequal%}>
+                                                                无限期
+                                                            </label>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                            <input type="radio" name="setendtime"  value="limited" {% ifnotequal caseset.get_schedule_endtime '2000-01-01 00:00:00' %} checked {% endifnotequal%}>
+                                                                设置结束时间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                            <label>
+                                                                <input type="text" class="form-control" name="schedule_endtime" id="schedule_endtime"  style="width:270px" {% ifnotequal caseset.get_schedule_endtime '2000-01-01 00:00:00' %} style="display" value="{{caseset.get_schedule_endtime}}" {%endifnotequal%}>
+                                                            </label>
+                                                            <label id="endcalendar"><i class="fa fa-calendar" ></i><code>*必填项</code></label>
+                                                        </div>
+                                                </div>
+                                         </div>
+                                 </form>
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="selecttc_btn" class="col-sm-2 control-label">包含用例</label>
+
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-success" id="selecttc_btn" name="selecttc_btn" onclick="openmodal()">
+                                    <i class="fa fa-plus"></i>
+                                    选择
+                                    </button>
+                                </div>
+                                <div id="testcasemodal" class="modal fade modal-success" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog　modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">选择用例</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                            <input type="hidden" name="testcaselist" id="testcaselist" value="">
+                                                            <div class="form-group">
+                                                                 <label for="product" class="col-sm-2 control-label">用例名称</label>
+                                                                    <div class="col-sm-2">
+                                                                        <input type="text" class="form-control" name="tcname" id="tcname" placeholder="请输入用例名称">
+                                                                    </div>
+
+                                                                <label for="product" class="col-sm-2 control-label">产品线</label>
+                                                                    <div class="col-sm-2">
+                                                                        <select class="form-control" id="productid4tc" name="productid4tc">
+                                                                        <option value=""></option>
+                                                                        {% for product in productlist %}
+                                                                        <option value="{{product.id}}">{{product.product_name}}</option>
+                                                                        {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                <label for="moduleid4tc" class="col-sm-1 control-label">模块</label>
+                                                                    <div class="col-sm-2">
+                                                                        <select class="form-control" id="moduleid4tc" name="moduleid4tc">
+                                                                        <option value=""></option>
+                                                                        {% for module in modulelist %}
+                                                                        <option value="{{module.id}}" {% ifequal module.id caseset.module_id %} selected {% endifequal %}>{{module.module_name}}</option>
+                                                                        {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="product" class="col-sm-2 control-label">冒烟测试</label>
+                                                                    <div class="col-sm-2">
+                                                                        <select class="form-control" id="smoke4tc" name="smoke4tc">
+                                                                        <option value=""></option>
+                                                                        <option value="True" checked>是</option>
+                                                                        <option value="False">否</option>
+                                                                        </select>
+                                                                    </div>
+                                                                <label for="zentoid4tc" class="col-sm-2 control-label">禅道编号</label>
+                                                                    <div class="col-sm-2">
+                                                                         <input type="text" class="form-control" name="zentoid4tc" id="zentoid4tc" placeholder="请输入禅道编号">
+                                                                    </div>
+                                                                    <label  class="col-sm-1 control-label">&nbsp;</label>
+                                                                    <div class="col-sm-2">
+                                                                    <button type="button" class="btn btn-info btn-sm" id="deletequerytc"><i class="fa fa-eraser"></i>清除</button>
+                                                                    <button type="button" class="btn btn-warning" id="querytc_btn"><i class="fa fa-search"></i>查询</button>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="form-group" id="div4tclidt">
+                                                                 {% include 'tclist.html' %}
+                                                            </div>
+                                                            <!-- /.div-form-group -->
+                                                         <!-- /.form-ended-->
+                                                    <!-- /.div-row-->
+                                                </div>
+                                                <!-- /.div-modal-body-->
+                                                <div class="modal-footer">
+                                                    <button type="button" id="close_modal" class="btn btn-outline pull-left" data-dismiss="modal">关闭</button>
+                                                    <button type="button" id="saveseletctc" class="btn btn-outline">保存</button>
+                                                </div>
+                                                <!-- /.div-modal-footer-->
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+                                <div id="sltclist" {% if not caseset %} style="display:none;" {% endif %}>
+                                    {% include 'tclist4edit.html' %}
+                                </div>
+                            </div>
+                            <!-- /.div-form-group -->
+                            <div class="box-footer col-md-12">
+                             <button type="reset" class="btn btn-primary" id="deleteall">全部清除</button>
+                            </div>
+                            <!-- /.div-box-footer-->
+                        </div>
+                    </form>            <!-- /.div-tab-content -->
+            </div>
+            <!-- /.form-casesetform-->
+
+      </div>
+      <!-- /.div-form-horizontal-->
+    </div>
+    <!-- /.div-row-->
+</div>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <script>
+    function gettestcase(num){
+        $.ajax({
+            url: "/caseset/querytc",
+            type: "POST",
+            data: "name="+$("#tcname").val()+"&producid="+$("#productid4tc").val()+"&moduleid="+$("#moduleid4tc").val()+"&smoke="+$("#smoke4tc").val()+"&zentoid="+$("#zentoid4tc").val()+"&casesetid="+$("#casesetid").val()+"&page="+num,
+            success:function(data) {
+                    $('#div4tclidt').html(data);
+                    $("#tcallcheck").click(function(){
+                        $("input[name='selected_tcid_4edit']").prop("checked",$(this).prop("checked"));
+                    });
+                }
+            });
+    }
+    function openmodal()
+    {
+        alert($("#casesetname").val())
+        $('#testcasemodal').modal('show');
+    };
+    function settestcaselist()
+    {
+        var testcaselist = $("#testcaselist").val();
+        $("input[name='selected_tcid_4edit']:checked").each(function(){
+                 testcaselist +=this.value +','
+         });
+        $("#testcaselist").val(testcaselist)
+    }
+    function gopage(num)
+    {
+        settestcaselist()
+        gettestcase(num)
+    };
+    function gopage4edit(num)
+    {
+        document.location.href = '/caseset/edit?casesetid='+$("#casesetid").val()+'&page='+num
+    };
+    function showOrhide4end(checkvalue)
+    {
+        if (checkvalue=="unlimited"){
+            $("#schedule_endtime").hide()
+            $("#endcalendar").hide()
+        }
+        else{
+            $("#schedule_endtime").show()
+            $("#endcalendar").show()
+        }
+    };
+    function showOrhide4start(checkvalue)
+    {
+        if (checkvalue=="at_once"){
+            $("#schedule_starttime").hide()
+            $("#startcalendar").hide()
+        }
+        else{
+            $("#schedule_starttime").show()
+            $("#startcalendar").show()
+        }
+    };
+    function validatecron(str){
+        var re = /^[\d\w,\*\/-]+ +[\d\w,\*\/-]+ +[\d\w,\*\/-]+ +[\d\w,\*\/-]+ +[\d\w,\*\/-]+$/;
+        return re.test(str)
+    };
+    function getcurrenttime(){
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var CurrentDateTime = date+' '+time;
+        return CurrentDateTime
+    };
+    function validationtc(){
+            var namelength=3
+            var deslength=5
+            var alertstr=""
+
+            var casesetname = $("#casesetname").val()
+            var casedes=$("#casesetdes").val()
+            var product_id=$("#productid").val()
+            var module_id=$("#moduleid").val()
+
+            var is_scheduled = ""
+            var setstarttime = ""
+            var schedule_starttime = $("#schedule_starttime").val()
+            var scheduled_radio = $("#scheduled_radio").val()
+            var setendtime = ""
+
+            $("input[name='is_scheduled']:checked").each(function(){
+                 is_scheduled = $.trim(this.value)
+            });
+            $("input[name='setstarttime']:checked").each(function(){
+                 setstarttime = $.trim(this.value)
+            });
+            $("input[name='setendtime']:checked").each(function(){
+                 setendtime = $.trim(this.value)
+            });
+
+            if ( $.trim(casesetname) == null||$.trim(casesetname)==""){
+                alertstr+="用例集名称不能为空!\r"
+            }
+            if ( $.trim(product_id) == null||$.trim(product_id)==""){
+                alertstr+="所属项目不能为空!\r"
+            }
+            if ( $.trim(casedes) == null||$.trim(casedes)==""){
+                alertstr+="用例集描述不能为空!\r"
+            }
+            if ( casesetname.length >namelength ){
+                alertstr+="用例集名称不能超过"+namelength+"个字符!\r"
+            }
+            if ( casedes.length >deslength ){
+                alertstr+="用例集描述不能超过"+deslength+"个字符!\r"
+            }
+            if ( $.trim(is_scheduled)=="True"){
+                if ($.trim(setstarttime)!="at_once")
+                {
+                    if( $.trim(schedule_starttime)==null || $.trim(schedule_starttime)=="")
+                        alertstr+="请输入开始时间!\r"
+                }
+                else
+                    $("#schedule_starttime").val(getcurrenttime())
+                if ($.trim(scheduled_radio)==null || $.trim(scheduled_radio)==""){
+                    alertstr+="请设置执行频率!\r"
+                }
+                if (!validatecron($.trim(scheduled_radio))){
+                    alertstr+="请输入正确的crontab格式!\r"
+                }
+                if($.trim(setendtime)!="unlimited")
+                {
+                    if( $.trim(schedule_endtime)==null || $.trim(schedule_endtime)=="")
+                        alertstr+="请输入结束时间!\r"
+                }
+                else
+                    $("#schedule_endtime").val("unlimited")
+            }
+            return alertstr
+       };
+
+    $(function() {
+        $("input[name='setstarttime']:checked").each(function(){
+                 showOrhide4start(this.value)
+        });
+        $("input[name='setstarttime']").change(function(){
+            if($(this).is(":checked")) {
+                showOrhide4start(this.value)
+            }
+        });
+        $("input[name='setendtime']:checked").each(function(){
+                 showOrhide4end(this.value)
+        });
+        $("input[name='setendtime']").change(function(){
+            if($(this).is(":checked")) {
+                showOrhide4end(this.value)
+            }
+        });
+       $("#deleteall").click(function(){
+            $('.form-control').val("");
+            $("input[name='tcid_selected4m']").attr('checked', false)
+       });
+
+       $("#tcallcheck").click(function(){
+            $("input[name='selected_tcid_4edit']").prop("checked",$(this).prop("checked"));
+       });
+       $("#selecttc_btn").click(function(){
+            $("#sltclist").hide()
+       });
+       $("#deletequerytc").click(function(){
+            $("#tcname").val("")
+            $("#productid4tc").val("")
+            $("#moduleid4tc").val("")
+            $("#smoke4tc").val("")
+            $("#zentoid4tc").val("")
+       });
+       $("#saveseletctc").click(function(){
+            settestcaselist()
+            var tclist = $("#testcaselist").val()
+            var alertstr = validationtc()
+            var is_scheduled=''
+            $("input[name='is_scheduled']:checked").each(function(){
+                 is_scheduled = $.trim(this.value)
+            });
+            if ($.trim(tclist)==null || $.trim(tclist)==""){
+                alertstr+="请选择至少一个测试用例!\r"
+            }
+            $("#testcasemodal").modal('hide')
+            if (alertstr.length > 0)
+                alert(alertstr)
+            else{
+                $.ajax({
+                url: "/caseset/save",
+                type: "POST",
+                dataType: "json",
+                data: "tclist="+tclist+"&name="+$("#casesetname").val()+"&detail="+$("#casesetdes").val()+"&moduleid="+$("#moduleid").val()+"&productid="+$("#productid").val()+"&casesetid="+$("#casesetid").val()+"&is_scheduled="+is_scheduled+"&scheduled_radio="+$("#scheduled_radio").val()+"&schedule_starttime="+$("#schedule_starttime").val()+"&schedule_endtime="+$("#schedule_endtime").val(),
+                success:function(data) {
+                        document.location.href = '/caseset/casesetlist/'
+                    }
+                });
+            }
+       });
+       $("#querytc_btn").click(function(){
+           gettestcase(1)
+       });
+       $("input[name='is_scheduled']").click(function(){
+             if(this.checked){
+                if (this.value=='True')
+                {
+                    $('#setschedul').show();
+                }
+                else
+                {
+                    $('#setschedul').hide();
+                }
+            }
+        });
+        $("#productid").change(function(){
+            $.ajax({
+                url: "/interface/getmodules",
+                type: "GET",
+                data: "productid="+$(this).val(),
+                success: function(data)
+                {
+                    $("#moduleid").empty();
+                    $("#moduleid").append('<option value="">选择所属模块</option>');
+                    if (data.module_list.length > 0)
+                    {
+                        for(var i=0;i < data.module_list.length;i++)
+                                $("#moduleid").append('<option value="'+data.module_list[i].id+'">'+data.module_list[i].name+'</option>');
+                    }
+                }
+            })
+        });
+         $("#productid4tc").change(function(){
+            $.ajax({
+                url: "/interface/getmodules",
+                type: "GET",
+                data: "productid="+$(this).val(),
+                success: function(data)
+                {
+                    $("#moduleid4tc").empty();
+                    $("#moduleid4tc").append('<option value="">选择所属模块</option>');
+                    if (data.module_list.length > 0)
+                    {
+                        for(var i=0;i < data.module_list.length;i++)
+                                $("#moduleid4tc").append('<option value="'+data.module_list[i].id+'">'+data.module_list[i].name+'</option>');
+                    }
+                }
+            })
+        });
+
+    });
+    </script>
+{% endblock %}

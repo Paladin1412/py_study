@@ -1,0 +1,24 @@
+Flask>=0.10
+Flask-Babel
+Flask-Cache
+Flask-Mail
+Flask-SQLAlchemy
+Flask-Script
+Flask-WTF>=0.9.3
+
+Pygments
+alembic
+gunicorn
+misaka
+
+livereload
+
+# Tests and code coverage
+nose
+coverage
+
+# Documentation
+sphinx
+
+# Linter
+flake8

@@ -1,0 +1,25 @@
+<div class="pagination pagination-sm no-margin pull-right">
+    {% if pages.paginator.count > 1  %}
+    <li>
+        <a onclick="gopage4edit(1)">首页</a>
+    </li>
+    {% endif %}
+    {% ifequal pages.paginator.count 1 %}
+    <li>
+            <a href="javascript:void(0);">首页</a>
+    </li>
+    {% endifequal %}
+    <li {% if not pages.has_previous %}  class="disabled"  {% endif %}>
+            <a {% if pages.has_previous %} onclick="gopage4edit({{pages.previous_page_number}})" {% else%} href="javascript:void(0);" {% endif%}>上页</a>
+    </li>
+    <li {% if not pages.has_next %}  class="disabled"  {% endif %}>
+            <a  {% if pages.has_next %} onclick="gopage4edit({{pages.next_page_number}})" {% else%} href="javascript:void(0);" {% endif%} >下页</a>
+    </li>
+    <li {% if pages.paginator.num_pages == 1 %} class="disabled"  {% endif %}>
+        <a {% if pages.paginator.num_pages > 1 %} onclick="gopage4edit({{pages.paginator.num_pages}})" {% else%} href="javascript:void(0);" {% endif%} >末页</a>
+    </li>
+</div>
+<div class="pull-right" style="line-height: 29px;">
+    共{{pages.paginator.count}}条数据, 每页[{{perpage}}] 条,
+    [{{pages.number }}]/[{{pages.paginator.num_pages }}]&nbsp;&nbsp;
+</div>

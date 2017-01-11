@@ -1,0 +1,213 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content %}
+<div class="box box-primary">
+    <div class="row" id="commonDataTableRow">
+        <div class="form-horizontal col-xs-12 col-md-8" >
+            <form action="/interface/testcase/create/" method="POST" id="newtestcaseform">
+                    {% csrf_token %}
+                    <div class="tab-content">
+                            <label></label>
+                            {% if testcase %} <input type="hidden" name="testcaseid" id="testcaseid" value="{{testcase.id}}"> {% endif %}
+                            <input type="hidden" name="interfaceid" id="interfaceid" value="{{interface.id}}">
+                            <div class="form-group" >
+                                <label for="interfaceurl" class="col-sm-2 control-label ">接口url</label>
+                                <div class="col-sm-8">
+                                <label name="interfaceurl" class="col-sm-2 control-label ">{% if interface %} {{interface.req_url}} {% endif %}</label>
+                                </div>
+                                <div class="control-label col-sm-offset-10">
+                                    {% for key,value in httpmethods %}
+                                    {% ifequal reqmethod key %}
+                                    <button type="button" class="btn btn-info btn-sm" name="reqmethod" id="reqmethod" disabled>{{value}}</button>
+                                    {% endifequal %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="case_name" class="col-sm-2 control-label">用例标题</label>
+                                <div class="col-sm-8">
+                                <input type="text" class="form-control" name="case_name" id="case_name" {% if testcase %}  value="{{testcase.case_name}}" {% else %}  placeholder="请输入用例标题"  {% endif%}  required maxlength="100">
+                                </div>
+                                <div class="col-sm-2 ">
+                                <p class="margin pull-left"><code>*必填项</code></p>
+                                </div>
+                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label for="selectzento" class="col-sm-2 control-label">禅道编号</label>-->
+                                <!--<div class="col-sm-10">-->
+                                    <!--<input type="text" class="form-control" name="selectzento" id="selectzento" {% if testcase %}  value="{{testcase.zento_bug_id}}" {% else %}  placeholder="请输入禅道编号" {% endif%} >-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group">
+                                <label for="case_detail" class="col-sm-2 control-label">用例描述</label>
+                                <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" name="case_detail" id="case_detail"  {% if not testcase %} placeholder="请输入描述信息" {% endif%} required maxlength="100"> {% if testcase %}{{testcase.case_detail}}{% endif%}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            <label for="level" class="col-sm-2 control-label">分类</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="level" name="level" required>
+                                        {% for key,value in tclevellist %}
+                                        <option value="{{key}}" {% ifequal key testcase.level %} selected {% endifequal %}>{{value}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                             <label for="is_smoke" class="col-sm-2" text-align="left;">冒烟测试</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="is_smoke" name="is_smoke">
+                                        {% if testcase %}
+                                        {% if testcase.is_smoke %}
+                                        <option value="True" checked>是</option>
+                                        <option value="False">否</option>
+                                        {% else  %}
+                                        <option value="False" checked>否</option>
+                                        <option value="True">是</option>
+                                        {% endif %}
+                                        {% else%}
+                                        <option value="True" checked>是</option>
+                                        <option value="False" >否</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="code_check" class="col-sm-2 control-label">状态码检查</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="code_check" name="code_check" required>
+                                        <option value="200">200</option>
+                                        <option value="404">404</option>
+                                        <option value="500">500</option>
+                                        <option value="503">503</option>
+                                        <option value="402">402</option>
+                                        <option value="403">403</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="res_check" class="col-sm-2 control-label">返回值校验</label>
+                                <div class="col-sm-8">
+                                <textarea class="form-control" rows="3" name="res_check" id="res_check"  {% if not testcase %} placeholder="请输入返回值，多个值请用;隔开。最长不超过100个字符" {% endif%} required maxlength="100"> {% if testcase %}{{testcase.res_check}}{% endif%}</textarea>
+                                </div>
+                                <div class="col-sm-2">
+                                <p class="margin pull-left"><code>*必填项,多字段验证请用;隔开</code></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="init_sql" class="col-sm-2 control-label">初始化SQL</label>
+                                <div class="col-sm-10">
+                                <input type="text" class="form-control" name="init_sql" id="init_sql" {% if testcase %}  value="{{testcase.init_sql}}" {% else %}  placeholder="请输入初始SQL语句，多条请用;隔开" {% endif%} maxlength="100">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="delete_sql" class="col-sm-2 control-label">清除SQL</label>
+                                <div class="col-sm-10">
+                                <input type="text" class="form-control" name="delete_sql" id="delete_sql" {% if testcase %}  value="{{testcase.delete_sql}}" {% else %}  placeholder="请输入清除SQL语句，多条请用;隔开" {% endif%} maxlength="100">
+                                </div>
+                            </div>
+                             <div class="form-group" name="jsondiv" id="jsondiv"  {% if interface.is_json %} style="display" {% else %} style="display:none;" {% endif %}>
+                                <label for="detail" class="col-sm-2 control-label">默认参数</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="8" name="para_data" id="para_data" {% if not parastr %} placeholder="请输入JSON格式的参数" {% endif%}>{% if parastr %}{{parastr}}{% endif %}</textarea>
+                                </div>
+                            </div>
+                            <div name="divnj" id="divnj" {% if not interface.is_json %} style="display" {% else %} style="display:none;" {% endif%}>
+                                {% if interface and paradict %}
+                                    <input type="hidden" name="paradiv" id="paradiv" value="{{paradict|length}}">
+                                    {% for key,value in paradict.items %}
+                                        <div class="form-group" name="lastform" id="njsondiv{{forloop.counter}}">
+                                            <label for="default_param" class="col-sm-2 control-label">{% ifequal forloop.counter 1 %}默认参数 {%else%} &nbsp;{%endifequal%}</label>
+                                            <div class="col-sm-4" name="lasturl">
+                                            <input type="text" class="form-control" name="param_name" value="{{key}}" onfocus="addpara()">
+                                            </div>
+                                            <div class="col-sm-5" name="lastpara">
+                                                <input type="text" class="form-control" name="param_value" value="{{value}}">
+                                            </div>
+                                            <div class="control-label col-sm-offset-10">
+                                                <button type="button" class="btn btn-success btn-sm" id="{{forloop.counter}}" onclick="deletediv()">删除</button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                <input type="hidden" name="paradiv" id="paradiv" value="1">
+                                <div class="form-group" name="lastform" id="njsondiv0">
+                                    <label for="default_param" class="col-sm-2 control-label">默认参数</label>
+                                    <div class="col-sm-4" name="lasturl">
+                                        <input type="text" class="form-control" name="param_name" placeholder="请输入参数名" onfocus="addpara()">
+                                    </div>
+                                    <div class="col-sm-5" name="lastpara">
+                                        <input type="text" class="form-control" name="param_value" placeholder="请输入参数值">
+                                    </div>
+                                     <div class="control-label col-sm-offset-10">
+                                        <button type="button" class="btn btn-success btn-sm" id="0" onclick="deletediv()">删除</button>
+                                     </div>
+                                </div>
+                                {% endif %}
+                        </div>
+                        <div class="box-footer">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary col-sm-3" id="deleteall">全部清除</button>
+                            </div>
+                            <div class="col-sm-offset-10">
+                                <button type="submit" class="btn btn-info pull-right" id="case_submitbtn">保存</button>
+                            </div>
+                        </div>
+                     </div>
+            </form>
+ </div>
+    <script>
+    $(function() {
+       $("#deleteall").click(function(){
+            $('.form-control').val("");
+       });
+       $("#case_runbtn").click(function(){
+            document.location.href = '/interface/runtc'+'?testcaseid='+$('#testcaseid').val()
+       });
+
+    });
+    $.validator.setDefaults({
+        submitHandler: function() {
+            $("#newtestcaseform").submit();
+        }
+    });
+    $().ready(function() {
+        $("#newtestcaseform").validate()
+    });
+    function addpara(){
+        var formlength=25
+        var paradiv_num = parseInt($('#paradiv').val())
+        paradiv_num = paradiv_num +1;
+
+        if($("div[name=lastform]").size()>=formlength)
+        {
+            alert("参数不能超过"+formlength+"个!")
+            return
+        }
+        var new_label="<label for='default_param' class='col-sm-2 control-label'></label>"
+        var new_parainput="<div class='col-sm-4' name='lasturl'><input type='text' class='form-control' name='param_name' placeholder='请输入参数名' onfocus='addpara()'></div>"
+        var new_paravalue="<div class='col-sm-5' name='lastpara'><input type='text' class='form-control' name='param_value' placeholder='请输入参数值'></div>"
+        var deletdiv="<div class='control-label col-sm-offset-10'><button type='button' class='btn btn-success btn-sm' id='"+paradiv_num+"' onclick='deletediv()'>删除</button></div>"
+        var newdiv="<div class='form-group' name='lastform' id='njsondiv"+paradiv_num+"'>"+
+                    new_label+
+                    new_parainput+
+                    new_paravalue+
+                    deletdiv +"</div>";
+
+        $('#paradiv').val(paradiv_num);
+        $("div[name=lastform]").last().after(newdiv);
+       };
+       function deletediv(){
+            var formMinlength=1
+            var divid = 'njsondiv' +event.target.id;
+
+            if($("div[name=lastform]").size()<=formMinlength)
+            {
+                alert("参数不能超过"+formMinlength+"个!")
+                return
+            }
+            $("#"+divid).remove();
+       }
+    </script>
+{% endblock %}

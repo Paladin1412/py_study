@@ -1,0 +1,183 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .fixed-table{
+        width: 130px;
+        table-layout: fixed;
+        border-collapse: collapse;
+        border-spacing: 0;
+        border: 0;
+    }
+</style>
+<div class="box box-primary">
+    <div class="row" id="commonDataTableRow">
+         <div class="box-header with-border">
+                        <table class="table table-bordered table-striped">
+                        <input type="hidden" name="testcaseid" value="{{testcaseid}}" id="testcaseid"/>
+                        {% if casesetid %}
+                        <input type="hidden" name="casesetid" value="{{casesetid}}" id="casesetid"/>
+                        {% endif %}
+                        <div class="col-xs-12">
+                                <button class="btn btn-danger" id="delete_btn">
+                                    <i class="fa fa-trash-o"></i>
+                                    删除
+                                </button>
+                        </div>
+                        </table>
+         </div>
+        <div class="box-body table-responsive no-padding" style="text-overflow:ellipsis;width:100%;white-space:nowrap;">
+                    <table class="table table-hover table no-padding">
+                    <thead>
+                    <tr>
+                    <th></th>
+                    <th>
+                        <span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                        </span>
+                        <input type="checkbox" name="selectallres" id="selectallres" value="">
+                    </th>
+                     {% if casesetid %}
+                     <th>冒烟集名称</th>
+                     {% endif %}
+                    <th>接品名称</th>
+                    <th>用例名称</th>
+                    <th>所属产品</th>
+                    <th>所属模块</th>
+                    <th>运行时间</th>
+                    <th>运行结果</th>
+                    <th>详细结果</th>
+                    <th>删除</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for result in pages.object_list %}
+                  <tr>
+                      <th></th>
+                      <th><span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                          </span>
+                          <input type="checkbox" name="selectrs" value="{{result.id}}">
+                      </th>
+                      {% if casesetid %}
+                      <th>
+                          <span class="text">{{result.caseset.set_name}}</span>
+                      </th>
+                      {% endif %}
+                      <th>
+                          <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{result.case.interface.name}}">
+                                    <span class="text">{{result.case.interface.name}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          <span class="text">{{result.case.case_name}}</span>
+                      </th>
+                      <th>
+                          <span class="text">{{result.product.product_name}}</span>
+                      </th>
+                      <th>
+                          <span class="text">{{result.module.module_name}}</span>
+                      </th>
+                      <th>
+                          <span class="text">{{result.elapsed_time}}</span>
+                      </th>
+                      <th>
+                          <span class="text"{%if result.res_status == 0 %} style="color:red" {% else %} style="color:green"{%endif%} >{{result.get_res_status_display}}</span>
+                      </th>
+                      <th>
+                          <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{result.response}}">
+                                    <span class="text">{{result.response}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          <div class="tools">
+                              <a id="deleteres{{result.id}}" onclick='deleteres("{{result.id}}")' data-toggle="tooltip" title="删除" data-placement="bottom"><i class="fa fa-trash-o"></i></a>
+                          </div>
+                      </th>
+                   </tr>
+                  {% endfor %}
+                  </tbody>
+                  </table>
+        </div>
+        {% block common_list_pagination %}
+                    <div class="box-footer clearfix">
+                        {% include 'adminlte/common_list_pagination.html' %}
+                    </div>
+        {% endblock %}
+    </div>
+</div>
+{% include 'deletemodal.html' %}
+<script>
+    function deleteinfo(reid){
+         $("#deletemodal").removeClass("modal-warning");
+         $("#deletemodal").addClass("modal-danger");
+         $("h4").text("危险");
+         $("p").text("确定要删除记录吗？");
+         $("#delete_in_btn").show();
+         $("#close_modal").text('取消');
+         $('#recordid').val(reid)
+         $('#deletemodal').modal('show')
+     }
+   function deleteres(id){
+        deleteinfo(id);
+   }
+   function gopage(num)
+   {
+        document.location.href = '/interface/testcase/getallresult?testcaseid='+$("#testcaseid").val()+'&page='+num
+   }
+    $(function() {
+        $("#delete_btn").click(function(){
+            var count = 0
+           var deleterecord = ''
+           $("input[name='selectrs']:checked").each(function(){
+                 count++ ;
+                 deleterecord +=this.value +','
+           });
+           if ($("p").text().indexOf("记录") >= 0 && deleterecord.length >0 ){
+                deleteinfo(deleterecord)
+           }
+           if ( count==0){
+                $("#deletemodal").removeClass("modal-danger");
+                $("#deletemodal").addClass("modal-warning");
+                $("#delete_in_btn").hide();
+                $("h4").text("警告");
+                $("#close_modal").text('关闭');
+                $("p").text("请选择至少一条记录!");
+                $('#deletemodal').modal('show')
+           }
+        });
+        $("#delete_in_btn").click(function(){
+            $.ajax({
+                url: "/interface/result/delete",
+                type: "POST",
+                dataType: "json",
+                data: "resultid="+$('#recordid').val(),
+                success:function(data) {
+                        alert(data.error)
+                        var casesetid = ''
+                        casesetid = $('#casesetid').val()
+                        if ( $.trim(casesetid) == null||$.trim(casesetid)==""){
+                            document.location.href = '/interface/testcase/getallresult?testcaseid='+$("#testcaseid").val()
+                        }
+                        else
+                            document.location.href = '/caseset/gettcresult'+'?testcaseid='+$("#testcaseid").val()+'&casesetid='+$('#casesetid').val();
+                    }
+                });
+      });
+      $("#selectallres").click(function(){
+            $("input[name='selectrs']").prop("checked",$(this).prop("checked"));
+       });
+    });
+</script>
+{% endblock %}

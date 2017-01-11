@@ -1,0 +1,310 @@
+{% extends "adminlte/base.html" %}
+{% load static %}
+{% block content_title %}
+    {{ page_title }}
+{% endblock %}
+
+{% block content %}
+{% if '操作' in error  %}
+        <div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> 消息</h4>
+                {{error}}
+        </div>
+{% endif %}
+{% if interfaceid %}
+<input type="hidden" name="interfaceid" id="interfaceid" value="{{interfaceid}}">
+{% endif%}
+{% if reqmethod %}
+<input type="hidden" name="reqmethod" id="reqmethod" value="{{reqmethod}}">
+{% endif%}
+<div class="box box-primary">
+    <div class="row" id="commonDataTableRow">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                        <table class="table table-hover table no-padding" >
+                        <div class="col-xs-6 col-sm-8 col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="search"
+                                       id="query_name"
+                                       class="form-control input-sm pull-right"
+                                       style="width: 110px;"
+                                       placeholder="请输入用例名称">
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" id="delete_name_btn">
+                                        <i class="fa fa-times-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-2">
+                            <div class="input-group">
+                                <input type="text" name="search"
+                                       id="query_tcid"
+                                       class="form-control input-sm pull-right"
+                                       style="width: 110px;"
+                                       placeholder="请输入用例编号">
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-default" id="delete_tcid_btn">
+                                        <i class="fa fa-times-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <button class="btn btn-success btn-sm" id="search_an" >
+                                        <i class="fa fa-search"></i>查询
+                            </button>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-5">
+                                <label  class="col-sm-1 control-label "></label>
+
+                                <button class="btn btn-danger btn-sm pull-right"
+                                        id="delete_btn">　
+                                    <i class="fa fa-trash-o"></i>
+                                    删除
+                                </button>
+                                 <button class="btn btn-success btn-sm pull-right"
+                                        id="run_btn">　
+                                    <i class="fa fa-fw fa-play"></i>运行
+                                </button>
+                                <button class="btn btn-primary btn-sm pull-right" id="create_btn">
+                                    <i class="fa fa-plus"></i>
+                                    新增
+                                </button>
+                                <!--<button class="btn btn-info btn-sm pull-right"-->
+                                        <!--id="download_btn">　-->
+                                    <!--<i class="fa fa-fw fa-file-excel-o"></i>-->
+                                    <!--下载-->
+                                <!--</button>-->
+                                <!--<button class="btn btn-warning btn-sm pull-right"-->
+                                        <!--id="upload_btn">　-->
+                                    <!--<i class="fa fa-fw fa-upload"></i>-->
+                                    <!--导入-->
+                                <!--</button>-->
+                        </table>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding" style="text-overflow:ellipsis;width:100%;white-space:nowrap;">
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                    <th>
+                        <span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                        </span>
+                        <input type="checkbox" name="selectalltc" id="selectalltc" value="">
+                    </th>
+                    <th>用例编号</th>
+                    <!--<th>禅道编号</th>-->
+                    <th>用例名称</th>
+                    <th style="width: 30px">参数</th>
+                    <th>状态码检查</th>
+                    <th>返回值校验</th>
+                    <th>冒烟测试</th>
+                    <th>执行次数</th>
+                    <th>优先级</th>
+                    <th>输入人员</th>
+                    <th>结果统计</th>
+                    <th>上次运行时间</th>
+                    <th>运行结果</th>
+                    <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      {% for testcase in pages.object_list %}
+                      <th>
+                          <span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                          </span>
+                          <input type="checkbox" name="selectcb" value="{{testcase.id}}">
+                      </th>
+                      <th>
+                          <span class="text">{{testcase.id}}</span>
+                      </th>
+                      <!--<th>-->
+                          <!--<span class="text">{{testcase.zento_bug_id}}</span>-->
+                      <!--</th>-->
+                      <th>
+                           <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{testcase.case_name}}">
+                                    <span class="text">{{testcase.case_name}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{testcase.modify_param}}">
+                                    <span class="text">{{testcase.modify_param}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          <span class="text">{{testcase.code_check}}</span>
+                      </th>
+                      <th>
+                          <table class="fixed-table">
+                              <tr>
+                                  <td data-toggle="popover" title="{{testcase.res_check}}">
+                                    <span class="text">{{testcase.res_check}}</span>
+                                  </td>
+                              </tr>
+                          </table>
+                      </th>
+                      <th>
+                          {% if testcase.is_smoke %}
+                          <span class="badge bg-red">是</span>
+                          {% else %}
+                          <span class="badge">否</span>
+                          {% endif %}
+                      </th>
+                      <th>
+                          <span class="text">{{testcase.pass_count}}:{{testcase.fail_count}}</span>
+                      </th>
+                      <th>
+                          <span class="text">{{testcase.get_level_display}}</span>
+                      </th>
+                      <th>
+
+                          <span class="text">{{testcase.created_by}}</span>
+                      </th>
+                      <th>
+                          <span class="text">{{testcase.count}}</span>
+                      </th>
+                      <th>
+                          {% if testcase.updated_time%}
+                          <span class="text">{{testcase.updated_time}}</span>
+                          {% else %}
+                          <span class="text" style="color:green">未运行</span>
+                          {% endif %}
+                      </th>
+                      <th>
+                          <span class="text" {%if testcase.caseresult == 0 %} style="color:red" {% else %} style="color:green"{%endif%}>{{testcase.get_caseresult_display}}</span>
+                      </th>
+                      <th>
+                          <div class="tools">
+                              <a id="edit{{testcase.id}}" onclick='edit("{{testcase.id}}")' data-toggle="tooltip" title="编辑" data-placement="bottom"><i class="fa fa-edit"></i></a>
+                              <a id="delete{{testcase.id}}" onclick='deletetc("{{testcase.id}}")' data-toggle="tooltip" title="删除" data-placement="bottom"><i class="fa fa-trash-o"></i></a>
+                              <a id="view{{testcase.id}}" onclick='view("{{testcase.id}}")' data-toggle="tooltip" title="查看运行结果" data-placement="bottom"><i class="fa fa-fw fa-arrow-circle-o-right"></i></a>
+                          </div>
+                       </th>
+                   </tr>
+                    {% endfor %}
+                  </tbody>
+                    </table>
+                </div>
+                <div class="box-footer clearfix">
+                        {% include 'adminlte/common_list_pagination.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="/interface/testcase/result" method="post" id ="runtcform" style="display:none">
+        {% csrf_token %}
+        <input type="hidden" name="runidlist" value="" id="runidlist"/>
+    </form>
+        <!-- /.modal-dialog-delete -->
+    {% include "deletemodal.html" %}
+    <script>
+    function deleteinfo(reid){
+         $("#deletemodal").removeClass("modal-warning");
+         $("#deletemodal").addClass("modal-danger");
+         $("h4").text("危险");
+         $("p").text("确定要删除记录吗？");
+         $("#delete_in_btn").show();
+         $("#close_modal").text('取消');
+         $('#recordid').val(reid)
+         $('#deletemodal').modal('show')
+    }
+    function gopage(num)
+    {
+        document.location.href = '/interface/tclist/interface'+$('#interfaceid').val()+'&page='+num
+    }
+    $(function() {
+        $("#run_btn").click(function(){
+            var jsonObj = '';
+            var count = 0;
+            $("input:checkbox[name=selectcb]:checked").each(function () {
+                jsonObj +=this.value +','
+                count++ ;
+            });
+            if (count>=1){
+                    jQuery.post("/interface/testcase/run", {jsonObj:jsonObj}, function(data, status){
+                        $('#runidlist').val(data);
+                        $('#runtcform').submit();
+                }, "text");
+            }
+            else
+                alert("请选择一个用例！")
+        });
+      $("#create_btn").click(function(){
+         document.location.href = '/interface/testcase/create'+'?interfaceid='+$('#interfaceid').val()+'&reqmethod='+$('#reqmethod').val();
+      });
+      $("#delete_name_btn").click(function(){
+           $("#query_name").val("")
+      });
+      $("#delete_tcid_btn").click(function(){
+           $("#query_tcid").val("")
+      });
+      $("#search_an").click(function(){
+           document.location.href = '/interface/tclist/interface'+$('#interfaceid').val()+'?case_name='+$("#query_name").val()+'&case_id='+$("#query_tcid").val();
+      });
+      $("#delete_btn").click(function(){
+           var count = 0
+           var deleterecord = ''
+           $("input[name='selectcb']:checked").each(function(){
+                 count++ ;
+                 deleterecord +=this.value +','
+           });
+           if ($("p").text().indexOf("记录") >= 0 && deleterecord.length >0 )
+           {
+                deleteinfo(deleterecord)
+           }
+           if ( count==0){
+                $("#deletemodal").removeClass("modal-danger");
+                $("#deletemodal").addClass("modal-warning");
+                $("#delete_in_btn").hide();
+                $("h4").text("警告");
+                $("#close_modal").text('关闭');
+                $("p").text("请选择至少一条记录!");
+                $('#deletemodal').modal('show')
+           }
+      });
+      $("#delete_in_btn").click(function(){
+            $.ajax({
+                url: "/interface/testcase/delete",
+                type: "POST",
+                dataType: "json",
+                data: "testcaseid="+$('#recordid').val(),
+                success:function(data) {
+                        alert(data.error)
+                        document.location.href = '/interface/tclist/interface'+data.interfaceid
+                    }
+                });
+      });
+      $("#selectalltc").click(function(){
+            $("input[name='selectcb']").prop("checked",$(this).prop("checked"));
+      });
+   });
+   function edit(id){
+        document.location.href = '/interface/testcase/edit'+'?testcaseid='+id+'&reqmethod='+$('#reqmethod').val();
+   }
+   function deletetc(id){
+        deleteinfo(id);
+   }
+   function view(id){
+        document.location.href = '/interface/testcase/getallresult'+'?testcaseid='+id;
+   }
+   $(function () { $("[data-toggle='tooltip']").tooltip(); });
+</script>
+{% endblock %}

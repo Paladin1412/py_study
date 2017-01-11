@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% from "snippet/macro.html" import form_field %}
+
+{% block subtitle %}{{ _('Find Password') }}{% endblock %}
+
+{% block main %}
+  <div class="panel panel-default single">
+    <form class="panel-body" role="form" method="post" action="">
+      <h2>{{ _('Find Password') }}</h2>
+
+      {{ form.csrf_token }}
+      {{ form_field(form.account) }}
+
+      <div class="form-group">
+        <button class="btn btn-primary">{{ _('Send') }}</button>
+
+      </div>
+    </form>
+  </div>
+{% endblock %}

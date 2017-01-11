@@ -1,0 +1,52 @@
+{% if pages.object_list %}
+<div class="box-body centered">
+    <table class="table col-md-2 col-md-offset-1" style="width:85%;">
+    <thead>
+    <tr>
+        <th>
+            <span class="handle">
+                <i class="fa fa-ellipsis-v"></i>
+                <i class="fa fa-ellipsis-v"></i>
+            </span><input type="checkbox"  id="tcallcheck" name="tcallcheck" value="">
+        </th>
+        <th>用例标题</th>
+        <th>用例编号</th>
+        <th>禅道编号</th>
+        <th>冒烟测试</th>
+        <th>优先级</th>
+    </tr>
+    </thead>
+        {% for testcase in pages.object_list %}
+    <tbody>
+    <tr>
+    <td>
+        <span class="handle">
+            <i class="fa fa-ellipsis-v"></i>
+            <i class="fa fa-ellipsis-v"></i>
+        </span>
+        <input type="checkbox" name="selected_tcid_4edit" value="{{testcase.id}}" {% if testcase.id in tcidlist_caseset %} checked {% endif %}>
+    </td>
+    <td>
+        {{testcase.case_name}}
+    </td>
+    <td>{{testcase.id}}</td>
+    <td>{{testcase.zento_bug_id}}</td>
+    <td>
+        {% if testcase.is_smoke%}
+        <span class="badge bg-red">是</span>
+        {% else %}
+        <span class="badge bg-blue">否</span>
+        {% endif %}
+    </td>
+    <td>
+        <span class="badge bg-yellow">{{testcase.get_level_display}}</span>
+    </td>
+    </tr>
+    </tbody>
+        {% endfor %}
+</table>
+</div>
+<div class="{% if not caseset %} bg-green {% endif %} col-md-offset-1 clearfix" style="width:85%;">
+                        {% include 'adminlte/common_list_pagination.html' %}
+</div>
+{% endif %}

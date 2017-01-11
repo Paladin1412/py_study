@@ -1,0 +1,21 @@
+ .modal {height=80%;top:15%;}
+.alert {height=80%;width:50%}
+.fixed-table {
+width: 60px;
+table-layout: fixed;
+/*not really necessary, removes extra white space */
+border-collapse: collapse;
+border-spacing: 0;
+border: 0;
+}
+.fixed-table td {
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.nowrap {
+/* used to keep buttons' text in a single line,
+* remove this class to allow natural line-breaking.
+*/
+white-space: nowrap;
+}
