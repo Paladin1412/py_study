@@ -1,0 +1,61 @@
+<!-- 审核管理页面 -->
+<div id="nex-audit-management">
+    <!-- 页面标题导航  -->
+    <p>审核管理</p>
+    <!-- 页面内容区 -->
+    <div class="nex-management-content">
+        <!-- 统计table -->
+        <table class="table1">
+            <caption>待审量统计</caption>
+            <tr>
+                <th class="table-first-th">广告主总计</th>
+                <th>NEX广告主</th>
+                <th class="table-last-th">易效广告主</th>
+                <th class="table-blank"></th>
+                <th class="table-first-th">创意总计</th>
+                <th>NEX创意</th>
+                <th class="table-last-th">易效创意</th>
+            </tr>
+            <tr class="table-odd-line">
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+                <td></td>
+                <td>100</td>
+                <td>100</td>
+                <td>100</td>
+            </tr>
+        </table>
+        <!-- 日常工作表 -->
+        <table class="table2">
+            <caption>人员分配及今日工作量</caption>
+            <tr>
+                <th class="table-first-th">审核员ID</th>
+                <th>审核员名称</th>
+                <th>审核开关</th>
+                <th>广告主总计</th>
+                <th>创意总计</th>
+                <th>NEX广告主</th>
+                <th>易效广告主</th>
+                <th>NEX创意</th>
+                <th>易效创意</th>
+            </tr>
+            <tr ng-repeat="node in list" ng-class-odd="'table-odd-line'">
+                <td class="table-first-td">{{node.id}}</td>
+                <td>{{node.name}}</td>
+                <td class="table-toggle">
+                    <input id="cmn-toggle-{{$index}}" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-click="click($index)">
+                    <label for="cmn-toggle-{{$index}}"></label>
+                </td>
+                <td>{{node.total1}}</td>
+                <td>{{node.total2}}</td>
+                <td>{{node.total3}}</td>
+                <td>{{node.total4}}</td>
+                <td>{{node.total5}}</td>
+                <td>{{node.total6}}</td>
+            </tr>
+        </table>
+        <div>
+        </div>
+    </div>
+</div>

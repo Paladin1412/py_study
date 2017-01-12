@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NEX Login</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <script src="./lib/angular-1.3.10.min.js"></script>
+    <script src="./nex-login.js"></script>
+</head>
+
+<body ng-app="Nex" ng-controller="nex-login-ctrl" ng-cloak>
+    <div class="nex-login-container">
+        <div class="nex-login-header"></div>
+        <form class="nex-login-form" name="form" novalidate="novalidate">
+            <input type="text" class="nex-login-input1" placeholder="请输入邮箱前缀" ng-model="form.username" required><!-- 
+         --><input type="text" class="nex-login-input2"  value="@corp.netease.com" ng-disabled="true">
+            <input type="password" placeholder="输入密码" class="nex-login-input3" ng-model="form.password" required>
+            <input type="text" placeholder="验证码" class="nex-login-input4" ng-model="form.verifycode" required><img ng-src="{{data.img}}">
+            <button ng-click="event.submit(form)">登录</button>
+            <a href="#">忘记密码?</a><div>{{data.warning}}</div>
+        </form>
+    </div>
+    <div class="nex-login-footer">
+        网易公司版权所有 &copy; 1997-2016
+    </div>
+</body>
+
+</html>

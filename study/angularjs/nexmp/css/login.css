@@ -1,0 +1,431 @@
+html,
+body {
+  line-height: 1.5;
+  font-family: Microsoft YaHei, arial, "宋体";
+  background: #ffffff;
+  font-size: 14px;
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+ol,
+ul {
+  list-style: none;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+  font-style: normal;
+}
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
+}
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+body {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+select {
+  font-size: 14px;
+}
+fieldset,
+img,
+a img,
+:link img,
+:visited img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+:focus {
+  outline: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+caption,
+th {
+  text-align: left;
+}
+sup,
+sub {
+  font-size: 100%;
+  vertical-align: baseline;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+.clear,
+.clearfix:after {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+  display: block;
+}
+.clearfix:after {
+  visibility: hidden;
+  content: ".";
+}
+.clearfix {
+  *zoom: 1;
+}
+/*  less 公共样式定义,包括: color / text / button 类型定义
+ *
+ *  请按照每个类型注释 规范名称
+ *
+ *  所有样式均已@定义 不输出样式
+ */
+/*  1
+ *
+ *  颜色样式定义
+ *
+ *  less-color-{具体颜色}-{说明} 
+ *
+ */
+/*  2
+ *
+ *  文字样式定义
+ *
+ *  #less-text > .{说明1}-[说明2] 文字样式 
+ *  
+ */
+#less-text .copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #caced2;
+}
+#less-text .input {
+  font-size: 14px;
+  color: #6f7c9a;
+}
+#less-text .nav-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  padding-left: 10px;
+  background: url(_images/content-title-line.png) no-repeat left;
+}
+#less-text .table-caption {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+}
+#less-text .table-head {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#less-text .table-data {
+  font-size: 12px;
+  color: #666666;
+}
+#less-text .label {
+  font-size: 12px;
+  color: #666666;
+}
+/*  3
+ *
+ *  :hover定义,主要为button a 复用
+ *
+ *  #less-hover > .{text-decoration}-{corsor} 没有则定义为none 
+ *  
+ */
+#less-hover .none-pointer:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-hover .underline-pointer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+/*  4
+ *
+ *  button 样式定义, 请注意<a>可能性,样式中不要定义位置,尽量不定义宽高
+ *  input
+ *  select
+ *  
+ */
+#less-button .search {
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  background-color: #008aff;
+}
+#less-button .search:hover {
+  background-color: #1f96fb;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .audit {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #46cf82;
+}
+#less-button .audit:hover {
+  background-color: #45de88;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-input .search {
+  height: 30px;
+  width: 160px;
+  color: #666666;
+  border: 1px solid #d7e1ea;
+  border-radius: 25px;
+  padding-left: 15px;
+}
+#less-select .search1 {
+  display: inline-block;
+  height: 30px;
+  width: 83px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 76px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#less-select .search1 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 98px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#less-select .search1 select:hover {
+  cursor: pointer;
+}
+#less-select .search1 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#less-select .search2 {
+  display: inline-block;
+  height: 30px;
+  width: 120px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 110px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#less-select .search2 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 135px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#less-select .search2 select:hover {
+  cursor: pointer;
+}
+#less-select .search2 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+/*  5
+ *
+ *  container样式定义
+ *
+ *  #less-container > .{说明1}-[说明2]  
+ *  
+ */
+#less-container .form1 {
+  border: 2px solid #d7e1ea;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+/* less */
+/* 整体页面布局 页面容器*/
+.nex-login-container {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+/* 页面header */
+.nex-login-header {
+  height: 60px;
+  background: url(_images/header-bg.png) no-repeat top left;
+  background-size: cover;
+  background-color: #4875c0;
+}
+/* 页面footer */
+.nex-login-footer {
+  margin-top: -60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: #caced2;
+}
+/* 页面表单具体内容 */
+.nex-login-form {
+  height: 240px;
+  width: 380px;
+  margin: 0 auto;
+  margin-top: 95px;
+  text-align: center;
+  padding-top: 100px;
+  border-radius: 5px;
+  background: url(_images/nex-logo.png) no-repeat #e9ecf2;
+  background-position: center 25px;
+}
+/* 表单输入框 定义高度 垂直居中 字体 文字颜色 */
+.nex-login-form > input {
+  font-size: 14px;
+  color: #6f7c9a;
+  display: inline-block;
+  height: 33px;
+  line-height: 33px;
+}
+/* 具体定义input1/2/3/4 不同样式 */
+.nex-login-input1 {
+  border: 1px solid #adb3ce;
+  border-radius: 3px 0 0 3px;
+  width: 110px;
+  background: url(_images/login-user-logo.png) no-repeat #ffffff;
+  background-position: 8px center;
+  padding-left: 35px;
+}
+.nex-login-input2 {
+  border: 1px solid #adb3ce;
+  border-radius: 0 3px 3px 0;
+  border-left-width: 0px;
+  text-align: center;
+  width: 145px;
+  background-color: #fafcfe;
+}
+.nex-login-input3 {
+  border: 1px solid #adb3ce;
+  border-radius: 3px;
+  width: 255px;
+  margin-top: 10px;
+  background: url(_images/login-password-logo.png) no-repeat #ffffff;
+  background-position: 8px center;
+  padding-left: 35px;
+}
+.nex-login-input4 {
+  border: 1px solid #adb3ce;
+  border-radius: 3px;
+  width: 185px;
+  margin-top: 10px;
+  vertical-align: middle;
+  padding-left: 8px;
+}
+/* 登录button */
+.nex-login-form > button {
+  display: block;
+  width: 290px;
+  height: 35px;
+  margin: 0 auto;
+  margin-top: 20px;
+  color: #ffffff;
+  background-color: #008aff;
+  border: 1px solid #008aff;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+.nex-login-form > button:hover {
+  background-color: #1c94fa;
+  border-color: #1c94fa;
+  cursor: pointer;
+}
+/* 验证码 */
+.nex-login-form > img {
+  border: 1px solid #b1d0db;
+  width: 78px;
+  height: 33px;
+  margin-left: 18px;
+  margin-top: 10px;
+  background-color: #f5f6f9;
+  vertical-align: middle;
+}
+/* 忘记密码 */
+.nex-login-form > a {
+  display: block;
+  font-size: 12px;
+  color: #0087d5;
+  margin-top: 15px;
+  margin-left: -230px;
+  text-decoration: underline;
+}

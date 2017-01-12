@@ -1,0 +1,80 @@
+#nex-advertiser-nex {
+    //导航标题
+    > p {
+        #less-text > .nav-title;
+    }
+    //内容区
+    .nex-content {
+        margin-top: 10px;
+        #less-container > .form1;
+    }
+    //搜索框
+    .nex-search {
+        height: 60px;
+        border-bottom: 2px solid @less-color-grey-border;
+        label {
+            #less-text > .label;
+            margin-right: 7px;
+            margin-left: 20px;
+        }
+        .nex-select1 {
+            #less-select > .search1;
+        }
+        .nex-select2 {
+            #less-select > .search2;
+        }
+        input {
+            #less-input > .search;
+            margin-right: 5px;
+        }
+        button {
+            #less-button > .search; 
+        }
+    }
+    //审核提示信息
+    .nex-tips {
+        height: 50px;
+        border-bottom: 2px solid @less-color-grey-border;
+        p {
+            #less-text > .label;
+            display: inline-block;
+            margin-left: 20px;
+            margin-right: 10px;
+        }
+        span {
+            margin: 0 5px;
+            font-weight: bold;
+            color: #f49773;
+        }
+    }
+    //列表信息
+    .nex-list {
+        padding: 10px 20px;
+        a {
+        	color: @less-color-blue-a;
+            #less-hover: > .none-pointer;
+        }
+        table {
+            width: 100%;
+            min-width: 600px;
+        }
+        th {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            #less-text > .table-head;
+        }
+        td {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            padding-left: 10px;
+            #less-text > .table-data;
+        }
+        //奇数行表格背景色为蓝色
+        .table-odd-line {
+            border-radius: 5px;
+            background-color: @less-color-blue-table;
+        }
+    }
+}

@@ -1,0 +1,959 @@
+/* 基本库引用 */
+html,
+body {
+  line-height: 1.5;
+  font-family: Microsoft YaHei, arial, "宋体";
+  background: #ffffff;
+  font-size: 14px;
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+ol,
+ul {
+  list-style: none;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+  font-style: normal;
+}
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
+}
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+body {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+select {
+  font-size: 14px;
+}
+fieldset,
+img,
+a img,
+:link img,
+:visited img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+:focus {
+  outline: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+caption,
+th {
+  text-align: left;
+}
+sup,
+sub {
+  font-size: 100%;
+  vertical-align: baseline;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+.clear,
+.clearfix:after {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+  display: block;
+}
+.clearfix:after {
+  visibility: hidden;
+  content: ".";
+}
+.clearfix {
+  *zoom: 1;
+}
+/*  less 公共样式定义,包括: color / text / button 类型定义
+ *
+ *  请按照每个类型注释 规范名称
+ *
+ *  所有样式均已@定义 不输出样式
+ */
+/*  1
+ *
+ *  颜色样式定义
+ *
+ *  less-color-{具体颜色}-{说明} 
+ *
+ */
+/*  2
+ *
+ *  文字样式定义
+ *
+ *  #less-text > .{说明1}-[说明2] 文字样式 
+ *  
+ */
+#less-text .copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #caced2;
+}
+#less-text .input {
+  font-size: 14px;
+  color: #6f7c9a;
+}
+#less-text .nav-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  padding-left: 10px;
+  background: url(_images/content-title-line.png) no-repeat left;
+}
+#less-text .table-caption {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+}
+#less-text .table-head {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#less-text .table-data {
+  font-size: 12px;
+  color: #666666;
+}
+#less-text .label {
+  font-size: 12px;
+  color: #666666;
+}
+/*  3
+ *
+ *  :hover定义,主要为button a 复用
+ *
+ *  #less-hover > .{text-decoration}-{corsor} 没有则定义为none 
+ *  
+ */
+#less-hover .none-pointer:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-hover .underline-pointer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+/*  4
+ *
+ *  button 样式定义, 请注意<a>可能性,样式中不要定义位置,尽量不定义宽高
+ *  input
+ *  select
+ *  
+ */
+#less-button .search {
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  background-color: #008aff;
+}
+#less-button .search:hover {
+  background-color: #1f96fb;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .audit {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #46cf82;
+}
+#less-button .audit:hover {
+  background-color: #45de88;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-input .search {
+  height: 30px;
+  width: 160px;
+  color: #666666;
+  border: 1px solid #d7e1ea;
+  border-radius: 25px;
+  padding-left: 15px;
+}
+#less-select .search1 {
+  display: inline-block;
+  height: 30px;
+  width: 83px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 76px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#less-select .search1 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 98px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#less-select .search1 select:hover {
+  cursor: pointer;
+}
+#less-select .search1 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#less-select .search2 {
+  display: inline-block;
+  height: 30px;
+  width: 120px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 110px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#less-select .search2 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 135px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#less-select .search2 select:hover {
+  cursor: pointer;
+}
+#less-select .search2 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+/*  5
+ *
+ *  container样式定义
+ *
+ *  #less-container > .{说明1}-[说明2]  
+ *  
+ */
+#less-container .form1 {
+  border: 2px solid #d7e1ea;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+/* 整体页面布局引用 */
+/* less 本文件内有效 */
+/* 页面 header 布局及内容 */
+.nex-header {
+  height: 60px;
+  background: url(_images/header-bg.png) #4875c0 no-repeat top left;
+  background-size: cover;
+  width: 100%;
+}
+.nex-header .nex-header-logo {
+  display: inline-block;
+  width: 300px;
+  height: 34px;
+  margin: 12px 0 0 15px;
+  background: url(_images/nex-logo.png) no-repeat center;
+}
+.nex-header .nex-header-user {
+  float: right;
+  margin: 17px 40px 0 0;
+}
+.nex-header .nex-header-user .nex-user-name {
+  display: inline-block;
+  font-size: 12px;
+  color: #ffffff;
+  width: 55px;
+  height: 16px;
+  padding-left: 20px;
+  background: url(_images/header-icon.png) no-repeat left center;
+}
+.nex-header .nex-header-user a {
+  display: inline-block;
+  font-size: 12px;
+  color: #ffffff;
+  padding-left: 18px;
+  margin-left: 18px;
+  background: url(_images/header-line.png) no-repeat left;
+}
+.nex-header .nex-header-user a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* 页面 menu 及内容 */
+.nex-menu {
+  float: left;
+  width: 200px;
+  height: 100%;
+  background: url(_images/menu-bg.png) no-repeat #414871;
+}
+/* 页面 内容区布局 */
+.nex-main {
+  height: 100%;
+  min-width: 600px;
+  overflow: hidden;
+  background-color: #f4f7fc;
+  padding: 15px 20px;
+}
+/* 页面 footer 布局 */
+.nex-footer {
+  margin-top: -120px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: #caced2;
+}
+/* menu 内容样式引用 */
+/* 页面 menu 内容*/
+.nex-menu-content a {
+  color: #ffffff;
+}
+.nex-menu-content > ul > li > a {
+  border: 1px solid black;
+  font-size: 16px;
+  display: block;
+  height: 55px;
+  line-height: 55px;
+  margin: 0 auto;
+  padding-left: 55px;
+}
+.nex-menu-content .nex-menu-manage {
+  background: url(_images/menu-icon-manage.png) no-repeat 20px center;
+}
+/* 各个内容区样式定义 */
+#nex-audit-management p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  padding-left: 10px;
+  background: url(_images/content-title-line.png) no-repeat left;
+}
+#nex-audit-management .nex-management-content {
+  margin-top: 10px;
+  padding: 16px 20px;
+  border: 2px solid #d7e1ea;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+#nex-audit-management table caption {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  margin-bottom: 5px;
+  padding-left: 5px;
+}
+#nex-audit-management table th {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+#nex-audit-management table td {
+  font-size: 12px;
+  color: #666666;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+#nex-audit-management .table-first-th {
+  text-align: left;
+  padding-left: 5px;
+}
+#nex-audit-management .table-odd-line {
+  border-radius: 5px;
+  background-color: #f5f8fd;
+}
+#nex-audit-management .table-blank {
+  width: 10px;
+  background-color: #ffffff;
+}
+#nex-audit-management .table1 {
+  width: 50%;
+}
+#nex-audit-management .table1 .table-first-th {
+  width: 13%;
+  text-align: left;
+  padding-left: 5px;
+}
+#nex-audit-management .table1 .table-first-td {
+  text-align: left;
+  padding-left: 10px;
+}
+#nex-audit-management .table1 .table-last-th {
+  width: 15%;
+}
+#nex-audit-management .table2 {
+  margin-top: 40px;
+  width: 100%;
+}
+#nex-audit-management .table2 .table-first-th {
+  width: 8%;
+  text-align: left;
+  padding-left: 5px;
+}
+#nex-audit-management .table2 .table-first-td {
+  text-align: left;
+  padding-left: 10px;
+}
+.cmn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  margin: 0 auto;
+}
+input.cmn-toggle-round + label {
+  padding: 2px;
+  width: 30px;
+  height: 15px;
+  background-color: #dddddd;
+  border-radius: 60px;
+}
+input.cmn-toggle-round + label:before,
+input.cmn-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.cmn-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round + label:after {
+  width: 14.5px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: margin 0.4s;
+}
+input.cmn-toggle-round:checked + label:before {
+  background-color: #8ce196;
+}
+input.cmn-toggle-round:checked + label:after {
+  margin-left: 15px;
+}
+#nex-advertiser-yixiao > p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  padding-left: 10px;
+  background: url(_images/content-title-line.png) no-repeat left;
+}
+#nex-advertiser-yixiao .nex-content {
+  margin-top: 10px;
+  border: 2px solid #d7e1ea;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+#nex-advertiser-yixiao .nex-search {
+  height: 60px;
+  border-bottom: 2px solid #d7e1ea;
+}
+#nex-advertiser-yixiao .nex-search label {
+  font-size: 12px;
+  color: #666666;
+  margin-right: 7px;
+  margin-left: 20px;
+}
+#nex-advertiser-yixiao .nex-search .nex-select1 {
+  display: inline-block;
+  height: 30px;
+  width: 83px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 76px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#nex-advertiser-yixiao .nex-search .nex-select1 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 98px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#nex-advertiser-yixiao .nex-search .nex-select1 select:hover {
+  cursor: pointer;
+}
+#nex-advertiser-yixiao .nex-search .nex-select1 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-yixiao .nex-search .nex-select2 {
+  display: inline-block;
+  height: 30px;
+  width: 120px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 110px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#nex-advertiser-yixiao .nex-search .nex-select2 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 135px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#nex-advertiser-yixiao .nex-search .nex-select2 select:hover {
+  cursor: pointer;
+}
+#nex-advertiser-yixiao .nex-search .nex-select2 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-yixiao .nex-search input {
+  height: 30px;
+  width: 160px;
+  color: #666666;
+  border: 1px solid #d7e1ea;
+  border-radius: 25px;
+  padding-left: 15px;
+  margin-right: 5px;
+}
+#nex-advertiser-yixiao .nex-search button {
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  background-color: #008aff;
+}
+#nex-advertiser-yixiao .nex-search button:hover {
+  background-color: #1f96fb;
+  text-decoration: none;
+  cursor: pointer;
+}
+#nex-advertiser-yixiao .nex-tips {
+  height: 50px;
+  border-bottom: 2px solid #d7e1ea;
+}
+#nex-advertiser-yixiao .nex-tips p {
+  font-size: 12px;
+  color: #666666;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+#nex-advertiser-yixiao .nex-tips span {
+  margin: 0 5px;
+  font-weight: bold;
+  color: #f49773;
+}
+#nex-advertiser-yixiao .nex-tips button {
+  width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #46cf82;
+}
+#nex-advertiser-yixiao .nex-tips button:hover {
+  background-color: #45de88;
+  text-decoration: none;
+  cursor: pointer;
+}
+#nex-advertiser-yixiao .nex-list {
+  padding: 10px 20px;
+}
+#nex-advertiser-yixiao .nex-list table {
+  width: 100%;
+  min-width: 600px;
+}
+#nex-advertiser-yixiao .nex-list th {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#nex-advertiser-yixiao .nex-list td {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding-left: 10px;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-yixiao .nex-list .table-odd-line {
+  border-radius: 5px;
+  background-color: #f5f8fd;
+}
+#nex-advertiser-nex > p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  padding-left: 10px;
+  background: url(_images/content-title-line.png) no-repeat left;
+}
+#nex-advertiser-nex .nex-content {
+  margin-top: 10px;
+  border: 2px solid #d7e1ea;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+#nex-advertiser-nex .nex-search {
+  height: 60px;
+  border-bottom: 2px solid #d7e1ea;
+}
+#nex-advertiser-nex .nex-search label {
+  font-size: 12px;
+  color: #666666;
+  margin-right: 7px;
+  margin-left: 20px;
+}
+#nex-advertiser-nex .nex-search .nex-select1 {
+  display: inline-block;
+  height: 30px;
+  width: 83px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 76px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#nex-advertiser-nex .nex-search .nex-select1 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 98px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#nex-advertiser-nex .nex-search .nex-select1 select:hover {
+  cursor: pointer;
+}
+#nex-advertiser-nex .nex-search .nex-select1 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-nex .nex-search .nex-select2 {
+  display: inline-block;
+  height: 30px;
+  width: 120px;
+  background: url(_images/select-arrow-icon.png) #f4f7fc no-repeat 110px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 50px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+}
+#nex-advertiser-nex .nex-search .nex-select2 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 135px;
+  opacity: 0;
+  background-color: #f4f7fc;
+}
+#nex-advertiser-nex .nex-search .nex-select2 select:hover {
+  cursor: pointer;
+}
+#nex-advertiser-nex .nex-search .nex-select2 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-nex .nex-search input {
+  height: 30px;
+  width: 160px;
+  color: #666666;
+  border: 1px solid #d7e1ea;
+  border-radius: 25px;
+  padding-left: 15px;
+  margin-right: 5px;
+}
+#nex-advertiser-nex .nex-search button {
+  height: 30px;
+  width: 50px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  background-color: #008aff;
+}
+#nex-advertiser-nex .nex-search button:hover {
+  background-color: #1f96fb;
+  text-decoration: none;
+  cursor: pointer;
+}
+#nex-advertiser-nex .nex-tips {
+  height: 50px;
+  border-bottom: 2px solid #d7e1ea;
+}
+#nex-advertiser-nex .nex-tips p {
+  font-size: 12px;
+  color: #666666;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+#nex-advertiser-nex .nex-tips span {
+  margin: 0 5px;
+  font-weight: bold;
+  color: #f49773;
+}
+#nex-advertiser-nex .nex-list {
+  padding: 10px 20px;
+}
+#nex-advertiser-nex .nex-list a {
+  color: #0087d5;
+  text-decoration: none;
+}
+#nex-advertiser-nex .nex-list table {
+  width: 100%;
+  min-width: 600px;
+}
+#nex-advertiser-nex .nex-list th {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#nex-advertiser-nex .nex-list td {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  padding-left: 10px;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-nex .nex-list .table-odd-line {
+  border-radius: 5px;
+  background-color: #f5f8fd;
+}
+#nex-advertiser-nex-audit > p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+  padding-left: 10px;
+  background: url(_images/content-title-line.png) no-repeat left;
+}
+#nex-advertiser-nex-audit .nex-content {
+  margin-top: 10px;
+  border: 2px solid #d7e1ea;
+  border-radius: 7px;
+  background-color: #ffffff;
+}
+#nex-advertiser-nex-audit .nex-advertiser-info {
+  height: 116px;
+  position: relative;
+}
+#nex-advertiser-nex-audit .nex-turnleft {
+  position: absolute;
+  top: 50%;
+  margin-top: -35px;
+  display: inline-block;
+  width: 35px;
+  height: 70px;
+  border-radius: 0 5px 5px 0;
+  background: url(_images/turnleft-icon.png) #a5a5a5 no-repeat center;
+}
+#nex-advertiser-nex-audit .nex-turnleft:hover {
+  background-color: #5e5e5e;
+}
+#nex-advertiser-nex-audit .nex-turnright {
+  position: absolute;
+  display: inline-block;
+  right: 0px;
+  top: 50%;
+  margin-top: -35px;
+  width: 35px;
+  height: 70px;
+  border-right: 1px solid #d7e1ea;
+  border-radius: 5px 0 0 5px;
+  background: url(_images/turnright-icon.png) #a5a5a5 no-repeat center;
+}
+#nex-advertiser-nex-audit .nex-turnright:hover {
+  background-color: #5e5e5e;
+}
+#nex-advertiser-nex-audit .nex-advertiser-info-table {
+  position: absolute;
+  left: 65px;
+  top: 20px;
+  width: 1000px;
+  height: 80px;
+}
+#nex-advertiser-nex-audit .nex-advertiser-info-table span {
+  margin: 0 5px;
+}
+#nex-advertiser-nex-audit .nex-advertiser-info-table a {
+  color: #0087d5;
+}
+#nex-advertiser-nex-audit .nex-advertiser-info-table a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#nex-advertiser-nex-audit .nex-advertiser-info-table td {
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list {
+  border-top: 2px solid #d7e1ea;
+  padding: 15px 20px;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table {
+  width: 100%;
+  table-layout: fixed;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table tr {
+  height: 40px;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table th {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table td {
+  padding: 5px 0px;
+  text-align: center;
+  font-size: 12px;
+  color: #666666;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table th:first-child {
+  padding-left: 25px;
+  text-align: left;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table td:first-child {
+  padding-left: 20px;
+  text-align: left;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table a {
+  color: #0087d5;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#nex-advertiser-nex-audit .nex-advertiser-list table .reject {
+  color: #f83c3a;
+}
+#nex-advertiser-nex-audit .nex-advertiser-submit {
+  height: 30px;
+  padding: 15px 20px;
+  border-top: 2px solid #d7e1ea;
+}
+#nex-advertiser-nex-audit .nex-advertiser-submit button {
+  width: 118px;
+  height: auto;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #46cf82;
+}
+#nex-advertiser-nex-audit .nex-advertiser-submit button:hover {
+  background-color: #45de88;
+  text-decoration: none;
+  cursor: pointer;
+}
+#nex-advertiser-nex-audit .table-odd-line {
+  border-radius: 5px;
+  background-color: #f5f8fd;
+}
+/* */

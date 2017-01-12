@@ -1,0 +1,250 @@
+/*  less 公共样式定义,包括: color / text / button 类型定义
+ *
+ *  请按照每个类型注释 规范名称
+ *
+ *  所有样式均已@定义 不输出样式
+ */
+
+
+/*  1
+ *
+ *  颜色样式定义
+ *
+ *  less-color-{具体颜色}-{说明} 
+ *
+ */
+//
+//登录页面 footer字体颜色 灰色
+@less-color-grey-copyringt: #caced2;
+//登录页面 表单背景色 灰色
+@less-color-grey-form: #e9ecf2;
+//各组件中边框 灰色
+@less-color-grey-border: #d7e1ea;
+//
+//左菜单栏背景色 紫色
+@less-color-purple-menu: #414871;
+//输入框文字颜色 紫色
+@less-color-purple-input: #6f7c9a;
+//输入框边框颜色 紫色
+@less-color-purple-input-border: #adb3ce;
+//
+//button背景色 蓝色
+@less-color-blue-button: #008aff;
+//button悬浮背景色 蓝色
+@less-color-blue-button-hover: #1c94fa;
+//表格背景色 蓝色
+@less-color-blue-table: #f5f8fd;
+//a标签文字颜色 蓝色
+@less-color-blue-a: #0087d5;
+//
+//页面主背景色 白色
+@less-color-white-bg: #f4f7fc;
+//
+//button背景色 绿色
+@less-color-green-button: #46cf82;
+//
+//醒目提示颜色 红色
+@lees-color-red-alter: #f83c3a;
+
+/*  2
+ *
+ *  文字样式定义
+ *
+ *  #less-text > .{说明1}-[说明2] 文字样式 
+ *  
+ */
+
+#less-text {
+    //登录页copyright文字
+    .copyright {
+        text-align: center;
+        font-size: 12px;
+        color: @less-color-grey-copyringt;
+    }
+    //输入框文字
+    .input {
+        font-size: 14px;
+        color: @less-color-purple-input;
+    }
+    //内容区最上方标题 (背景图 样式 位置均写好 直接引用即可)
+    .nav-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #678698;
+        padding-left: 10px;
+        background: url(./_images/content-title-line.png) no-repeat left;
+    }
+    //table大标题
+    .table-caption {
+        font-size: 14px;
+        font-weight: bold;
+        color: #678698;
+    }
+    //th
+    .table-head {
+        font-size: 12px;
+        font-weight: bold;
+        color: #000000;
+    }
+    //td
+    .table-data {
+        font-size: 12px;
+        color: #666666;
+    }
+    //button/input旁边label普通文字
+    .label {
+        font-size: 12px;
+        color: #666666;
+    }
+}
+
+
+/*  3
+ *
+ *  :hover定义,主要为button a 复用
+ *
+ *  #less-hover > .{text-decoration}-{corsor} 没有则定义为none 
+ *  
+ */
+
+#less-hover {
+    //无underline有pointer
+    .none-pointer {
+        &:hover {
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+    .underline-pointer {
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}
+
+
+/*  4
+ *
+ *  button 样式定义, 请注意<a>可能性,样式中不要定义位置,尽量不定义宽高
+ *  input
+ *  select
+ *  
+ */
+
+#less-button {
+    //搜索区域中的button
+    .search {
+        height: 30px;
+        width: 50px;
+        font-size: 12px;
+        color: #ffffff;
+        border: none;
+        border-radius: 25px;
+        background-color: @less-color-blue-button;
+        &:hover {
+            background-color: #1f96fb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+    .audit {
+        height: 30px;
+        font-size: 12px;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        background-color: @less-color-green-button;
+        &:hover {
+            background-color: #45de88;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+}
+
+#less-input {
+    //搜索区域中的input
+    .search {
+        height: 30px;
+        width: 160px;
+        color: #666666;
+        border: 1px solid @less-color-grey-border;
+        border-radius: 25px;
+        padding-left: 15px;
+    }
+}
+
+#less-select {
+    //较短的select
+    .search1 {
+        display: inline-block;
+        height: 30px;
+        width: 83px;
+        background: url(./_images/select-arrow-icon.png) @less-color-white-bg no-repeat 76px center;
+        border: 1px solid @less-color-grey-border;
+        border-radius: 50px;
+        vertical-align: middle;
+        position: relative;
+        padding-left: 15px;
+        select {
+            position: absolute;
+            left: 0;
+            height: 30px;
+            width: 98px;
+            opacity: 0;
+            background-color: @less-color-white-bg;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        span {
+            line-height: 30px;
+            #less-text > .label;
+        }
+    }
+    //较长的select
+    .search2 {
+        display: inline-block;
+        height: 30px;
+        width: 120px;
+        background: url(./_images/select-arrow-icon.png) @less-color-white-bg no-repeat 110px center;
+        border: 1px solid @less-color-grey-border;
+        border-radius: 50px;
+        vertical-align: middle;
+        position: relative;
+        padding-left: 15px;
+        select {
+            position: absolute;
+            left: 0;
+            height: 30px;
+            width: 135px;
+            opacity: 0;
+            background-color: @less-color-white-bg;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        span {
+            line-height: 30px;
+            #less-text > .label;
+        }
+    }
+}
+
+
+/*  5
+ *
+ *  container样式定义
+ *
+ *  #less-container > .{说明1}-[说明2]  
+ *  
+ */
+
+#less-container {
+    .form1 {
+        border: 2px solid #d7e1ea;
+        border-radius: 7px;
+        background-color: #ffffff;
+    }
+}
