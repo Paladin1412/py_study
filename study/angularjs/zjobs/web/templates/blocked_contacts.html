@@ -1,0 +1,56 @@
+<div>
+    <h4 class="text-center" style="margin-bottom:20px;">Blocked Contacts</h4>
+
+    <div style="width:50%;margin:0 auto;margin-bottom:15px;">
+        <a class="btn btn-primary btn-sm" href="/blocked_contacts/extract/csv">Export Blocked Contacts</a>
+        <a class="btn btn-success btn-sm" file-upload="/blocked_contacts/import" file-upload-redirect-url="/#/blocked_contacts">Import Blocked Contacts</a>
+    </div>
+
+    <table class="table table-bordered table-striped table-hover" style="width:50%; margin:0 auto;">
+        <thead>
+        <tr>
+            <th>Blocked Contact</th><th>Block Reason</th><th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in records">
+            <td ng-if="!record.is_new">[[ record.contact ]]</td>
+            <td ng-if="record.is_new"><input type="text" ng-model="record.contact"/></td>
+
+            <td ng-if="!(record.is_new || record.is_modify)">[[ record.block_reason ]]</td>
+            <td ng-if="record.is_new || record.is_modify"><input type="text" ng-model="record.block_reason"/></td>
+
+            <td ng-if="!(record.is_new || record.is_modify)">
+                <span class="glyphicon glyphicon-trash inline_icon_btn" ng-click="remove($index)"></span>
+                <span class="glyphicon glyphicon-edit inline_icon_btn" ng-click="modify($index)"></span>
+            </td>
+            <td ng-if="record.is_new || record.is_modify"><span class="glyphicon glyphicon-floppy-disk inline_icon_btn" ng-click="save(record)"></span></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right"><span class="glyphicon glyphicon-plus inline_icon_btn" ng-click="add_new()"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center">
+
+        <ul class="pagination">
+
+             <span ng-click="toPreviousPage()" class="glyphicon glyphicon-backward inline_icon_btn">
+             </span>
+
+              <span>
+                <input id="page_no_box" class="form-control" ng-model="page_request.page_no">&nbsp; of &nbsp; [[ paged_result.total_pages]]
+            </span>
+
+             <span ng-click="toNextPage()" class="glyphicon glyphicon-forward inline_icon_btn"></span>
+
+            <span>
+                Page Size
+                <select class="form-control" id="page_size_box" ng-model="page_request.size" ng-options="page_size for page_size in page_size_options">
+                </select>
+            </span>
+            <div loading-indicator></div>
+        </ul>
+    </div>
+</div>
