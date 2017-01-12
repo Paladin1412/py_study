@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.ad.omp.dao.stat.mapper.OverivewMapper">
+    <sql id="column">
+    id as id,
+    sta_date AS staDate,
+    category_name AS categoryName,
+    total_income AS totalIncome,
+    today_income AS todayIncome,
+    using_advertisers AS usingAdvertisers,
+    audit_advertisers AS auditAdvertisers,
+    audit_ideas AS auditIdeas,
+    using_contracts AS usingContracts,
+    using_plans AS usingPlans,
+    using_ideas AS usingIdeas,
+    create_time AS createTime,
+    data_status AS dataStatus,
+    category AS category
+    </sql>
+
+    <!--概览广告主数据-->
+    <select id="selectAdvertiserForCount"  resultType="com.netease.ad.omp.vo.OverviewVo">
+  SELECT ad.category,ad.status,
+         COUNT(
+								(
+										case
+										when ad.status=1 then true
+										else NULL
+										END
+								)
+							)  AS usingAdvertisers,
+				COUNT(
+							if(ad.status=0,true,NULL)
+						) as auditAdvertisers,
+
+       (
+            case
+            when ad.category=1 then '易效'
+            when ad.category=2 then 'nex'
+            else null
+            END
+        ) as categoryName,
+        (
+          SELECT COUNT(1) FROM  ad_advertiser a,cr_idea c,ad_dsp d
+		        WHERE a.id = c.advertiser_id
+		        AND a.account_status = 0
+			  AND c.dsp_id = d.dsp_id
+			  AND c.status = 0
+			AND c.data_status = 0
+			AND a.status = 1
+			AND a.data_status = 0
+			AND a.dsp_advertiser_id = c.dsp_advertiser_id
+			AND d.account_flag = 1
+			AND a.category = ad.category
+        ) as auditIdeas
+
+        FROM ad_advertiser ad where ad.data_status = 0  group by ad.category
+    </select>
+
+
+    <!--概览广告主数据-->
+    <select id="selectOverview"  resultType="com.netease.ad.omp.vo.OverviewVo">
+        SELECT s.id,t.staDate,s.category,s.categoryName,s.totalIncome,s.todayIncome,s.usingAdvertisers,s.auditAdvertisers,
+               s.auditIdeas,s.usingContracts,s.usingPlans,s.usingIdeas,s.createTime,s.dataStatus
+        FROM
+        (
+            SELECT MAX(sta_date) staDate FROM sta_overivew
+        ) t LEFT JOIN
+        (
+            SELECT <include refid="column"/>
+            FROM  sta_overivew WHERE data_status = 0
+        ) s ON t.staDate = s.staDate
+    </select>
+
+    <delete id="deleteDayOverview" parameterType="java.lang.Integer">
+        DELETE FROM sta_overivew WHERE sta_date=#{day}
+    </delete>
+
+    <!-- 批量写入概览表 -->
+    <insert id="insertDateOverview" parameterType="java.util.List">
+        INSERT INTO sta_overivew(sta_date,category_name,total_income,today_income,using_advertisers,audit_advertisers,audit_ideas,using_contracts,using_plans,using_ideas,category,create_time)
+        VALUES
+        <foreach collection="list" item="overview" index="index" separator=",">
+            (
+            #{overview.staDate},#{overview.categoryName},#{overview.totalIncome},#{overview.todayIncome},#{overview.usingAdvertisers},#{overview.auditAdvertisers},
+            #{overview.auditIdeas},#{overview.usingContracts},#{overview.usingPlans},#{overview.usingIdeas},#{overview.category},#{overview.createTime}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据产品线查询总花费 -->
+    <select id="selectRevenueByCategory" parameterType="com.netease.ad.omp.vo.CategoryRevenueVo" resultType="com.netease.ad.omp.vo.CategoryRevenueVo">
+        SELECT SUM(revenue) AS revenue,sta_date AS staDate,category
+        FROM sta_basic_day_revenue
+        WHERE 1=1 AND sta_date >= #{startTime} AND #{endTime}>= sta_date
+        <if test="category!=null">
+            AND category= #{category} GROUP BY sta_date,category
+        </if>
+        <if test="category==null">
+            GROUP BY sta_date
+        </if>
+
+    </select>
+
+    <!-- 根据产品线查询小时花费 -->
+    <select id="selectRevenueByCategoryByHour" parameterType="com.netease.ad.omp.vo.CategoryRevenueVo" resultType="com.netease.ad.omp.vo.CategoryRevenueVo">
+        SELECT SUM(revenue) AS revenue,sta_date AS staDate,category
+        FROM sta_basic_revenue
+        WHERE 1=1 AND SUBSTR(sta_date,1,8) >= #{startTime} AND #{endTime}>= SUBSTR(sta_date,1,8)
+        <if test="category!=null">
+            AND category= #{category} GROUP BY sta_date,category
+        </if>
+        <if test="category==null">
+            GROUP BY sta_date
+        </if>
+    </select>
+
+    <select id="selectAllProductLineRevenue" parameterType="java.lang.Integer" resultType="com.netease.ad.omp.vo.OverviewVo">
+        SELECT  SUBSTR(sta_date,1,8) AS staDate,SUM(revenue) AS todayIncome,category,
+                (CASE WHEN category=1 THEN '易效' WHEN category=2 THEN 'NEX' END) categoryName
+                FROM sta_basic_revenue
+                WHERE category IN(1,2) AND SUBSTR(sta_date,1,8)=#{day}
+                GROUP BY category,staDate
+    </select>
+
+</mapper>

@@ -1,0 +1,283 @@
+#omp-advertiser-aduit-detail {
+    .omp-title {
+        margin-top: 15px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 14px;
+        color: #678698;
+    }
+    //翻页按键左
+    .omp-turnleft {
+        position: absolute;
+        top: 85px;
+        display: inline-block;
+        width: 35px;
+        height: 70px;
+        border-radius: 0 5px 5px 0;
+        background: url(./_images/turnleft-icon.png) #a5a5a5 no-repeat center;
+        &:hover {
+            background-color: #5e5e5e;
+        }
+    }
+    //翻页按键右
+    .omp-turnright {
+        position: absolute;
+        display: inline-block;
+        right: 0px;
+        top: 85px;
+        width: 35px;
+        height: 70px;
+        border-right: 1px solid @less-color-grey-border;
+        border-radius: 5px 0 0 5px;
+        background: url(./_images/turnright-icon.png) #a5a5a5 no-repeat center;
+        &:hover {
+            background-color: #5e5e5e;
+        }
+    }
+    //关闭详细页
+    .omp-detail-close {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 10px;
+        right: 10px;
+        background: url(./_images/aduit-close-icon.png) no-repeat center;
+    }
+    //详细信息容器
+    .omp-advertiser-detail {
+        border-top: 2px solid @less-color-grey-border;
+        position: relative;
+       overflow:hidden;
+        padding-bottom:20px;
+
+    }
+    //详细信息右边
+    .omp-detail-right {
+        float: right;
+        width: 49%;
+        height: 90%;
+        ul {
+            #less-text > .label;
+            margin: 15px 0 0 0px;
+        }
+        li {
+            margin-bottom: 10px;
+            label:first-child {
+                font-weight: bold;
+            }
+        }
+        li:first-child {
+            width: 500px;
+        }
+        span {
+            margin: 0 5px;
+        }
+        .status-reject {
+            color: @lees-color-red-alert;
+        }
+        .status-ok {
+            color: inherit;
+        }
+    }
+    //审核评审框
+    .omp-aduit-judge {
+        width: 400px;
+        min-height: 400px;
+        padding: 0 0 0 20px;
+        border-radius: 5px;
+        background-color: @less-color-white-bg;
+        border: 1px solid @less-color-grey-border;
+        p {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+        td {
+            height: 30px;
+            position: relative;
+            padding-left: 15px;
+            input {
+                position: absolute;
+                top: 50%;
+                margin-top: -6px;
+                left: 0;
+            }
+        }
+        textarea {
+            border: 1px solid @less-color-grey-border;
+            border-radius: 5px;
+            margin-top: 10px;
+            padding: 3px 3px 20px 3px;
+            min-height: 135px;
+            max-height: 135px;
+            min-width: 376px;
+            max-width: 376px;
+            font-size: 15px;
+            text-align: left;
+        }
+        .omp-judge-list {
+            position: relative;
+            overflow: hidden;
+        }
+        .omp-judge-reason-list {
+            min-height: 115px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .omp-datetimepicker {
+            position: relative;
+            margin-top: 15px;
+            label {
+                font-weight: normal !important;
+                margin-right: 5px;
+            }
+            a {
+                color: @less-color-blue-a;
+                font-weight: normal;
+                font-size: 12px;
+                margin-left: 5px;
+                #less-hover > .underline-pointer;
+            }
+            span {
+                color: @lees-color-red-alert;
+            }
+            p {
+                font-weight: normal;
+                position: absolute;
+                top: 15px;
+                left: 95px;
+                color: @lees-color-red-alert;
+            }
+        }
+        .text-length-tips {
+            position: absolute;
+            bottom: 5px;
+            right: 35px;
+            color: #ccc;
+            .overlength {
+                #less-text > .alert;
+            }
+        }
+        .omp-judge-btns {
+            padding-right: 16px;
+            text-align: right;
+            margin: 4px 0 8px 0;
+            span {
+                #less-text > .alert;
+                font-size: 12px;
+            }
+            .grey {
+                color: grey;
+            }
+            button {
+                margin-left: 8px;
+                width: 70px;
+            }
+            .btn1 {
+                #less-button > .reject;
+            }
+            .btn2 {
+                #less-button > .audit;
+            }
+        }
+    }
+}
+
+//左边框基本信息
+#omp-advertiser-aduit-detail .omp-detail-left {
+    float: left;
+    margin-left: 35px;
+    min-height: 300px;
+    min-width: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    //详细信息左边
+    .detail-left-info {
+        ul {
+            #less-text > .label;
+            margin: 15px 0 0 15px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        span {
+            margin: 0 5px;
+        }
+        a {
+            color: @less-color-blue-a;
+            #less-hover > .underline-pointer;
+        }
+    }
+    .detail-left-img {
+        ul {
+            #less-text > .label;
+            margin: 15px 0 0 15px;
+            display: table-row;
+            height:500px;            
+        }
+        li {
+            width: 450px;
+            text-align: center;
+            height:500px;
+            display: table-cell;
+            vertical-align: middle;
+            a {
+                display: block;
+                position: absolute;
+                top: 46%;
+                left: 55%;
+                margin-left: -50px;
+                color: @less-color-blue-a;
+                max-width: 250px;
+                height: auto;
+                word-break: keep-all;
+                word-wrap: break-word;
+                text-align: left;
+            }
+            .imgDownloadZip{
+                display: block;
+                position: absolute;
+                top: 46%;
+                left: 50%;
+                margin-left: -80px;
+            }
+        }
+        img {
+            max-width: 450px;
+            max-height: 480px;
+        }
+        .omp-detail-left-nav {
+            position: absolute;
+            left: 60px;
+            right: 0;
+            top: 15px;
+            text-align: right;
+            a {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                font-size: 12px;
+                margin-left: 10px;
+                border-radius: 50px;
+                opacity: 0.6;
+                #less-hover > .none-pointer;
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+            .focus {
+                opacity: 1;
+                color: #666666;
+                background-color: #666666;
+            }
+            .blur {
+                color: @less-color-grey-border;
+                background-color: @less-color-grey-border;
+            }
+        }
+    }
+}

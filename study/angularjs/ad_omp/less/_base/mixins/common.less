@@ -1,0 +1,50 @@
+/*======================全局mixins========================*/
+
+//不输出到css，需要以 reference 方式来导入。
+
+//注意：请勿修改该文件，若需要增加全局mixins，请在less/_custome/mixins/common.less中定义。
+
+/*=======================================================*/
+
+//根据传入的参数返回margin，默认为0px
+.mx-margin(@t:0px,@r:0px,@b:0px,@l:0px) {
+    margin: @arguments
+}
+
+//根据传入的参数返回padding，默认为0px
+.mx-padding(@t:0px,@r:0px,@b:0px,@l:0px) {
+    padding: @arguments
+}
+.mx-padding-double(@tb:0px,@rl:0px) {
+    padding: @arguments
+}
+.mx-padding-all(@all:0px) {
+    padding: @all
+}
+
+//生成一个随父容器变化而自适应高宽的容器，父容器position值必需为relative或absolute
+.mx-container-autoSize(@top:0,@right:0,@bottom:0,@left:0,@width:auto,@height:auto) {
+    position: absolute;
+    top:@top;
+    right: @right;
+    bottom: @bottom;
+    left: @left;
+    width: @width;
+    height: @height;
+}
+
+//生成transfrom translate
+.mx-transform-translate(@x:0,@y:0){
+    transform:translate(@x,@y);
+    -ms-transform:translate(@x,@y);
+    -webkit-transform:translate(@x,@y);    
+    -moz-transform:translate(@x,@y);
+}
+
+//生成box-sizing
+.mx-box-sizing(@value){
+    box-sizing:@value;
+    -ms-box-sizing:@value;
+    -webkit-box-sizing:@value;
+    -moz-box-sizing:@value;    
+}

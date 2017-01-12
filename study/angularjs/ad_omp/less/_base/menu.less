@@ -1,0 +1,67 @@
+/* 页面 menu 内容*/
+
+.omp-menu-content {
+    @font-size:14px;
+
+    width: 100%;
+    //所有a标签白色 无underline;
+    a {
+        #less-hover > .none-pointer;
+    }
+    //1级菜单栏定义
+    li.omp-menu-sup > p {
+        @height:50px;
+
+        height: @height;
+        width: 100%;
+        a {
+            display: block;
+            margin: 0 20px;
+            height: 100%;
+            line-height: @height;
+            font-size: @font-size;
+            position: relative;
+            color: #d3dbec;
+        }
+        span {
+            margin-left: 35px;
+        }
+    }
+    li.omp-menu-sup > ul {
+        height: 0px;
+        overflow: hidden;
+    }
+    //2级菜单栏定义
+    ul.omp-menu-sub {
+        width: 100%;
+        transition: height 0.4s ease-out;
+        -moz-transition: height 0.4s ease-out;
+        -webkit-transition: height 0.4s ease-out;
+        -o-transition: height 0.4s ease-out;
+        a {
+            margin-left: 35px;
+            font-size: @font-size;
+            color: #d9d9de;
+        }
+        li {
+            padding: 0 0 0 20px;
+            height: 50px;
+            line-height: 50px;
+            border-right: 8px solid #383d5c;
+            #less-hover > .none-pointer;
+            &:hover {
+            border-right: 8px solid #414665;
+                background-color: #414665;
+            }
+        }
+    }
+    //箭头动画转动
+    .omp-menu-arrow-rotate {
+        transform: rotate(90deg);
+    }
+    //当前路由下的背景图
+    .omp-menu-click-bg {
+        background-color: #414665;
+        border-right: 8px solid #24a0f6 !important;
+    }
+}

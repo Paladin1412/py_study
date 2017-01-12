@@ -1,0 +1,90 @@
+<!-- 易效广告主收入 NEX -->
+<div id="omp-income-count">
+    <!-- 页面标题导航  -->
+    <!-- <p>易效广告主收入</p> -->
+    <!-- 页面内容区 -->
+    <div class="omp-content">
+        <div class="omp-search">
+            <label>渠道</label>
+            <div class="omp-select1">
+                <span>{{search.way.name}}</span>
+                <select ng-model="search.way" ng-options="node.name for node in search.channel">
+                    <option value="" ng-if="false"></option>
+                </select>
+            </div>
+            <label>日期</label>
+            <div class="omp-input-container">
+                <input daterangepicker class="daterangepicker_box" ng-model="beginEndDate" select="updateDate(start, end, label)"/>
+            </div>
+            <button ng-click="event.search()" class="income-search">查询</button>
+        </div>
+        <div class="omp-download-table">
+            <a ng-href="{{search.downloadUrl}}?channel={{search.way.id}}&startTime={{search.curDate.start}}&endTime={{search.curDate.end}}&start={{data.pageStart}}&limit={{data.pageLimit}}" target="_blank">下载报表</a>
+        </div>
+        <!--列表显示-->
+        <div class="omp-list">
+            <div class="omp-list-data">
+                <table>
+                    <tr>
+                        <th>广告主ID</th>
+                        <th>广告主公司名称</th>
+                        <th>渠道</th>
+                        <th>代理商ID</th>
+                        <th>代理商公司名称</th>
+                        <th>所属行业</th>
+                        <th>实际收入(元)</th>
+                        <th>花费(元)</th>
+                        <th>曝光量</th>
+                        <th>点击量</th>
+                        <th>点击率</th>
+                        <th class="col-9 explain">平均千次展现成本(元)<b ng-mouseenter="event.explain($event,'sum')" ng-mouseleave="event.explainHide($event)"></b><span></span></th>
+                        <th class="col-9 explain">平均点击成本(元)<b ng-mouseenter="event.explain($event,'average')" ng-mouseleave="event.explainHide($event)"></b><span></span></th>
+                    </tr>
+                    <tr ng-repeat="node in list" ng-class-odd="'omp-list-odd-line'" ng-show="list.length && data.total > 0">
+                        <td align="center">
+                            <p>{{node.advertiserId | checkNull}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.advertiserName | checkNull}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.channelName | checkNull}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.agentId | checkNull}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.agentName | checkNull}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.industry | checkNull}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{ node.revenue ? (node.revenue |currency :'') : '--'}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.expend ? (node.expend |currency :'') : '--'}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.exposures | number}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.clicks | number}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.clickRate | percentFilter}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.pvCost ? (node.pvCost |currency :'') : '--'}}</p>
+                        </td>
+                        <td align="center">
+                            <p>{{node.clickCost ? (node.clickCost |currency :'') : '--'}}</p>
+                        </td>
+                    </tr>
+                </table>
+                <p class="omp-list-data-none" ng-show="!list.length && !data.total">该查询条件下无数据</p>
+            </div>
+            <page-filter></page-filter>
+        </div>
+    </div>
+</div>

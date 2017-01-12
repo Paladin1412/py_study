@@ -1,0 +1,15 @@
+<!-- 页面下部 左部 menu -->
+<div class="omp-menu-content" ng-controller="omp-ctrl-menu">
+    <!-- 一级导航栏 -->
+    <ul ng-repeat="menusRoot in menusTree">
+        <li class="omp-menu-sup" data-state="{{menusRoot.state}}">
+            <p ng-click="event.toggle(menusRoot,$index)">
+                <a ng-style="menusRoot.ngStyle"><span>{{menusRoot.name}}</span></a>
+            </p>
+            <!-- 二级导航栏 -->
+            <ul ng-show="menusRoot.tree.length >= 1" class="omp-menu-sub">
+                <li ng-repeat="menusChild in menusRoot.tree" data-state="{{menusChild.state}}" ng-click="event.toggle(menusChild,$index,$parent.$index)"><a>{{menusChild.name}}</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.ad.omp.dao.sys.mapper.PermissionMapper">
+
+    <!--通过条件查找权限资源 -->
+    <select id="selectPermissionsByVo" resultType="com.netease.ad.omp.entity.sys.Permission" parameterType="com.netease.ad.omp.entity.sys.PermissionVo">
+	       SELECT
+		       DISTINCT
+				sp.id AS id,
+		        sp.type AS type,
+				sp.code AS code,
+				sp.name AS name,
+				sp.pid AS pid,
+				sp.url AS url ,
+				sp.icon AS icon,
+				sp.descs AS descs,
+		        sp.sort_num AS sortNum ,
+				sp.create_time AS createTime,
+				sp.update_time AS updateTime,
+				sp.operator_id AS operatorId,
+				sp.operator_name AS operatorName,
+				sp.status AS status ,
+				sp.data_status AS dataStatus,
+				sp.remark  AS remark
+			FROM
+				sys_permission AS sp
+			JOIN sys_role_rel_permission AS srlp ON sp.id = srlp.permission_id
+			WHERE
+			     sp.data_status = 0
+			       <if test="roleIds != null">
+			        AND srlp.role_id  in
+		            <foreach item="item" index="index" collection="roleIds" 
+		                         open="(" separator="," close=")">
+		                        #{item}
+		             </foreach>
+			   </if>
+    </select>
+    
+    <select id="queryCountPermissionRelRoles" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+       SELECT
+		COUNT(sys_role.role_id)
+	   FROM
+		sys_role
+		INNER JOIN sys_role_rel_permission ON sys_role_rel_permission.roles_id = sys_role.role_id
+	   WHERE
+		sys_role_rel_permission.id = #{value} AND
+		sys_role.role_status = 0
+    </select>
+    
+</mapper>

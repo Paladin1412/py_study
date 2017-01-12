@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/rabbit
+     http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+
+    <!-- connect to server config  -->
+    <rabbit:connection-factory id="rabbitmqConnectionFactory" virtual-host="${rabbitmq.vhost}" channel-cache-size="25" host="${rabbitmq.host}" port="${rabbitmq.port}" username="${rabbitmq.username}" password="${rabbitmq.password}"/>
+
+    <rabbit:template id="amqpTemplate" exchange="${exchangeName}" connection-factory="rabbitmqConnectionFactory"/>
+
+    <rabbit:admin connection-factory="rabbitmqConnectionFactory"/>
+
+    <!-- 易效广告主送审队列名称 -->
+    <rabbit:queue id="p4p_adv_audit_queue" name="p4p_adv_audit_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!-- NEX广告主送审队列名称 -->
+    <rabbit:queue id="nex_adv_audit_queue" name="nex_adv_audit_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!-- 易效广告主审核结果队列名称 -->
+    <rabbit:queue id="p4p_adv_audit_rs_queue" name="p4p_adv_audit_rs_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!-- NEX广告主审核结果队列名称 -->
+    <rabbit:queue id="nex_adv_audit_rs_queue" name="nex_adv_audit_rs_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!--易效广告主资质过期队列名称 -->
+    <rabbit:queue id="p4p_adv_expired_queue" name="p4p_adv_expired_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- 易效创意送审队列名称 -->
+    <rabbit:queue id="p4p_idea_audit_queue" name="p4p_idea_audit_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!-- NEX创意送审队列名称 -->
+    <rabbit:queue  id="nex_idea_audit_queue" name="nex_idea_audit_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <!-- 易效创意审核结果队列名称 -->
+    <rabbit:queue id="p4p_idea_audit_rs_queue" name="p4p_idea_audit_rs_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- NEX DSP信息同步队列名称-->
+    <rabbit:queue id="nex_dsp_queue" name="nex_dsp_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- 易效代理商信息同步队列名称-->
+    <rabbit:queue id="p4p_agent_queue" name="p4p_agent_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- p4p创意资质同步队列名称-->
+    <rabbit:queue id="p4p_idea_credential_queue" name="p4p_idea_credential_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- 易效冻结广告主配置-->
+    <rabbit:queue id="p4p_adv_frozen_queue" name="p4p_adv_frozen_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- 易效代理商充值及返点金额消息队列定义 -->
+    <rabbit:queue id="stat_agent_charge_queue" name="stat_agent_charge_queue" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments value-type="java.lang.Long">
+            <entry key="x-message-ttl" value="604800000"></entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+
+    <!-- adv exchange queue binging pattern -->
+    <rabbit:topic-exchange name="${exchangeName}" durable="true" auto-delete="false" >
+        <rabbit:bindings>
+            <!-- 易效、NEX广告主送审消息队列 -->
+            <rabbit:binding queue="p4p_adv_audit_queue" pattern="${p4pAdvAudit}"/>
+            <rabbit:binding queue="nex_adv_audit_queue" pattern="${nexAdvAudit}"/>
+            <!-- 易效、NEX广告主审核结果消息队列 -->
+            <rabbit:binding queue="p4p_adv_audit_rs_queue" pattern="${p4pAdvAuditRs}"/>
+            <rabbit:binding queue="nex_adv_audit_rs_queue" pattern="${nexAdvAuditRs}"/>
+            <!-- 易效资质过期广告主消息队列 -->
+            <rabbit:binding queue="p4p_adv_expired_queue" pattern="${p4pAdvExpired}"/>
+
+            <!-- 易效、NEX创意送审消息队列 -->
+            <rabbit:binding queue="p4p_idea_audit_queue" pattern="${p4pIdeaAudit}"/>
+            <rabbit:binding queue="nex_idea_audit_queue" pattern="${nexIdeaAudit}"/>
+
+            <!-- 易效创意送审结果消息队列 -->
+            <rabbit:binding queue="p4p_idea_audit_rs_queue" pattern="${p4pIdeaAuditRs}"/>
+            <!-- NEX业务平台同步DSP -->
+            <rabbit:binding queue="nex_dsp_queue" pattern="${nexDSPSync}"/>
+             <!--易效创意资质同步-->
+            <rabbit:binding queue="p4p_idea_credential_queue" pattern="${p4pIdeaCredential}"/>
+            <!--易效代理商信息同步-->
+            <rabbit:binding queue="p4p_agent_queue" pattern="${p4pAgentSync}"/>
+            <!--易效冻结广告主-->
+            <rabbit:binding queue="p4p_adv_frozen_queue" pattern="${p4pFrozen}"/>
+            <!--易效代理商充值及返点金额 -->
+            <rabbit:binding queue="stat_agent_charge_queue" pattern="${p4pAgentCharge}"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <!--  广告主消息消费者配置-->
+    <bean id="advAuditConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.AdvAuditConsumer"></bean>
+    <!--  创意消费者配置-->
+    <bean id="ideaAuditConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.IdeaAuditConsumer"></bean>
+    <!--  NEX 业务平台DSP同步队列 消费者配置-->
+    <bean id="dspSyncConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.DspSyncConsumer"></bean>
+    <!--  p4p易效创意资质消费者配置-->
+    <bean id="ideaCredentialConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.IdeaCredentialConsumer"></bean>
+    <!--  易效代理商消费者配置-->
+    <bean id="p4pAgentSyncConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.AgentSyncConsumer"></bean>
+    <!--  易效代理商消费者配置-->
+    <bean id="p4pFrozenConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.P4pFrozenConsumer"></bean>
+    <!--  易效代理商充值及返点金额消费者定义-->
+    <bean id="p4pAgentChargeConsumer" class="com.netease.ad.omp.api.message.rabbit.consumer.P4PAgentChargeConsumer"></bean>
+
+
+    <!--双机环境： concurrency ：并发线程   prefetch 每次只拿一个消费信息-->
+    <rabbit:listener-container connection-factory="rabbitmqConnectionFactory" acknowledge="manual" concurrency = "2" prefetch="1">
+        <!-- 广告主送审消息接收队列 -->
+        <rabbit:listener ref="advAuditConsumer" queues="p4p_adv_audit_queue"/>
+        <rabbit:listener ref="advAuditConsumer" queues="nex_adv_audit_queue"/>
+        <!--创意送审消息接收队列 -->
+        <rabbit:listener ref="ideaAuditConsumer" queues="p4p_idea_audit_queue"/>
+        <rabbit:listener ref="ideaAuditConsumer" queues="nex_idea_audit_queue"/>
+        <!-- NEX业务平台同步dsp消息接收队列 -->
+        <rabbit:listener ref="dspSyncConsumer" queues="nex_dsp_queue"/>
+        <!-- p4p易效创意资质消费者配置 -->
+        <rabbit:listener ref="ideaCredentialConsumer" queues="p4p_idea_credential_queue"/>
+        <!-- 易效代理商消费者配置 -->
+        <rabbit:listener ref="p4pAgentSyncConsumer" queues="p4p_agent_queue"/>
+        <!-- 易效冻结广告主配置 -->
+        <rabbit:listener ref="p4pFrozenConsumer" queues="p4p_adv_frozen_queue"/>
+
+        <rabbit:listener ref="p4pAgentChargeConsumer" queues="stat_agent_charge_queue"/>
+
+    </rabbit:listener-container>
+
+</beans>

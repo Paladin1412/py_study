@@ -1,0 +1,162 @@
+#omp-authorize {
+    //导航标题
+    > p {
+        #less-text > .nav-title;
+    }
+
+    .omp-authorize-content {
+        #less-container > .form1;
+        padding: 0 20px;
+    }
+
+    .omp-buttons {
+        .mx-padding(@t:20px,@b:22px);
+        a {
+            #less-button > .search;
+            height: auto;
+        }
+
+        a.cancel {
+            .omp-popAlert-content-confirm .btns .cancel;
+            padding: 5px;
+            height: auto;
+            min-width: 60px;      
+            width: auto;                              
+        }
+    }
+
+    .omp-list {
+        @rowHeight:40px;
+        table {
+            #less-table;
+        }
+        th {
+            #less-table-th;
+            text-align: center;
+            height: @rowHeight;
+            line-height: @rowHeight;
+            padding: 0;
+        }
+        td {
+            #less-table-td;
+            text-align: center;
+            height: @rowHeight;            
+            line-height: @rowHeight;          
+            padding: 0;              
+            a {
+                #less-hover > .underline-pointer;
+                color: #24a0f6;
+                margin-left: 10px;
+                margin-right: 10px;                
+            }
+        }
+        tr:nth-child(even){
+            #less-table-odd-line;
+        }
+    }
+    .omp-page {
+        #less-page;
+    }
+    .filetree span.file,.filetree span.folder {
+        display: inline-block;
+    }
+
+    .addRoleTb {
+        margin-top: 20px;
+        input[type=text] {
+            #less-input > .search;
+            width: 308px;    
+        }
+        textarea {
+            #less-input > .search;
+            padding-top: 5px;           
+            height: 70px;
+            width: 308px;                        
+        }
+    }
+    .addRoleTb td {
+        padding-top: 10px;
+        padding-bottom: 10px;     
+        vertical-align: top;   
+    }
+    .addRoleTb tr td:first-child{
+        padding-right: 26px;
+    }
+
+    .roleAdd-error{
+        background:url("@{cg-imgPath}icon-input-error.png") no-repeat left -2px;
+        margin-left: 10px;
+        padding-left: 25px;
+        height: 100%;
+        color: #e5436e;
+        /*visibility: hidden;*/
+    }
+    td.roleAdd-error {
+        background:url("@{cg-imgPath}icon-input-error.png") no-repeat 5px 8px;     
+        padding-left: 30px;
+    }
+
+    .omp-userList-search {
+        padding-top: 20px;
+        table {
+                    border: 1px solid @less-color-grey-border;
+                    border-radius: 4px;
+        }
+        input {
+            #less-input > .search;    
+            width: 188px;  
+            border: 0;
+        }
+        
+        a {
+
+        &:hover {
+            background-color: #1f96fb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+            height: 100%;
+            border-radius: 0;
+            vertical-align: middle;
+            width: 35px;
+            min-width:0px;
+            background:@less-color-blue-button url("@{cg-imgPath}icon-search-glass.png") no-repeat center center;   
+            }   
+    }
+
+    .addUserTb {
+        margin-top: 20px;
+        > tbody > tr { 
+            >td {
+                padding: 10px 10px;
+                position: relative;
+                
+                input[type=text] {
+                    #less-input > .search;    
+                    height: 25px;
+                }
+            }
+            >td:first-child {
+                width: 70px;
+            }
+            >td:last-child {
+                width: 500px;
+            }
+        }
+        .roleAdd-error {
+                    position: absolute;
+                }
+    }
+
+    .fontBold {
+        font-weight: bold;
+        color: #333333;
+    }
+
+    .roleSelectTb {
+            float: left;                    
+        td {
+            padding: 5px 35px 0px 5px;
+        }
+    }
+}

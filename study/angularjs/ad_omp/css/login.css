@@ -1,0 +1,1123 @@
+html,
+body {
+  line-height: 1.5;
+  font-family: Microsoft YaHei, arial, "宋体";
+  background: #ffffff;
+  font-size: 14px;
+}
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+ol,
+ul {
+  list-style: none;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+  font-style: normal;
+}
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
+}
+html {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+body {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+select {
+  font-size: 14px;
+}
+fieldset,
+img,
+a img,
+:link img,
+:visited img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+:focus {
+  outline: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+caption,
+th {
+  text-align: left;
+}
+sup,
+sub {
+  font-size: 100%;
+  vertical-align: baseline;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+.clear,
+.clearfix:after {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+  display: block;
+}
+.clearfix:after {
+  visibility: hidden;
+  content: ".";
+}
+.clearfix {
+  *zoom: 1;
+}
+td,
+div,
+p {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+}
+/*  less 公共样式定义,包括: color / text / button 类型定义
+ *
+ *  请按照每个类型注释 规范名称
+ *
+ *  所有样式均已@定义 不输出样式
+ */
+/*  1
+ *
+ *  颜色样式定义
+ *
+ *  less-color-{具体颜色}-{说明} 
+ *
+ */
+/*  2
+ *
+ *  文字样式定义
+ *
+ *  #less-text > .{说明1}-[说明2] 文字样式 
+ *  
+ */
+#less-text .copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #caced2;
+}
+#less-text .input {
+  font-size: 14px;
+  color: #6f7c9a;
+}
+#less-text .nav-title {
+  font-size: 15px;
+  color: #5e71a3;
+  padding-left: 6px;
+  border-left: 4px solid #24a0f6;
+}
+#less-text .nav-title a {
+  color: #5e71a3;
+}
+#less-text .nav-title a:hover {
+  color: #24a0f6;
+}
+#less-text .nav-title a:hover:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-text .table-caption {
+  font-size: 14px;
+  font-weight: bold;
+  color: #678698;
+}
+#less-text .table-head {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#less-text .table-data {
+  font-size: 12px;
+  color: #666666;
+}
+#less-text .label {
+  font-size: 12px;
+  color: #666666;
+}
+#less-text .page {
+  font-size: 12px;
+  color: #5a688b;
+}
+#less-text .alert {
+  font-size: 12px;
+  color: #40acc6;
+}
+/*  3
+ *
+ *  :hover定义,主要为button a 复用
+ *
+ *  #less-hover > .{text-decoration}-{corsor} 没有则定义为none 
+ *  
+ */
+#less-hover .none-pointer:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-hover .underline-pointer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#less-hover .none-none:hover {
+  text-decoration: none;
+  cursor: text;
+}
+/*  4
+ *
+ *  button 样式定义, 请注意<a>可能性,样式中不要定义位置,尽量不定义宽高
+ *  input
+ *  select
+ *  
+ */
+#less-button .search {
+  min-width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #24a0f6;
+  padding: 5px;
+  display: inline-block;
+  text-align: center;
+}
+#less-button .search:hover {
+  background-color: #1f96fb;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .audit {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #87d04d;
+}
+#less-button .audit:hover {
+  background-color: #95d561;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .reject {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #40acc6;
+}
+#less-button .reject:hover {
+  background-color: #54b5cc;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .disable {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #888888;
+}
+#less-button .reason-cancel {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #a5bee7;
+}
+#less-button .reason-cancel:hover {
+  background-color: #b9cdec;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .reason-submit {
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #008aff;
+}
+#less-button .reason-submit:hover {
+  background-color: #2c9cfb;
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-button .download {
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  min-width: 80px;
+  font-size: 12px;
+  color: #24a0f6;
+  border: 1px solid #d6e2f5;
+  border-radius: 5px;
+  padding-left: 18px;
+  background: #dfebfd url("_images/download.png") no-repeat 14px center;
+}
+#less-button .download:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-input .search {
+  height: 30px;
+  color: #666;
+  border: 1px solid #d7e1ea;
+  border-radius: 5px;
+  padding: 0 15px;
+}
+#less-input .calendar {
+  height: 30px;
+  color: #666666;
+  border: 1px solid #d7e1ea;
+  border-radius: 5px;
+  padding: 0 5px 0 15px;
+  background: url("_images/calendar.png") no-repeat right content-box;
+}
+#less-select .search1 {
+  display: inline-block;
+  height: 30px;
+  width: 63px;
+  background: url(_images/select-arrow-icon.png) #fff no-repeat 75px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 5px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 30px;
+}
+#less-select .search1 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 98px;
+  opacity: 0;
+}
+#less-select .search1 select:hover {
+  cursor: pointer;
+}
+#less-select .search1 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#less-select .search2 {
+  display: inline-block;
+  height: 30px;
+  min-width: 120px;
+  background: url(_images/select-arrow-icon.png) #fff no-repeat 110px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 5px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 5px;
+  line-height: 30px;
+  margin-left: 10px;
+}
+#less-select .search2 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  min-width: 140px;
+  opacity: 0;
+}
+#less-select .search2 select:hover {
+  cursor: pointer;
+}
+#less-select .search2 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#less-select .search3 {
+  display: inline-block;
+  height: 30px;
+  width: 63px;
+  background: url(_images/select-arrow-icon.png) #fff no-repeat 75px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 5px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 30px;
+}
+#less-select .search3 select {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 98px;
+  opacity: 0;
+}
+#less-select .search3 select:hover {
+  cursor: pointer;
+}
+#less-select .search3 span {
+  line-height: 30px;
+  font-size: 12px;
+  color: #666666;
+}
+#less-select .page {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  width: 45px;
+  background: url(_images/page-select-icon.png) #fff no-repeat 35px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 4px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 5px;
+}
+#less-select .page select {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 50px;
+  opacity: 0;
+  background-color: #fff;
+}
+#less-select .page select:hover {
+  cursor: pointer;
+}
+#less-select .page span {
+  line-height: 20px;
+  font-size: 12px;
+  color: #666666;
+}
+/*  5
+ *
+ *  others
+ *
+ *  container 容器  sortup/down排序按键 tips悬浮提示文字 
+ *  
+ */
+#less-container .form1 {
+  background: white;
+  margin-top: 15px;
+  width: 100%;
+  height: auto;
+  border: 1px solid #d7e1ea;
+  border-radius: 4px;
+  padding: 0px 0px;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+#less-sort-up {
+  border-bottom: 5px solid #678698;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  /*&:hover {
+        #less-hover > .none-pointer;
+        border-bottom-color: black;
+    }*/
+}
+#less-sort-down {
+  border-top: 5px solid #678698;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  /*&:hover {
+        #less-hover > .none-pointer;
+        border-top-color: black;
+    }*/
+}
+#less-reason-tips {
+  display: none;
+  position: absolute;
+  background-color: #fdf7f0;
+  padding: 5px;
+  border-radius: 3px;
+  width: 200px;
+  height: auto;
+  word-break: break-all;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -webkit-box-shadow: 0 0 10px #999;
+  -moz-box-shadow: 0 0 10px #999;
+  box-shadow: 0 0 10px #999;
+  z-index: 200;
+  color: #b8a794;
+}
+#less-reason-arrow {
+  display: none;
+  position: absolute;
+  height: 0;
+  width: 0;
+  z-index: 201;
+  transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  border-left: 5px solid #fffeee;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.close {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: -20px;
+  left: 103%;
+  background: url(_images/img-close-icon.png) no-repeat center;
+  background-size: 25px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  z-index: 302;
+}
+.close:hover {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: -20px;
+  left: 103%;
+  background: url(_images/img-close-icon-hover.png) no-repeat center;
+  background-size: 25px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  z-index: 302;
+}
+#less-page {
+  padding: 15px 2px;
+}
+#less-page span {
+  margin-right: 8px;
+}
+#less-page div {
+  display: inline-block;
+  font-size: 12px;
+  color: #5a688b;
+}
+#less-page a {
+  margin: 0 5px;
+  color: #5a688b;
+}
+#less-page a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#less-page button {
+  width: 50px;
+  height: 25px;
+  margin-left: 3px;
+  border-radius: 3px;
+  border: 1px solid #24a0f6;
+  background-color: #24a0f6;
+  color: #ffffff;
+}
+#less-page button:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+#less-page button:hover {
+  background-color: #1f96fb;
+}
+#less-page input {
+  text-align: center;
+  width: 38px;
+  height: 18px;
+  padding: 0 3px;
+  margin: 0 3px;
+  border-radius: 4px;
+  border: 1px solid #adb3ce;
+  vertical-align: middle;
+}
+#less-page .omp-page-select {
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  width: 45px;
+  background: url(_images/page-select-icon.png) #fff no-repeat 35px center;
+  border: 1px solid #d7e1ea;
+  border-radius: 4px;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 5px;
+}
+#less-page .omp-page-select select {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 50px;
+  opacity: 0;
+  background-color: #fff;
+}
+#less-page .omp-page-select select:hover {
+  cursor: pointer;
+}
+#less-page .omp-page-select span {
+  line-height: 20px;
+  font-size: 12px;
+  color: #666666;
+}
+#less-page .omp-page-right {
+  float: right;
+}
+#less-page .omp-page-right a {
+  color: #5a688b;
+}
+#less-table {
+  width: 100%;
+}
+#less-table-th {
+  height: 40px;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+}
+#less-table-td {
+  height: 36px;
+  padding: 5px 0;
+  line-height: 1.5;
+  font-size: 12px;
+  color: #666666;
+}
+#less-table-odd-line {
+  border-radius: 5px;
+  background-color: #f5f8fd;
+}
+#less-pop-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 300;
+}
+#less-pop-background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #2a2d3e;
+  opacity: 0.7;
+  z-index: 299;
+}
+.omp-popAlert-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 300;
+}
+.omp-popAlert-opbg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 299;
+  background: black;
+  opacity: 0.2;
+}
+.omp-popAlert-content {
+  position: absolute;
+  min-height: 158px;
+  max-height: 200px;
+  width: 300px;
+  left: 50%;
+  top: 40%;
+  /*border-radius: 5px;*/
+  margin-top: -80px;
+  margin-left: -150px;
+  background-color: #fff;
+  z-index: 300;
+}
+.omp-popAlert-header {
+  width: 100%;
+  height: 35px;
+  background-color: #24a0f6;
+  /*border: 1px solid #24a0f6;
+    border-bottom: none;*/
+}
+.omp-popAlert-header a {
+  float: right;
+  margin: 8px 8px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  height: 17px;
+  width: 16px;
+  background: url(_images/pop-alert-close-icon.png) no-repeat center;
+}
+.omp-popAlert-header label {
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 35px;
+  margin-left: 10px;
+}
+.omp-popAlert-content-confirm {
+  min-height: 100px;
+  padding-top: 25px;
+  /*border: 1px solid @less-color-grey-border;*/
+  /*border-radius: 0 0 5px 5px;
+    border-top: none;*/
+}
+.omp-popAlert-content-confirm p {
+  padding: 0 20px;
+  color: #666666;
+  font-size: 12px;
+  text-align: center;
+}
+.omp-popAlert-content-confirm .btns {
+  text-align: center;
+  margin: 20px 0 20px 0;
+}
+.omp-popAlert-content-confirm .btns .cancel {
+  width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #a5bee7;
+  margin-left: 5px;
+}
+.omp-popAlert-content-confirm .btns .cancel:hover {
+  background-color: #b9cdec;
+  text-decoration: none;
+  cursor: pointer;
+}
+.omp-popAlert-content-confirm .btns .confirm {
+  width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #008aff;
+  margin-right: 5px;
+}
+.omp-popAlert-content-confirm .btns .confirm:hover {
+  background-color: #2c9cfb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.omp-popAlert-content-warning {
+  min-height: 100px;
+  padding-top: 25px;
+  /*border: 1px solid @less-color-grey-border;
+    border-radius: 0 0 5px 5px;*/
+  /*border-top: none;*/
+}
+.omp-popAlert-content-warning p {
+  text-align: center;
+  color: #666666;
+  font-size: 12px;
+  margin-top: 20px;
+}
+.omp-popError-content-warning {
+  min-height: 100px;
+  padding-top: 25px;
+  /*border: 1px solid @less-color-grey-border;
+    border-radius: 0 0 5px 5px;*/
+  /*border-top: none;*/
+}
+.omp-popError-content-warning p {
+  text-align: center;
+  color: #666666;
+  font-size: 12px;
+}
+.omp-popError-content-warning .btns {
+  text-align: center;
+  margin: 35px 0 20px 0;
+}
+.omp-popError-content-warning .btns button {
+  width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #008aff;
+}
+.omp-popError-content-warning .btns button:hover {
+  background-color: #2c9cfb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.omp-popAlert-content-confirm-center {
+  min-height: 100px;
+  padding-top: 25px;
+  /*border: 1px solid @less-color-grey-border;
+    border-radius: 0 0 5px 5px;*/
+  /*border-top: none;*/
+}
+.omp-popAlert-content-confirm-center p {
+  text-align: center;
+  color: #666666;
+  font-size: 12px;
+}
+.omp-popAlert-content-confirm-center .btns {
+  text-align: center;
+  margin: 25px 0 20px 0;
+}
+.omp-popAlert-content-confirm-center .btns .cancel {
+  width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #a5bee7;
+  margin-right: 5px;
+}
+.omp-popAlert-content-confirm-center .btns .cancel:hover {
+  background-color: #b9cdec;
+  text-decoration: none;
+  cursor: pointer;
+}
+.omp-popAlert-content-confirm-center .btns .confirm {
+  width: 70px;
+  height: 30px;
+  font-size: 12px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  background-color: #008aff;
+  margin-left: 5px;
+}
+.omp-popAlert-content-confirm-center .btns .confirm:hover {
+  background-color: #2c9cfb;
+  text-decoration: none;
+  cursor: pointer;
+}
+.padding-x {
+  padding-left: 32%;
+}
+.col-3 {
+  width: 3%;
+}
+.col-5 {
+  width: 5%;
+}
+.col-6 {
+  width: 6%;
+}
+.col-7 {
+  width: 7%;
+}
+.col-8 {
+  width: 8%;
+}
+.col-9 {
+  width: 9%;
+}
+.col-10 {
+  width: 10%;
+}
+.col-11 {
+  width: 11%;
+}
+.col-12 {
+  width: 12%;
+}
+.col-13 {
+  width: 13%;
+}
+.col-15 {
+  width: 15%;
+}
+.col-16 {
+  width: 16%;
+}
+.col-17 {
+  width: 17%;
+}
+.col-18 {
+  width: 18%;
+}
+.col-19 {
+  width: 19%;
+}
+.col-20 {
+  width: 20%;
+}
+.col-25 {
+  width: 25%;
+}
+.col-30 {
+  width: 30%;
+}
+.col-35 {
+  width: 35%;
+}
+.col-40 {
+  width: 40%;
+}
+.col-60 {
+  width: 60%;
+}
+.padding-5 {
+  padding-left: 5%;
+}
+.padding-8 {
+  padding-left: 8%;
+}
+.padding-10 {
+  padding-left: 10%;
+}
+.padding-15 {
+  padding-left: 15%;
+}
+.padding-17 {
+  padding-left: 17%;
+}
+.padding-20 {
+  padding-left: 20%;
+}
+.padding-23 {
+  padding-left: 23%;
+}
+.padding-25 {
+  padding-left: 25%;
+}
+.padding-27 {
+  padding-left: 27%;
+}
+.padding-28 {
+  padding-left: 28%;
+}
+.padding-30 {
+  padding-left: 30%;
+}
+.padding-32 {
+  padding-left: 32%;
+}
+.padding-35 {
+  padding-left: 35%;
+}
+.padding-38 {
+  padding-left: 38%;
+}
+.padding-40 {
+  padding-left: 40%;
+}
+.padding-43 {
+  padding-left: 43%;
+}
+.minWidthTd {
+  min-width: 86px!important;
+}
+/* less */
+/* 整体页面布局 页面容器*/
+.omp-login-container {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+/* 页面header */
+.omp-login-header {
+  height: 60px;
+  background: url(_images/header-bg.png) no-repeat top left;
+  background-size: cover;
+  background-color: #4875c0;
+}
+/* 页面footer */
+.omp-login-footer {
+  margin-top: -60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: #caced2;
+}
+/* 页面表单具体内容 */
+.omp-login-form {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-top: -220px;
+  margin-left: -190px;
+  height: 240px;
+  width: 380px;
+  text-align: center;
+  padding-top: 90px;
+  border-radius: 5px;
+  background: url(_images/omp-logo.png) no-repeat #e9ecf2;
+  background-position: center 25px;
+}
+/*  错误提示文字 */
+.omp-login-tips {
+  height: 20px;
+}
+.omp-login-tips p {
+  line-height: 20px;
+  padding-left: 45px;
+  color: #40acc6;
+  text-align: left;
+  font-size: 12px;
+}
+/* 表单输入框 定义高度 垂直居中 字体 文字颜色 */
+.omp-login-form > input {
+  font-size: 14px;
+  color: #6f7c9a;
+  display: inline-block;
+  height: 33px;
+  line-height: 33px;
+}
+/* 具体定义input1/2/3/4 不同样式 */
+.omp-login-input1 {
+  border: 1px solid #adb3ce;
+  border-radius: 3px 0 0 3px;
+  width: 110px;
+  background: url(_images/login-user-logo.png) no-repeat #ffffff;
+  background-position: 8px center;
+  padding-left: 35px;
+}
+.omp-login-input2 {
+  border: 1px solid #adb3ce;
+  border-radius: 0 3px 3px 0;
+  border-left-width: 0px;
+  text-align: center;
+  width: 145px;
+  background-color: #fafcfe;
+}
+.omp-login-input3 {
+  border: 1px solid #adb3ce;
+  border-radius: 3px;
+  width: 255px;
+  margin-top: 10px;
+  background: url(_images/login-password-logo.png) no-repeat #ffffff;
+  background-position: 8px center;
+  padding-left: 35px;
+}
+.omp-login-input4 {
+  border: 1px solid #adb3ce;
+  border-radius: 3px;
+  width: 185px;
+  margin-top: 10px;
+  vertical-align: middle;
+  padding-left: 8px;
+}
+/* 登录button */
+.omp-login-form > button {
+  display: block;
+  width: 290px;
+  height: 35px;
+  margin: 0 auto;
+  margin-top: 20px;
+  color: #ffffff;
+  background-color: #24a0f6;
+  border: 1px solid #24a0f6;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+.omp-login-form > button:hover {
+  background-color: #1c94fa;
+  border-color: #1c94fa;
+  cursor: pointer;
+}
+/* 验证码 */
+.omp-login-form > img {
+  border: 1px solid #b1d0db;
+  width: 78px;
+  height: 33px;
+  margin-left: 18px;
+  margin-top: 10px;
+  background-color: #f5f6f9;
+  vertical-align: middle;
+}
+.omp-login-form > img:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* 忘记密码 */
+/* 忘记密码 */
+.omp-login-form > a {
+  display: block;
+  font-size: 12px;
+  color: #0087d5;
+  margin-top: 15px;
+  margin-left: -230px;
+  text-decoration: underline;
+}

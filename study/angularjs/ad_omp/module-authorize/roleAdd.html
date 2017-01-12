@@ -1,0 +1,52 @@
+<!--权限管理-->
+<div id="omp-authorize">
+    <div ng-include="'./common/template/popConfirm.html'"></div>
+    <div ng-include="'./common/template/popError.html'"></div>
+    <div ng-include="'./common/template/popSuccess.html'"></div>
+    <p><a href="/omp-app.html#/authorize/roleList">角色列表</a>&nbsp;>&nbsp;{{title}}角色</p>
+    <div class="omp-authorize-content">
+        <table class="addRoleTb">
+            <tbody>
+                <tr>
+                    <td>
+                        角色名称：
+                    </td>
+                    <td>
+                        <input type="text" ng-model="roleName" maxlength="50"  ng-blur="event.nameOnChange()" />
+                    </td>
+                    <td class="roleAdd-error" ng-show='roleNameError'>
+                        {{roleNameError}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        角色说明：
+                    </td>
+                    <td>
+                        <textarea ng-model="roleDesc"  ng-blur="event.desOnChange()" />
+                    </td>
+                    <td class="roleAdd-error" ng-show='roleDescError'>
+                        {{roleDescError}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        权限分配：
+                    </td>
+                    <td style="position:relative">
+                        <ul id="authorize-tree" class="ztree" style='display:inline-block'></ul>
+                        <div style="display:inline-block;position:absolute;top:20px" class="roleAdd-error" ng-show='pList.length===0'>
+                            请选择权限
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="omp-buttons">
+            <a ng-click="event.add()">{{title}}</a>&nbsp;&nbsp;
+            <a class='cancel' href="/omp-app.html#/authorize/roleList">取消</a>
+        </div>
+    </div>
+</div>

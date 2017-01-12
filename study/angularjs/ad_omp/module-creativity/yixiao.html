@@ -1,0 +1,102 @@
+<!-- 创意 易效审核 -->
+<div id="omp-creativity-yixiao">
+    <!-- 提示窗弹窗 -->
+    <div ng-include="'./common/template/popConfirm.html'"></div>
+    <!-- 页面标题导航  -->
+    <p>易效创意待审列表</p>
+    <!-- 页面内容区 -->
+    <div class="omp-content">
+        <div class="omp-search">
+            <label>渠道</label>
+            <div class="omp-select1">
+                <span>{{search.channel.name}}</span>
+                <select ng-model="search.channel" ng-options="node.name for node in search.channelList">
+                    <option value="" ng-if="false"></option>
+                </select>
+            </div>
+            <label>行业</label>
+            <div class="omp-select2">
+                <span>{{search.industry.name}}</span>
+                <select ng-model="search.industry" ng-options="node.name for node in search.industryList" ng-change="event.changeIndustry(search.industry.id)">
+                    <option value="" ng-if="false"></option>
+                </select>
+            </div>
+            <div class="omp-select2">
+                <span>{{search.subIndustry.name}}</span>
+                <select ng-model="search.subIndustry" ng-options="node.name for node in search.subIndustryList">
+                    <option value="" ng-if="false"></option>
+                </select>
+            </div>
+            <label>广告主ID/名称</label>
+            <div class="omp-input-container">
+                <label>{{data.inputWarning}}</label>
+                <input type="text" ng-blur="event.inputLengthCheck(search.inputAdvertiser,'inputWarning',42,'最多为42个字符')" ng-model="search.inputAdvertiser">
+                <button ng-click="event.search()">查询</button>
+            </div>
+            <div class="omp-middle-flag"></div>
+        </div>
+        <div class="omp-tips">
+            <div class="omp-middle-flag"></div>
+            <p>当前共<span>{{data.total}}</span>条创意待审</p>
+            <button ng-if="data.role == 2" ng-class="{true:'btn-disable',false:'btn-green'}[data.userStatus === 1 || data.total ===0]" ng-click="(data.userStatus === 1 || data.total ===0 ) ? null : event.audit('',1,1,'',data.userStatus)">开始审核</button>
+            <button ng-if="data.role == 1" ng-class="{true:'btn-disable',false:'btn-green'}[data.btnDisable]" class="omp-button-pass" ng-disabled="data.disable" ng-checked="data.btnDisable" ng-click="event.passAll()">一键通过</button>
+        </div>
+        <div class="omp-list">
+            <div class="omp-list-head">
+                <table>
+                    <tr>
+                        <th class="col-8">广告主ID</th>
+                        <th class="col-20">广告主名称</th>
+                        <th class="col-15">
+                            <p>待审创意数量</p>
+                        </th>
+                        <th class="col-15 omp-button-sort" ng-click="event.sort('updateTime')">
+                            <p>更新时间</p>
+                            <a class="omp-sort-up" ng-hide="data.sortKey === 'updateTime' && data.sortDir === 'DESC'"></a>
+                            <a class="omp-sort-down" ng-hide="data.sortKey === 'updateTime' && data.sortDir === 'ASC'"></a>
+                        </th>
+                        <th class="col-15">一级行业</th>
+                        <th class="col-15">二级行业</th>
+                        <th class="">渠道</th>
+                        <th class="col-3" ng-if="data.role == 1">
+                            <input type="checkbox" ng-show="data.total > 0" ng-click="event.checkAll()" ng-checked="data.checked">
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <div class="omp-list-data">
+                <p class="omp-list-data-none" ng-show="data.total === 0">该查询条件下无数据</p>
+                <table ng-show="data.total > 0">
+                    <tr ng-repeat="node in listY" ng-class-odd="'omp-list-odd-line'">
+                        <td class="col-8">
+                            <p class="padding-20">{{node.dspAdvertiserId}}</p>
+                        </td>
+                        <td class="col-20">
+                            <a ng-show="data.role == 1" class="padding-15 a-manage" ng-click="event.audit(node.id,1,1,node.dspAdvertiserId)">{{node.name | checkNull}}</a>
+                            <a ng-show="data.role == 2" class="padding-15 a-user">{{node.name | checkNull}}</a>
+                        </td>
+                        <td class="col-15">
+                            <p style="text-align: center">{{node.auditNum}}</p>
+                        </td>
+                        <td class="col-15">
+                            <p style="text-align: center">{{node.updateTimeStr}}</p>
+                        </td>
+                        <td class="col-15">
+                            <p  style="text-align: center">{{node.industryStr}}</p>
+                        </td>
+                        <td class="col-15">
+                            <p  style="text-align: center">{{node.subIndustryStr}}</p>
+                        </td>
+                        <td class="">
+                            <p  style="text-align: center">{{node.channelStr}}</p>
+                        </td>
+                        <td class="col-3 omp-checkbox-pass" ng-if="data.role == 1">
+                            <input ng-checked="node.checked" type="checkbox" ng-click="event.check(node)">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <page-filter></page-filter>
+        </div>
+    </div>
+</div>

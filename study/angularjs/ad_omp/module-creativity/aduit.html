@@ -1,0 +1,227 @@
+<!-- 广告主 创意 审核 -->
+<div id="omp-creativity-aduit">
+    <!-- 错误提示窗弹窗 -->
+    <div ng-include="'./common/template/popError.html'"></div>
+    <!-- 拒绝原因弹窗 -->
+    <div ng-include="'./common/template/popRejectReasons.html'"></div>
+    <!-- 点击详情查看图片弹窗 -->
+    <div ng-include="'./common/template/popImageShow.html'"></div>
+    <!-- 查看匹配资质图片弹窗 -->
+    <div ng-include="'./common/template/popCredential.html'"></div>
+    <!-- 提示窗弹窗 -->
+    <div ng-include="'./common/template/popBatchOperation.html'"></div>
+    <p>
+        <a href="" ng-click="event.link()">{{data.pageTitle}}</a>&nbsp;&gt;&nbsp;
+        <label>创意审核</label>
+    </p>
+    <div class="omp-content">
+        <!-- 广告主基本信息 -->
+        <div class="omp-creativity-info">
+            <a class="omp-turnright" href="" ng-if="data.role " ng-show="showTurnRight" ng-click="event.getNextAdvertiserAudit()"></a>
+            <table>
+                <tr>
+                    <td class="col-15">
+                        <label>ID</label><span>:</span>
+                        <label>{{data.id}}</label>
+                    </td>
+                    <td class="col-25">
+                        <label>广告主名称</label><span>:</span>
+                        <label>{{data.name}}</label>
+                    </td>
+                    <td class="col-20">
+                        <label>网址</label><span>:</span>
+                        <a target="_blank" href="{{data.url | checkHTTP}}">{{data.url}}</a>
+                    </td>
+                    <td class="col-20">
+                        <label>行业</label><span>:</span>
+                        <label>{{data.industryDetail}}</label>
+                    </td>
+                    <td class="col-20">
+                        <label ng-if="data.pageCategory == 1" ng-show="data.dspAgent!=='直客'">代理商</label>
+                        <label ng-if="data.pageCategory == 2">DSP公司</label><span>:</span>
+                        <label>{{data.dspAgent}}</label>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <!-- YIXIAO审核 -->
+                <tr ng-if="data.pageCategory == 1">
+                    <td class="col-60">
+                        <label class="font-bold">必备资质</label><span>:</span>
+                        <p ng-repeat="node in data.requireList">
+                            <a href="" ng-click="event.showPopCredential($index)">{{node.name}}</a>
+                            <span ng-if="$index !=(data.requireList.length - 1)">|</span>
+                        </p>
+                    </td>
+                    <td class="col-20">
+                        <label class="font-bold">其他资质</label><span>:</span>
+                        <a ng-if="data.otherList.length != 0"  href="" ng-click="event.lookupCredentials('other')">查看全部</a>
+                        <label ng-if="data.otherList.length == 0">&#45;&#45;</label>
+                    </td>
+                    <td class="col-20">
+                        <label class="font-bold">创意资质</label><span>:</span>
+                        <a ng-if="data.ideaList.length  != 0" href="" ng-click="event.lookupCredentials('idea')">查看全部</a>
+                        <label ng-if="data.ideaList.length  == 0">&#45;&#45;</label>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <!-- NEX审核 -->
+                <tr ng-if="data.pageCategory == 2">
+                    <td class="col-40">
+                        <label class="font-bold">广告主资质</label><span>:</span>
+                        <a ng-if="data.advertiserList.length != 0 " href="" ng-click="event.lookupCredentials('advertiser')">查看全部</a>
+                        <label ng-if="data.advertiserList.length  == 0">&#45;&#45;</label>
+                    </td>
+                    <td class="">
+                        <label class="font-bold" ng-click="event.lookupCredentials('idea')">创意资质</label><span>:</span>
+                        <a ng-if="data.ideaList.length  != 0" href="" ng-click="event.lookupCredentials('idea')">查看全部</a>
+                        <label ng-if="data.ideaList.length  == 0">&#45;&#45;</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- 搜索栏 -->
+        <div class="omp-search">
+            <label>创意审核状态</label>
+            <div class="omp-select1">
+                <span>{{search.state.name}}</span>
+                <select ng-model="search.state" ng-options="node.name for node in search.stateList">
+                    <option value="" ng-if="false"></option>
+                </select>
+            </div>
+            <label>创意标题</label>
+            <div class="omp-input-container">
+                <label>{{data.inputWarningTitle}}</label>
+                <input ng-model="search.inputTitle" class="omp-input1" ng-blur="event.inputLengthCheck(search.inputTitle,'inputWarningTitle',44,'最多为44个字符')" type="text">
+            </div>
+            <label>创意ID</label>
+            <div class="omp-input-container">
+                <label>{{data.inputWarningId}}</label>
+                <input ng-model="search.inputCreateId" class="omp-input2" ng-blur="event.inputLengthCheck(search.inputCreateId,'inputWarningId',20,'最多为20个字符')" type="text">
+            </div>
+            <button class="omp-button-search" ng-click="event.search(data.advertiserId)">查询</button>
+            <button ng-class="{true:'omp-button-audit-disable',false:'omp-button-audit'}[data.btnDisable]" ng-disabled="data.btnDisable" ng-click="event.submitPass(null,data.id)">通过</button>
+            <button ng-class="{true:'omp-button-reject-disable',false:'omp-button-reject'}[data.btnDisable]" ng-click="event.popShow(null,data.id)">拒绝</button>
+            <div class="omp-middle-flag"></div>
+        </div>
+        <!-- 列表信息 -->
+        <div class="omp-list">
+            <div class="omp-list-head">
+                <table>
+                    <tr>
+                        <th class="col-6">创意ID</th>
+                        <th class="col-6">展现形式</th>
+                        <th class="col-18">素材</th>
+                        <th class="col-9">标题</th>
+                        <th class="col-16">点击URL</th>
+                        <th class="col-16">下载URL</th>
+                        <th class="col-8">更新时间</th>
+                        <th class="col-9">最后操作</th>
+                        <th class="col-9">
+                            <p>审核操作/状态</p>
+                        </th>
+                        <th class="omp-list-head-checkbox">
+                            <input ng-checked="data.checked" ng-click="event.checkedAll()" type="checkbox" />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <div class="omp-list-data">
+                <table>
+                    <!-- repeat -->
+                    <tr ng-repeat="node in list" ng-class-odd="'omp-list-odd-line'">
+                        <td class="col-6" style="text-align:center;">
+                            <p class="">{{node.dspIdeaId}}</p>
+                        </td>
+                        <td class="col-6" style="text-align:center;">
+                            <p class="">{{node.typeStr}}</p>
+                        </td>
+                        <!-- 默认情况 -->
+                        <td ng-if="node.typeStr == null" class="col-18" style="text-align:center;"></td>
+                        <!-- 信息图文 下载图-->
+                        <td ng-if="node.typeStr == '信息流-图文' || node.typeStr == '信息流-下载图文'" class="col-18 omp-list-data-imgs img-tuwen">
+                            <!-- 缩略图 -->
+                            <img ng-src="{{node.materials[0]}}">
+                            <!-- 浮动大图 -->
+                            <img ng-src="{{node.materials[0]}}">
+                        </td>
+                        <!-- 信息流大图 下载大图-->
+                        <td ng-if="node.typeStr == '信息流-大图' || node.typeStr == '信息流-下载大图'" class="col-18 omp-list-data-imgs img-datu">
+                            <!-- 缩略图 -->
+                            <img ng-src="{{node.materials[0]}}">
+                            <!-- 浮动大图 -->
+                            <img ng-src="{{node.materials[0]}}">
+                        </td>
+                        <!-- 信息流三图 -->
+                        <td ng-if="node.typeStr == '信息流-三图'" class="col-18 omp-list-data-imgs img-santu">
+                            <img ng-src="{{node.materials[0]}}" ng-click="event.showImgDetail(node.typeStr,node.materials)" >
+                            <img ng-src="{{node.materials[1]}}" ng-click="event.showImgDetail(node.typeStr,node.materials)">
+                            <img ng-src="{{node.materials[2]}}" ng-click="event.showImgDetail(node.typeStr,node.materials)">
+                            <p ng-click="event.showImgDetail(node.typeStr,node.materials)">查看详情</p>
+                        </td>
+                        <!-- 信息流GIF -->
+                        <td ng-if="node.typeStr == '信息流-GIF'" class="col-18 omp-list-data-imgs img-gif">
+                            <img ng-src="{{node.materials[0]}}" ng-click="event.showImgDetail(node.typeStr,node.materials)">
+                            <p ng-click="event.showImgDetail(node.typeStr,node.materials)">查看详情</p>
+                        </td>
+                        <!-- 信息流视频 -->
+                        <td ng-if="node.typeStr == '信息流-视频'" class="col-18 omp-list-data-imgs img-vedio">
+                            <img ng-src="{{node.materials[0]}}" ng-click="event.showImgDetail(node.typeStr,node.materials)">
+                            <p ng-click="event.showImgDetail(node.typeStr,node.materials)">查看详情</p>
+                        </td>
+                        <td class="col-9">
+                            <p class="" style="word-wrap:break-word;word-break:break-all;">{{node.title}}</p>
+                        </td>
+                        <td class="col-16" style="text-align:center;">
+                            <!--<a class="padding-20" target="_blank" href="{{node.clickUrl | checkHTTP}}">{{node.clickUrl}}</a>-->
+                            <a class="" target="_blank" href="{{node.clickUrl | checkHTTP}}">{{node.clickUrl}}</a>
+                        </td>
+                        <td class="col-16" style="text-align:center;">
+                            <p ng-if="node.androidUrl" class="">
+                                <label>android:</label>
+                                <a target="_blank" href="{{node.androidUrl | checkHTTP}}">{{node.androidUrl}}</a>
+                            </p>
+                            <p ng-if="node.iosUrl" class="">
+                                <label>ios:</label>
+                                <a target="_blank" href="{{node.iosUrl | checkHTTP}}">{{node.iosUrl}}</a>
+                            </p>
+                        </td>
+                        <td class="col-8" style="text-align:center;">
+                            <!--<p class="padding-15">{{node.updateTimeStr}}</p>-->
+                            <p>{{node.updateTimeStr}}</p>
+                        </td>
+                        <td class="col-9" style="text-align:center;">
+                            <!--<p class="padding-15">{{node.operatorName}}</p>-->
+                            <!--<p class="padding-15">{{node.operateTimeStr}}</p>-->
+                            <p>{{node.operatorName}}</p>
+                            <p>{{node.operateTimeStr}}</p>
+                        </td>
+                        <!-- 默认空状态 -->
+                        <td ng-if='node.statusStr === "" || node.statusStr === null' class="col-8"></td>
+                        <!-- 状态 拒绝 -->
+                        <td ng-if="node.statusStr == '拒绝'" class="col-9 omp-status-btns">
+                            <p>拒绝</p>
+                            <p class="reason">查看原因</p>
+                            <div class="reason-arrow"></div>
+                            <div class="reason-tips">{{node.reason}}</div>
+                        </td>
+                        <!-- 状态 待审核 -->
+                        <td ng-if="node.statusStr == '待审核'" class="col-9 omp-status-btns">
+                            <a class="reject" ng-click="event.popShow(node.id,data.id)" href="">拒绝</a>
+                            <a class="pass" ng-click="event.submitPass(node.id,data.advertiserId)" href="">通过</a>
+                        </td>
+                        <!-- 状态 通过/作废 -->
+                        <td ng-if="node.statusStr == '通过' || node.statusStr == '作废'" class="col-9 omp-status-btns">
+                            <p>{{node.statusStr}}</p>
+                        </td>
+                        <td class="omp-list-data-checkbox">
+                            <input ng-class="{true:'omp-list-data-hasScroll',false:'omp-list-data-noneScroll'}[list.length > 6]" ng-checked="node.checked" ng-click="event.checked(node)" type="checkbox" />
+                        </td>
+                    </tr>
+                </table>
+                <page-filter></page-filter>
+            </div>
+        </div>
+    </div>
+</div>

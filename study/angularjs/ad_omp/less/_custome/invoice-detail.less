@@ -1,0 +1,354 @@
+#omp-invoice-detail {
+    .clearfix1:after{content: "";display: block;clear: both;}
+    .clearfix1{zoom:1;}
+    .omp-content {
+        border-radius: 7px;
+        padding: 20px 20px 10px 30px;
+        border: 1px solid #d7e1ea;
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        .containertop {
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 10px;
+        }
+        .containerbottom{
+            
+        }
+       
+    }
+    .omp-issued {
+        padding-top: 0;
+        .containertop {
+            height: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 0;
+            h3 {
+                float: left;
+                line-height: 30px;
+                .firsttip {
+                    color: #e9655c;
+                    margin-left: 5px;
+                }
+            }
+            span{
+                cursor: pointer;
+                &:hover{
+                    background: #1f96fb;
+                }
+            }
+            a{
+                text-decoration: none;
+                &:hover{
+                    background: #1f96fb;
+                }
+            }
+        }
+        .operatebtn {
+            display: block;
+            float: right;
+            background: #008aff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .cancelbtn {
+            margin-left: 10px;
+        }
+        .checkbtn {
+            margin-left: 10px;
+        }
+        .issued-details {
+            width: 100%;
+            .issueditem {
+                margin-bottom: 5px;
+                width: 24%;
+                display: inline-block;
+                color: #666;
+                margin-right: 60px;
+            }
+        }
+    }
+    .omp-operate{
+        padding-top: 0px;
+        padding-bottom: 0;
+        .containertop{
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 0px;
+            margin-bottom: 0;
+        }
+        .nooperate{
+                padding: 10px 0 10px 0;
+                border-top: 1px solid #e0e0e0;
+        }
+        .operate-details{
+            .operateitem{
+                padding-top: 10px;
+                border-top: 1px solid #e0e0e0;
+                height: 20px;
+                padding-bottom: 10px;
+                overflow: hidden;
+                .operator-content{
+                    margin-bottom: 10px;   
+                    span:nth-child(1){
+                        width: 200px;
+                        display: inline-block;
+                    }
+                    span:nth-child(2){
+                        width: 200px;
+                        display: inline-block;
+                    }
+                    span:nth-child(3){
+                        width: 200px;
+                        display: inline-block;
+                    }
+                }
+            }
+            .operateitem.unfold{
+                height: 50px;
+            }
+            .operateitem.reason{
+                .operator-content{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .omp-invoice{
+        .basicinfo,.companyinfo,.taxpayerinfo{
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .companyinfo,.expressinfo,.taxpayerinfo{
+            padding-top: 20px;
+        }
+        .companyinfo,.taxpayerinfo{
+            .basicitem{
+                input:nth-child(2){
+                    margin-right: 100px;
+                }
+                
+            }
+        }
+        .taxpayerinfo{
+            .corpcert{
+                .basicname{
+                    vertical-align: top;
+                }
+                img{
+                    width: 184px;
+                    height: 184px;
+                }
+            }
+        }
+        .basictitle{
+            margin-bottom: 16px;
+        }
+        .basic-details{
+            li{
+                color: #666;
+                .basicname{
+                    display: inline-block;
+                    width: 10%;
+                }
+                
+            }
+        }
+        .basicitem{
+            color: #666;
+            margin-bottom: 20px;
+            .basicname{
+                position: relative;
+                &:before{
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    width: 4px;
+                    height: 4px;
+                    background: #008aff;
+                    border-radius: 50%;
+                    margin-top: -2px;
+                }
+                padding-left:10px;
+                display: inline-block;
+                width: 10%;
+            }
+            .icon{
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                background: url(./_images/invoice-icon.png);
+            }
+            input{
+                color: #999;
+                background: #efefef;
+                display: inline-block;
+                width: 250px;
+                height: 34px;
+                padding-left: 11px;
+                font-size: 14px;
+                outline: none;
+                border: 1px solid #dedede;
+                line-height: 34px;
+            }
+            .input-col-100{
+                width: 100px;
+            }
+            .units{
+                margin-left: 10px;   
+            }
+        }
+    }
+    .omp-popAlert-content{
+        .omp-popAlert-header{
+            background: #008aff;
+        }
+        .confirm{
+            background-color: #008aff;
+            &:hover{
+                background-color: #2c9cfb;
+            }
+        }
+        .cancel{
+            background: #a5bee7;
+            &:hover{
+                background-color: #b9cdec;
+            }
+        }
+        .omp-popAlert-content-invoice-confirm{
+            .btns{
+                .confirm{
+                    width: 110px!important;
+                }
+                .cancel{
+                    
+                }
+            }
+        }
+       .input-radio{
+           margin-top: 10px;
+           text-align: center;
+           label:first-child{
+               margin-right: 30px;
+           }
+           span{
+               width: 12px;
+               height: 12px;
+               display: inline-block;
+               background: url(../../css/_images/invoice-input-radio.png) no-repeat 0 0;
+               input{opacity: 0;filter: alpha(opacity=0);}
+               vertical-align: middle;
+               margin-top: -3px;
+               margin-right: 5px;
+           };
+           .on{
+               background-position: -12px 0;
+           }
+       }
+       .btns{
+           margin-top: 20px;
+       }
+    }
+    .omp-popAlert-content-invoice-refuse{
+        width: 425px;
+        height: 345px;
+        max-height: 345px;
+        .content{
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .tip1{
+            margin-bottom: 6px;
+            text-align: left;
+        }
+        .tip2{
+            text-align: left;
+            background: url(./_images/pop-alert-refuse-tip.png) no-repeat 0 0;
+            background-size: 15px 15px;
+            height: 16px;
+            line-height: 13px;
+            margin-bottom: 5px;
+            margin-left: 20px;
+        }
+        .reason-textarea{
+            padding-left: 20px;
+            vertical-align: top;
+            .l{
+                vertical-align: top;
+                margin-right: 10px;
+            }
+            .r{
+                padding:  0 10px;
+                height: 129px;
+                width: 300px;
+                border: 1px solid #dadfea;
+                resize: none;
+            }
+        }
+        .btns{
+            .confirm{
+                background:#777a7d;
+                &:hover{
+                    background:#777a7d;
+                }
+            } 
+            .confirm.on{
+                background:#008aff;
+                &:hover{
+                    background:#2c9cfb;
+                }
+            }   
+        }
+    }
+    .omp-operatebtn{
+        margin-bottom: 80px;
+        span{
+            color: #fff;
+            background: #008aff;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+            &:hover{
+                background: #1f96fb;
+                cursor: pointer;
+            }
+        }
+        .op-close,.op-refuse{
+            width: 50px;
+            text-align: center;
+        }
+    }
+    .invoice-pdf-style{
+        width: 1000px;
+        height: 800px;
+        margin-left: -500px;
+        margin-top: -400px;
+        object{
+            width: 100%;
+            height: 100%;
+        }
+        a{
+            margin-right: -15px;
+            margin-top: -15px;
+            right: 0;
+        }
+    }
+    .invoice-img-style{
+        width: 400px;
+        height: auto;
+        margin-left: -200px;
+        margin-top: -200px;
+        img{
+            width: 100%;
+            height: 100%;
+            margin-left: 0;
+        }
+        a{
+            margin-right: -15px;
+            margin-top: -15px;
+            right: 0;
+        }
+    }
+}

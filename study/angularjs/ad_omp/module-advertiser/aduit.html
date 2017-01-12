@@ -1,0 +1,31 @@
+<!-- 广告主 NEX 资质审核 -->
+<div id="omp-advertiser-aduit">
+    <!-- 提示窗弹窗 -->
+    <div ng-include="'./common/template/popError.html'"></div>
+    <div ng-include="'./common/template/popSuccess.html'"></div>
+    <!-- 页面标题导航  -->
+    <p><a ng-if="data.pageTitle === '易效'" ng-click="event.link()">易效广告主审核列表</a><a ng-if="data.pageTitle === 'NEX'" ng-click="event.link()">NEX广告主审核列表</a> &gt; 广告主资质审核</p>
+    <!-- 页面内容区域 -->
+    <div class="omp-content">
+        <!-- 广告主基本信息 -->
+        <div class="omp-advertiser-info">
+            <table class="omp-advertiser-info-table">
+                <tr>
+                    <td>广告主ID<span>:</span>{{info.dspAdvertiserId | checkNull}}</td>
+                    <td>广告主名称<span>:</span>{{info.name | checkNull}}</td>
+                    <td>网址<span>:</span><a target="_blank" href="{{info.url | checkHTTP}}">{{info.url}}</a></td>
+                </tr>
+                <tr>
+                    <td>行业<span>:</span>{{info.industryDetail | checkNull}}</td>
+                    <td>{{data.pageInfo}}<span>:</span>{{info.info | checkNull}}</td>
+                    <td>提交资质时间<span>:</span>{{info.subTimeStr | checkNull}}</td>
+                </tr>
+                <tr>
+                    <td>最近一次审核结果<span>:</span>{{info.lastAduitStatusStr | checkNull | isNeedAudit}}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- 二级路由 -->
+        <div ui-view></div>
+    </div>
+</div>

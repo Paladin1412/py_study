@@ -1,0 +1,17 @@
+<div class="omp-popAlert-container" ng-show="popBatchOperation.show" id ="popBatchOperationId">
+    <div class="omp-popAlert-opbg">
+    </div>
+    <div class="omp-popAlert-content">
+        <div class="omp-popAlert-header">
+            <label>提示信息：</label>
+            <a href="" ng-click="event.popBatchOperationClose()"></a>
+        </div>
+        <!-- 警告弹窗 文字居中 只有确认按钮 -->
+        <div class="omp-popError-content-warning" ng-show="popBatchOperation.show">
+            <p>{{popBatchOperation.content}}</p>
+            <div class="btns">
+                <button ng-click="event.popBatchOperationClose()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

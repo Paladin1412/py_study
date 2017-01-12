@@ -1,0 +1,33 @@
+<div class="omp-pop-container" ng-show="pop.show">
+    <!-- 透明背景色 -->
+    <div class="omp-popAlert-opbg">
+    </div>
+    <div class="omp-pop-content">
+        <div class="omp-pop-reasons-right">
+            <a href="" ng-click="event.popClose()"></a>
+            <p>其他原因</p>
+            <div class="pop-reasons-right-textarea">
+                <label><span ng-class="{true:'overlength',false:''}[pop.inputCharLength > 200]">{{pop.inputCharLength}}</span>&nbsp;/&nbsp;200</label>
+                <textarea ng-model="pop.input" ng-change="event.fixInputCnLength(pop.input)" maxlength="200"></textarea>
+            </div>
+            <div class="pop-reasons-right-btns">
+                <label>{{pop.warning}}</label>
+                <button class="btn1" ng-click="event.popClose()">取消</button>
+                <button class="btn2" ng-click="event.popSubmit()">确定</button>
+            </div>
+        </div>
+        <div class="omp-pop-reasons-left">
+            <p>拒绝原因</p>
+            <div class="pop-reasons-list">
+                <table>
+                    <tr ng-repeat="node in pop.reasonList">
+                        <td>
+                            <input ng-checked="node.checked" ng-click="node.checked = !node.checked" type="checkbox">
+                            <label>{{node.reason}}</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

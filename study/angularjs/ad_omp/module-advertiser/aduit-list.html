@@ -1,0 +1,40 @@
+<div id="omp-advertiser-aduit-list">
+    <!-- 提示窗弹窗 -->
+    <div ng-include="'./common/template/popConfirm.html'"></div>
+    <!-- 审核列表table -->
+    <div class="omp-advertiser-list">
+        <table>
+            <tr>
+                <th>审核内容</th>
+                <th>失效日期</th>
+                <th>审核状态</th>
+                <!--<th>最近一次拒绝原因</th>-->
+                <th>审核操作</th>
+                <th>提交资质时间</th>
+                <th>操作人</th>
+                <th>操作时间</th>
+            </tr>
+            <tr ng-repeat="node in list" ng-class-odd="'table-odd-line'">
+                <td>{{node.name | checkNull}}</td>
+                <td>{{node.expireTimeStr | checkNull}}</td>
+                <td class="table-td-status">
+                    <span ng-class="{'拒绝':'reject'}[node.statusStr]">{{node.statusStr}}</span><span ng-show="node.tips" class="reject">未审核</span>
+                    <p ng-show="node.statusStr == '拒绝' ">{{node.rejectReasonsShow | checkNull}}</p>
+                </td>
+                <!--<td>{{node.lastReason}}</td>-->
+                <!--<td></td>-->
+                <td><a ng-click="event.detail($index)">审核</a></td>
+                <td>{{node.subTimeStr | checkNull}}</td>
+                <td>{{node.operatorName | checkNull}}</td>
+                <td>{{node.operateTime | checkNull}}</td>
+            </tr>
+        </table>
+    </div>
+    <!-- 提交button -->
+    <div class="omp-advertiser-submit">
+        <button ng-click="event.submit()">
+            <span ng-if="data.needAudit === true">提交并进入下一个</span>
+            <span ng-if="data.needAudit != true">提交</span>
+        </button>
+    </div>
+</div>

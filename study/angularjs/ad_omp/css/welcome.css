@@ -1,0 +1,214 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+    color: #ffffff;
+    background: #fafafa;
+    font-family: "microsoft yahei", arial, simsun, sans-serif;
+    overflow: hidden;
+}
+html a {
+    color: #ffffff;
+}
+body {
+    position: relative;
+    min-height: 800px;
+    min-width: 1000px;
+    height: 100%;
+}
+.p-login {
+    width: 1270px;
+    margin: 0 auto;
+}
+.p-login .ico1 {
+    background: url("/css/_images/bloe_login_sprit1_efa4272.jpg") scroll no-repeat 0 0;
+}
+.p-login .ico2 {
+    background: url("/css/_images/bloe_login_sprit2_64d12f9.jpg") scroll no-repeat 0 0;
+}
+.p-login .logo-wrap {
+    position: absolute;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    font-weight: 400;
+    text-align: center;
+}
+.p-login .logo-wrap .ico-logo {
+    display: inline-block;
+    width: 385px;
+    height: 0;
+    padding-top: 105px;
+    overflow: hidden;
+    background-position: 0 0;
+}
+.p-login .subhead {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    z-index: 8;
+    margin-top: -220px;
+    font-weight: 400;
+}
+.p-login .subhead .ico-desc {
+    display: block;
+    width: 461px;
+    height: 0;
+    margin: 0 auto 20px;
+    padding-top: 57px;
+    font-size: 56px;
+    overflow: hidden;
+    background-position: 0 -117px;
+}
+.p-login .subhead .ico-link {
+    display: block;
+    margin: 0 auto 90px;
+    width: 280px;
+    height: 0;
+    padding-top: 25px;
+    overflow: hidden;
+    background-position: -90px -188px;
+}
+.p-login .subhead .ico-login {
+    display: block;
+    margin: 0 auto;
+    width: 175px;
+    height: 0;
+    padding-top: 68px;
+    overflow: hidden;
+    background-position: 0 -247px;
+}
+.p-login .stage-show .ico-book1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 375px;
+    height: 417px;
+    margin: -400px 0 0 -1050px;
+    background-position: 0 0;
+}
+.p-login .stage-show .ico-clip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 59px;
+    height: 72px;
+    margin: 10px 0 0 350px;
+    background-position: 0 -427px;
+}
+.p-login .stage-show .ico-pen1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 137px;
+    height: 216px;
+    margin: -290px 0 0 -720px;
+    background: none;
+}
+.p-login .stage-show .ico-pen1:before,
+.p-login .stage-show .ico-pen1:after {
+    content: '';
+    float: left;
+    background-image: url("/css/_images/bloe_login_sprit2_64d12f9.jpg");
+}
+.p-login .stage-show .ico-pen1:before {
+    width: 50px;
+    height: 100px;
+    background-position: 0 -499px;
+}
+.p-login .stage-show .ico-pen1:after {
+    width: 87px;
+    height: 159px;
+    margin-top: 57px;
+    background-position: -50px -556px;
+}
+.p-login .stage-show .ico-pen2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 138px;
+    height: 108px;
+    margin: 10px 0 0 -580px;
+    background-position: 0 -716px;
+}
+.p-login .stage-show .ico-pens {
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    width: 175px;
+    height: 220px;
+    margin-left: 500px;
+    background-position: 0 -822px;
+}
+.p-login .stage-show .ico-book2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 553px;
+    height: 447px;
+    margin: -20px 0 0 570px;
+    background-position: 0 -1043px;
+}
+.p-login .stage-show .ico-coffee {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 147px;
+    height: 147px;
+    margin: 230px 0 0 -490px;
+    background-position: 0 -1493px;
+}
+.p-login .stage-show .ico-mouse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 85px;
+    height: 165px;
+    margin: 350px 0 0 320px;
+    background-position: 0 -1642px;
+}
+.p-login .stage-show .ico-mac {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 605px;
+    height: 390px;
+    margin: 120px 0 0 -300px;
+    background-position: 0 -1808px;
+}
+@media screen and (max-height: 800px) {
+    html {
+        overflow-y: scroll;
+    }
+}
+@-webkit-keyframes coffee {
+    0% {
+        opacity: 0;
+        margin-top: 400px;
+    }
+    70% {
+        opacity: .8;
+        margin-top: 250px;
+    }
+    100% {
+        opacity: 1;
+        margin-top: 230px;
+    }
+}
+@keyframes coffee {
+    0% {
+        opacity: 0;
+        margin-top: 400px;
+    }
+    70% {
+        opacity: .8;
+        margin-top: 250px;
+    }
+    100% {
+        opacity: 1;
+        margin-top: 230px;
+    }
+}

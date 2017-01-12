@@ -1,0 +1,20 @@
+{
+  "name": "kofer",
+  "version": "1.0.0",
+  "description": "gulp nex web ",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nex"
+  ],
+  "author": "kofer",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "browsersync-ssi": "^0.2.4",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.3.0"
+  }
+}

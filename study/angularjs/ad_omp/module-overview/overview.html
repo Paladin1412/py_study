@@ -1,0 +1,68 @@
+<!-- 运营概览 -->
+<div id="omp-overview">
+	<!-- 页面标题导航  -->
+	<p>运营概览</p>
+	<div class="omp-overview-data">
+		<h3>数据概览</h3>
+		<div class="omp-list-wrap">
+			<div class="omp-list-item">
+				<div>
+					<h4 class="yipin"><span>易品</span></h4>
+					<ul>
+						<li>累计总花费：<span class="font-red">{{yipin.totalIncome ? (yipin.totalIncome | number:2) : '0'}}</span>元</li>
+						<li>今日花费：<span class="font-red">{{yipin.todayIncome ? (yipin.todayIncome | number:2) : '0'}}</span>元</li>
+						<li>在投合同：{{yipin.usingContracts ? (yipin.usingContracts| number) : '0'}}个</li>
+						<li>在投广告计划：{{yipin.usingPlans ? (yipin.usingPlans | number) : '0'}}个</li>
+						<li>在投创意：{{yipin.usingIdeas ? (yipin.usingIdeas | number) : '0'}}个</li>
+					</ul>	
+				</div>
+			</div>
+			<div class="omp-list-item">
+				<div>
+					<h4 class="yixiao"><span>易效</span></h4>
+					<ul>
+						<li>累计总花费：<span class="font-red">{{p4p.totalIncome ? (p4p.totalIncome | number:2) : '0'}}</span>元</li>
+						<li>今日花费：<span class="font-red">{{p4p.todayIncome ? (p4p.todayIncome | number:2) : '0'}}</span>元</li>
+						<li>已通过广告主：{{p4p.usingAdvertisers ? (p4p.usingAdvertisers | number) : '0'}}个</li>
+						<li>待审广告主：<span class="font-org">{{p4p.auditAdvertisers ? (p4p.auditAdvertisers | number) : '0'}}</span>个</li>
+						<li>待审创意：<span class="font-org">{{p4p.auditIdeas ? (p4p.auditIdeas | number) : '0'}}</span>个</li>
+					</ul>	
+				</div>
+			</div>
+			<div class="omp-list-item">
+				<div>
+					<h4 class="nex"><span>NEX</span></h4>
+					<ul>
+						<li>累计总花费：<span class="font-red">{{nex.totalIncome ? (nex.totalIncome | number:2) : '0'}}</span>元</li>
+						<li>今日花费：<span class="font-red">{{nex.todayIncome ? (nex.todayIncome | number:2) : '0'}}</span>元</li>
+						<li>已通过广告主：{{nex.usingAdvertisers ? (nex.usingAdvertisers | number) : '0'}}个</li>
+						<li>待审广告主：<span class="font-org">{{nex.auditAdvertisers ? (nex.auditAdvertisers | number) : '0'}}</span>个</li>
+						<li>待审创意：<span class="font-org">{{nex.auditIdeas ? (nex.auditIdeas | number) : '0'}}</span>个</li>
+					</ul>	
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="omp-overview-chart">
+		<h3>趋势图</h3>
+		<div class="omp-chart-wrap">
+			<div class="omp-search">
+				<label>产品线</label>
+	            <div class="omp-select1">
+	                <span>{{search.curProduct.name}}</span>
+	                <select ng-model="search.curProduct" ng-change="getChartData()" ng-options="node.name for node in search.productList">
+	                    <option value="" ng-if="false"></option>
+	                </select>
+	            </div>
+				<label>日期</label>
+				<div class="omp-overview-time">
+					<input daterangepicker class="daterangepicker_box" ng-model="beginEndDate" select="updateDate(start, end, label)" prevdatelimit="true" prevtoday="true"/>
+				</div>
+			</div>
+
+			<div ng-show="!chartData" class="omp-chart-no">该查询条件下无数据</div>
+			<div class="omp-chart" id="omp-ov-chart" ng-show="chartData">
+			</div>
+		</div>
+	</div>
+</div>

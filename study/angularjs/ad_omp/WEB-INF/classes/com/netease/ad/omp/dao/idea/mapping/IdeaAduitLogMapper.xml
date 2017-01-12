@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.netease.ad.omp.dao.idea.mapper.IdeaAduitLogMapper" >
+  <!--批量插入-->
+  <insert id="batchInsertIdeaLog" useGeneratedKeys="true"  parameterType="java.util.List" >
+    INSERT INTO cr_idea_aduit_log (
+								   dsp_id,
+								   advertiser_id,
+								   dsp_advertiser_id,
+								   dsp_idea_id, type,
+								   title,
+								   click_url,
+								   android_url,
+								   ios_url,
+								   update_time,
+								   operator_name,
+								   status,
+								   operator_id,
+								   create_time,
+	  							   last_status,
+	                               category
+                                  )
+	  VALUES
+
+		 <foreach collection="list" item="item" index="index" separator="," >
+		  (
+		        #{item.dspId,jdbcType=BIGINT},
+		        #{item.advertiserId,jdbcType=BIGINT},
+		        #{item.dspAdvertiserId,jdbcType=BIGINT},
+		        #{item.dspIdeaId,jdbcType=BIGINT},
+		        #{item.type,jdbcType=INTEGER},
+		        #{item.title,jdbcType=VARCHAR},
+		        #{item.clickUrl,jdbcType=VARCHAR},
+		        #{item.androidUrl,jdbcType=VARCHAR},
+		        #{item.iosUrl,jdbcType=VARCHAR},	
+		        #{item.updateTime,jdbcType=TIMESTAMP},	
+		        #{item.operatorName,jdbcType=VARCHAR},	
+		        #{item.status,jdbcType=INTEGER},	
+		        #{item.operatorId,jdbcType=INTEGER},	
+		        #{item.createTime,jdbcType=TIMESTAMP},
+			    #{item.lastStatus,jdbcType=INTEGER},
+			    #{item.category,jdbcType=INTEGER}
+		  )
+	    </foreach>  
+ 	 </insert>
+</mapper>

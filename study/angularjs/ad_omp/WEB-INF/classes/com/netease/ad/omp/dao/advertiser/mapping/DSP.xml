@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.netease.ad.omp.dao.advertiser.mapper.DspMapper">
+	
+	<!-- 插入广告主并返回广告主id -->
+    <insert id="insertDsp" parameterType="com.netease.ad.omp.entity.advertiser.Dsp">
+    	INSERT INTO ad_dsp(
+			dsp_id,
+			dsp_name,
+			corp_name,
+			home_page,
+			email,
+			contact_person,
+			post_address,
+			`type`,
+			account_flag,
+			token,
+			ebs_customer_id
+         )
+        VALUES
+        (
+			#{dspId},
+           #{dspName},
+           #{corpName},
+           #{homePage},
+           #{email},
+           #{contactPerson},
+           #{postAddress},
+		#{type},
+		#{accountFlag},
+		#{token},
+		#{ebsCustomerId}
+    	 )
+    </insert>
+
+   <select id="selectDspById" parameterType="java.lang.Long" resultType="com.netease.ad.omp.entity.advertiser.Dsp"  >
+   	SELECT 	dsp.id AS id, dsp.dsp_id AS dspId, dsp.dsp_name AS dspName,dsp.corp_name AS corpName,dsp.home_page AS homePage,
+			dsp.email AS email,dsp.contact_person AS contactPerson,dsp.post_address AS postAddress,dsp.type AS type,
+			dsp.account_flag AS accountFlag,dsp.token AS token,dsp.ebs_customer_id AS ebsCustomerId
+	FROM ad_dsp AS dsp WHERE dsp.dsp_id = #{dspId}
+   </select>
+    
+</mapper>

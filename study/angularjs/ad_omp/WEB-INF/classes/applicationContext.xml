@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/util
+                        http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- 多个PropertyPlaceholderConfigurer，需要设置本属性为true. -->
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="locations">
+			<list>
+				<value>classpath:datasource.properties</value>
+				<value>classpath:redis.properties</value>
+				<value>classpath:rabbitmq.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入	-->
+	<context:component-scan base-package="com.netease.ad.omp">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<!-- spring mybatis-->
+	<import resource="spring-mybatis.xml"/>
+	<!-- rabbitmq config import -->
+	<import resource="rabbitmq.xml"/>
+	<!-- quartz config import-->
+	<import resource="spring-quartz.xml"/>
+
+	<bean id="springUtils" class="com.netease.ad.omp.common.utils.SpringUtils" />
+
+	<!-- JSR303 Validator定义  bjzhangzhenzhen -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="messageSource"/>
+	</bean>
+
+	<!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） bjzhangzhenzhen-->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="useCodeAsDefaultMessage" value="false"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="cacheSeconds" value="60"/>
+	</bean>
+
+	<!-- Spring Session 管理所需依赖 -->
+	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+
+	<!--             redis 配置      -->
+	<!--jedis的连接池配置-->
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!-- 最大空闲连接数量 -->
+		<property name="maxIdle" value="${redis.pool.maxIdle}"/>
+		<!-- 最小空闲连接数量, 处理间隔时间为 timeBetweenEvictionRunsMillis -->
+		<property name="minIdle" value="${redis.pool.minIdle}"/>
+		<!-- 池中持有的最大连接数量 -->
+		<property name="maxTotal" value="${redis.pool.maxActive}"/>
+		<!-- borrowObject 方法的最大等待时间 -->
+		<property name="maxWaitMillis" value="${redis.pool.maxWait}"/>
+		<!-- 池中可用资源耗尽时, borrow 方法是否阻塞等待 maxWaitMillis 毫秒 -->
+		<property name="blockWhenExhausted" value="true"/>
+		<!-- borrowObject 时是否执行检测 -->
+		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+		<!-- 是否检测空闲连接链接的有效性, 间隔时间为 timeBetweenEvictionRunsMillis -->
+		<property name="testWhileIdle" value="true"/>
+		<!-- 空闲对象被清除需要达到的最小空闲时间 -->
+		<!--<property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"/>-->
+		<!-- 空闲检测线程,sleep 间隔多长时间,去处理与idle相关的事情 -->
+		<!--<property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"/>-->
+	</bean>
+	<!-- jedis的连接工厂 -->
+	<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis.host}"/>
+		<property name="port" value="${redis.port}"/>
+		<property name="database" value="${redis.database}"/>
+		<property name="password" value="${redis.password}"/>
+		<property name="timeout" value="200000"/>
+		<property name="poolConfig" ref="poolConfig"/>
+	</bean>
+	<!--redis实际使用的template-->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory"/>
+		<property name="keySerializer">
+		   <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+	    </property>
+		<property name="valueSerializer">
+		    <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+	    </property>
+	</bean>
+
+	<bean id="advAuditMessageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<!-- NEX 广告主审核队列 -->
+			<bean class="com.netease.ad.omp.api.message.redis.consumer.RedisAdvAuditConsumer"/>
+		</constructor-arg>
+	</bean>
+
+	<bean id="ideaMessageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<!-- NEX 创意审核队列 -->
+			<bean class="com.netease.ad.omp.api.message.redis.consumer.RedisIdeaAuditConsumer"/>
+		</constructor-arg>
+	</bean>
+
+	<bean id="ideaCredentialMessageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<!-- NEX 创意资质审核队列 -->
+			<bean class="com.netease.ad.omp.api.message.redis.consumer.RedisIdeaCredentialConsumer"/>
+		</constructor-arg>
+	</bean>
+
+	<bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory"/>
+		<property name="messageListeners">
+			<map>
+				<entry key-ref="advAuditMessageListener">
+					<bean class="org.springframework.data.redis.listener.ChannelTopic">
+						<constructor-arg value="${nex.adv.audit.queue}"/>
+					</bean>
+				</entry>
+				<entry key-ref="ideaMessageListener">
+					<bean class="org.springframework.data.redis.listener.ChannelTopic">
+					<constructor-arg value="${nex.idea.audit.queue}"/>
+					</bean>
+				</entry>
+				<entry key-ref="ideaCredentialMessageListener">
+					<bean class="org.springframework.data.redis.listener.ChannelTopic">
+					<constructor-arg value="${nex.idea.credential.queue}"/>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 让Spring Session不再执行config命令 -->
+	<util:constant static-field="org.springframework.session.data.redis.config.ConfigureRedisAction.NO_OP"/>
+
+	<!-- 配置druid template-->
+	<bean name="druidTemplate" class="com.netease.ad.druid.template.DruidTemplate">
+		<property name="url" value="http://${data-service.host}:${data-service.port}/druid/v2?pretty"/>
+	</bean>
+
+	<!-- 配置dao-->
+	<bean name="druidDao" class="com.netease.ad.datacenter.dao.druid.DruidDao">
+		<property name="druidTemplate" ref="druidTemplate"/>
+	</bean>
+
+	<!-- 配置服务 -->
+	<bean name="dataService" class="com.netease.ad.datacenter.service.impl.DruidServiceImpl">
+		<property name="druidDao" ref="druidDao"/>
+	</bean>
+
+</beans>

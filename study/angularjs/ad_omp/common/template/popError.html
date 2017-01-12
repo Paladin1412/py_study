@@ -1,0 +1,17 @@
+<div class="omp-popAlert-container" ng-show="popError.show">
+    <div class="omp-popAlert-opbg">
+    </div>
+    <div class="omp-popAlert-content">
+        <div class="omp-popAlert-header">
+            <label>错误提示</label>
+            <a href="" ng-click="event.popErrorClose()"></a>
+        </div>
+        <!-- 警告弹窗 文字居中 只有确认按钮 -->
+        <div class="omp-popError-content-warning" ng-show="popError.show">
+            <p>{{popError.content}}</p>
+            <div class="btns">
+                <button ng-click="event.popErrorClose()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,137 @@
+/* less 本文件内有效 */
+
+@header-height: 50px;
+@footer-height: 12px;
+@menu-width: 200px;
+@window-min-height: 700px;
+@window-min-width: 1200px;
+@content-padding:20px;
+
+/* 主页布局设计 */
+
+body {
+    background-color: #f4f7fc;
+    /*overflow:auto; */   
+}
+
+.omp-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+   /* min-width: @window-min-width;
+    min-height: @window-min-height;*/
+    overflow: auto;
+    padding-top: @header-height; 
+    box-sizing: border-box;   
+}
+
+
+/* 页面 header 布局及内容 */
+.omp-header {
+    @bg-color:#2786c7;
+    @color:#ffffff;
+    position: fixed;
+    top:0;
+    z-index: 50;
+    height: @header-height;
+    width: 100%;
+    background-color: @bg-color;
+    //左边logo
+    .omp-header-logo {
+        @height:23px;
+        @width:177px;
+
+        display: inline-block;
+        width: @width;
+        height: @height;
+        background: url("@{cg-imgPath}header-logo.png") no-repeat center;
+
+        .mx-margin(@t: (@header-height - @height)/2 , @l:13.5px);        
+    }
+    //右边用户信息
+    .omp-header-user {
+        @height:15px;
+        @font-size:12px;
+        
+        float: right;
+        height: @height;
+        line-height: @height;
+        font-size: @font-size;
+        color: @color;
+        //定位与背景
+        background: url("@{cg-imgPath}header-icon.png") no-repeat left center;
+
+        //mixins
+        .mx-margin(@t: (@header-height - @height)/2 , @r:20px);        
+        .mx-padding(@l:25px);
+        //退出键
+        a {
+            @space:10px;
+
+            display: block;
+            height: 100%;
+            float: right;            
+            background: url("@{cg-imgPath}header-line.png") no-repeat left;
+
+            //mixins
+            #less-hover > .none-pointer;
+            .mx-margin(@l:@space);
+            .mx-padding(@l:@space); 
+        }
+    }
+}
+
+
+/* 页面 内容区布局 menu + content + footer */
+
+.omp-main {
+    /*.mx-container-autoSize(@width:100%,@top:@header-height);*/
+    min-width: 100%;
+   /* padding-bottom: 40px;*/
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    background-color: #f4f7fc;
+}
+
+
+/* 页面 content 布局*/
+.omp-main td.omp-content-td {
+    vertical-align: top;    
+    min-width: 900px;
+    position: relative;
+}
+.omp-main div.omp-content:first-child {
+    font-size: 12px;
+    color: #666666;
+    .mx-padding(@t:@content-padding,@r:@content-padding,@l:@content-padding,@b:40px);
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    /*.mx-container-autoSize(@left:@menu-width)    */
+}
+
+/* 页面 menu 布局 */
+
+.omp-main td.omp-menu {
+    min-width: @menu-width;
+    width: @menu-width;
+    height: 100%;
+    background-color: #383d5c;
+    vertical-align: top;
+    /*overflow-x:hidden;
+    overflow-y: auto; */
+}
+
+
+/* 页面 footer 布局 */
+
+.omp-footer {
+    position: absolute;
+    height: @footer-height;
+    line-height: @footer-height;
+    bottom: @content-padding;
+    left: 50%;
+    .mx-transform-translate(@x:-50%);
+    #less-text > .copyright;    
+}

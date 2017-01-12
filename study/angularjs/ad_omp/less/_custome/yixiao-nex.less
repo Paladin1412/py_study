@@ -1,0 +1,470 @@
+#omp-invoice-list,
+#omp-creativity-manage,
+#omp-creativity-nex,
+#omp-creativity-yixiao,
+#omp-advertiser-nex,
+#omp-advertiser-yixiao {
+    //导航标题
+    > p {
+        #less-text > .nav-title;
+    }
+    //内容区
+    .omp-content {
+        margin-top: 10px;
+        #less-container > .form1;
+    }
+    //搜索框
+    .omp-search {
+        min-height: 60px;
+        line-height: 60px;
+        border-bottom: 1px solid @less-color-grey-border;
+        padding-left: 20px;
+        label {
+            #less-text > .label;
+            margin-right: 5px;
+            margin-left: 20px;
+        }
+        label:first-child {
+            margin-left: 0px;
+        }
+        input {
+            #less-input > .search;
+            margin-right: 5px;
+        }
+        button {
+            margin-left: 5px;
+            #less-button > .search;
+        }
+        .omp-select1 {
+            #less-select > .search1;
+        }
+        .omp-select2 {
+            #less-select > .search2;
+        }
+        .omp-select3 {
+            #less-select > .search3;
+        }
+        .omp-input1 {
+            width: 55px;
+        }
+        .omp-input2 {
+            width: 100px;
+        }
+        .omp-manage-input {
+            width: 95px;
+        }
+        .omp-input-container {
+            display: inline-block;
+            position: relative;
+            margin-left: 10px;
+            label:first-child {
+                color: @lees-color-red-alert;
+                position: absolute;
+                bottom: -25px;
+                left:15px;
+            }
+        }
+    }
+    //审核提示信息
+    .omp-tips {
+        height: 50px;
+        padding-left: 20px;
+        padding-top: 3px;
+        border-bottom: 1px solid @less-color-grey-border;
+        p {
+            #less-text > .label;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        span {
+            margin: 0 5px;
+            font-weight: bold;
+            color: #f49773;
+        }
+        button {
+            width: 70px;
+        }
+        label {
+            #less-text > .label;
+        }
+        .btn-green {
+            #less-button > .audit;
+        }
+        .btn-disable {
+            #less-button > .disable;
+        }
+    }
+    //列表信息
+    .omp-list {
+        padding: 10px 20px 0 20px;
+        table {
+            #less-table;
+        }
+        th {
+            #less-table-th;
+        }
+        td {
+            #less-table-td;
+        }
+        //一键勾选
+        .omp-list-head-checkbox {
+            text-align: right;
+            input {
+                margin-right: 30px;
+            }
+        }
+        //通过checkbox
+        .omp-list-data-checkbox {
+            text-align: right;
+            .omp-list-data-hasScroll {
+                margin-right: 15px;
+            }
+            .omp-list-data-noneScroll {
+                margin-right: 30px;
+            }
+        }
+    }
+    .omp-list-data {
+        #less-table-data-overflow;
+        //没有数据情况下文字提示
+        .omp-list-data-none {
+            text-align: center;
+            font-size: 12px;
+            color: inherit;
+        }
+        p {
+            word-break: break-all;
+        }
+        p.p-datetime {
+            word-break:keep-all;
+            
+        }
+        a {
+            word-break: break-all;
+            display: inline-block;
+        }
+        //管理员可点击a标签
+        .a-manage {
+            color: #24a0f6;
+            #less-hover > .underline-pointer;
+        }
+        //普通审核员不可以
+        .a-user {
+            #less-hover > .none-none;
+        }
+    }
+    .omp-list-odd-line {
+        #less-table-odd-line;
+    }
+    .omp-page {
+        #less-page;
+    }
+}
+
+//广告主NEX制定
+#omp-advertiser-nex {
+    .omp-button-sort {
+        #less-hover > .none-pointer;
+        position: relative;
+        .omp-sort-up {
+            #less-sort-up;
+            position: absolute;
+            right: 16%;
+            top: 13px;
+        }
+        .omp-sort-down {
+            #less-sort-down;
+            position: absolute;
+            right: 16%;
+            top: 21px;
+        }
+    }
+}
+
+//广告主yixiao制定
+#omp-advertiser-yixiao {
+    .omp-button-sort {
+        #less-hover > .none-pointer;
+        position: relative;
+        .omp-sort-up {
+            #less-sort-up;
+            position: absolute;
+            right: 5%;
+            top: 13px;
+        }
+        .omp-sort-down {
+            #less-sort-down;
+            position: absolute;
+            right: 5%;
+            top: 21px;
+        }
+    }
+}
+
+//middle-flag
+.omp-middle-flag {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+//创意yixiao制定
+#omp-creativity-yixiao {
+    .omp-checkbox-pass {
+        text-align: center;
+    }
+    .omp-button-sort {
+        #less-hover > .none-pointer;
+        position: relative;
+        .omp-sort-up {
+            #less-sort-up;
+            position: absolute;
+            right: 20%;
+            top: 13px;
+        }
+        .omp-sort-down {
+            #less-sort-down;
+            position: absolute;
+            right: 20%;
+            top: 21px;
+        }
+    }
+    .omp-button-pass {
+        float: right;
+        margin: 10px 20px 0 0;
+    }
+}
+
+//创意NEX制定
+#omp-creativity-nex {
+    .omp-checkbox-pass {
+        text-align: center;
+    }
+    .omp-button-sort {
+        #less-hover > .none-pointer;
+        position: relative;
+        .omp-sort-up {
+            #less-sort-up;
+            position: absolute;
+            right: 20%;
+            top: 13px;
+        }
+        .omp-sort-down {
+            #less-sort-down;
+            position: absolute;
+            right: 20%;
+            top: 21px;
+        }
+    }
+    .omp-button-pass {
+        float: right;
+        margin: 10px 20px 0 0;
+    }
+}
+
+//创意管理制定
+#omp-creativity-manage,
+#omp-invoice-detail {
+    //素材图片
+    .omp-list-data-imgs {
+        text-align: center;
+    }
+    .omp-list-data {
+        a {
+            word-break: break-all;
+            color: @less-color-blue-a;
+        }
+    }
+    .omp-search {
+        label {
+            margin-left: 7px;
+        }
+        .omp-input-container-fix {
+            label {
+                left: -5px;
+                margin-left: -5px;
+                width:90px;
+            }
+        }
+    }
+    //查看状态原因
+    .omp-list-data-status {
+        position: relative;
+        text-align: center;
+        .allow {
+            color: @less-color-green-text;
+        }
+        .reject {
+            color: @lees-color-red-alert;
+        }
+        .reason {
+            color: @less-color-blue-a;
+            #less-hover > .none-pointer;
+            &:hover ~ div {
+                display: block;
+            }
+        }
+        .reason-tips {
+            top: 62%;
+            right: 80px;
+            #less-reason-tips;
+        }
+        .reason-arrow {
+            top: 62%;
+            right: 75px;
+            #less-reason-arrow;
+        }
+    }
+    //弹窗容器
+    .omp-pop-container {
+        #less-pop-container;
+        //背景
+        .omp-pop-background {
+            #less-pop-background;
+        }
+    }
+    //查看大图内容容器
+    .omp-pop-img-content {
+        opacity: 1 !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 302;
+        a {
+            position: absolute;
+        }
+        img {
+            margin-left: 30px;
+        }
+    }
+    //信息流图文-单图 下载单图
+    .img-tuwen {
+        position: relative;
+        img:first-child {
+            width: 60px;
+            height: 45px;
+            #less-hover > .none-pointer;
+            &:hover + img {
+                display: block;
+                float: left;
+                position: absolute;
+                left: 75%;
+                top: 5px;
+                z-index: 303;
+            }
+        }
+        img:first-child + img {
+            display: none;
+            width: 270px;
+            height: 202px;
+        }
+    }
+    //信息流图文-大图 下载大图
+    .img-datu {
+        position: relative;
+        img:first-child {
+            width: 135px;
+            height: 45px;
+            #less-hover > .none-pointer;
+            &:hover + img {
+                display: block;
+                float: left;
+                position: absolute;
+                left: 90%;
+                top: 5px;
+                z-index: 303;
+            }
+        }
+        img:first-child + img {
+            display: none;
+            width: 600px;
+            height: 200px;
+        }
+    }
+    //三图
+    .img-santu {
+        img {
+            width: 60px;
+            height: 45px;
+        }
+        p {
+            color: @less-color-blue-a;
+            #less-hover > .none-pointer;
+        }
+    }
+    //GIF
+    .img-gif {
+        img {
+            width: 135px;
+            height: 45px;
+        }
+        p {
+            color: @less-color-blue-a;
+            #less-hover > .none-pointer;
+        }
+    }
+    //视频
+    .img-vedio {
+        img {
+            width: 60px;
+            height: 45px;
+        }
+        p {
+            color: @less-color-blue-a;
+            #less-hover > .none-pointer;
+        }
+    }
+    //img 270*202 三图
+    .img-style-three {
+        a {
+            top: -35px;
+            right: -35px;
+        }
+        img {
+            width: 270px;
+            height: 202px;
+        }
+        margin-top: -101px;
+        margin-left: -135px * 3px - 60px;
+    }
+    //img 600*300 vedio 640*360 视频
+    .img-style-vedio {
+        a {
+            top: -120px;
+            right: 0px;
+        }
+        .img {
+            width: 600px;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        img{
+            width: 600px;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        .vedio {
+            width: 640px;
+            height: 360px;
+        }
+        video{
+            width: 640px;
+            height: 360px;
+        }
+        margin-top: -180px;
+        margin-left: -300px - 320px - 30px;
+    }
+    //gif 900*300 GIF
+    .img-style-gif {
+        a {
+            top: -20px;
+            right: -140px;
+        }
+        img {
+            display: block;
+            margin-bottom: 30px;
+        }
+        margin-top: -300px - 30px;
+        margin-left: -450px;
+    }
+}
